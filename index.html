@@ -503,6 +503,34 @@ function buildOverview(D){
 
   // GA4 totals
   document.getElementById('ov-ga4-total').textContent=ga4.kpis[0].value;
+
+  // SEO Status card — overview
+  var seo=D.s3_seo;
+  var seoEl=document.getElementById('ov-seo-items');
+  if(seoEl){
+    var seoItems=[
+      {type:'done', title:seo.completed[0].title, detail:seo.completed[0].detail},
+      {type:'done', title:seo.completed[1].title, detail:seo.completed[1].detail},
+      {type:'crit', title:(seo.pending[0].ticket?seo.pending[0].ticket+' — ':'')+seo.pending[0].title, detail:seo.pending[0].detail},
+      {type:'pend', title:(seo.pending[1].ticket?seo.pending[1].ticket+' — ':'')+seo.pending[1].title, detail:seo.pending[1].detail}
+    ];
+    var typeStyles={
+      done:{bg:'#F0FDF4',border:'#BBF7D0',iconBg:'#16a34a',sym:'<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',titleColor:'#16a34a'},
+      crit:{bg:'#FFF1F1',border:'#FFD5D6',iconBg:'#EE3135',sym:'<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',titleColor:'#EE3135'},
+      pend:{bg:'#FFFBEB',border:'#FDE68A',iconBg:'#ca8a04',sym:'<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>',titleColor:'#101828'}
+    };
+    seoEl.innerHTML=seoItems.map(function(item){
+      var s=typeStyles[item.type];
+      var detail=item.detail.length>90?item.detail.substring(0,90)+'…':item.detail;
+      return '<div style="display:flex;align-items:flex-start;gap:12px;background:'+s.bg+';border:1px solid '+s.border+';border-radius:12px;padding:12px 14px">'
+        +'<div style="width:34px;height:34px;border-radius:9px;background:'+s.iconBg+';display:flex;align-items:center;justify-content:center;flex-shrink:0">'+s.sym+'</div>'
+        +'<div style="flex:1;min-width:0">'
+        +'<div style="font-size:12.5px;font-weight:700;color:'+s.titleColor+';margin-bottom:3px;line-height:1.3">'+item.title+'</div>'
+        +'<div style="font-size:11px;color:#667085;line-height:1.5">'+detail+'</div>'
+        +'</div>'
+        +'</div>';
+    }).join('');
+  }
   document.getElementById('ov-ga4-ch1').textContent=ga4.byChannel[0].value.toLocaleString();
   document.getElementById('ov-ga4-ch2').textContent=ga4.byChannel[1].value.toLocaleString();
   document.getElementById('ov-ga4-ch3').textContent=ga4.byChannel[2].value.toLocaleString();
@@ -1097,14 +1125,26 @@ document.addEventListener('DOMContentLoaded', function(){
         <div class="more-link" style="margin-top:16px" onclick="navTo('acquisition',document.querySelectorAll('.sb-item')[2])">View Full Funnel →</div>
       </div>
       </div>
-      <div class="card">
-        <div class="card-hd"><div class="card-ht"><div class="card-title">Paid Media</div><div class="card-sub">Spend · Apr MTD</div></div><div class="legend"><div class="leg-item"><div class="leg-dot" style="background:#EE3135"></div>LinkedIn</div><div class="leg-item"><div class="leg-dot" style="background:#2563eb"></div>Google</div></div></div>
-        <div style="height:150px;position:relative"><canvas id="ov-paid-chart"></canvas></div>
-        <div class="pm-cards">
-          <div class="pm-card"><div class="pm-card-label">LinkedIn</div><div class="pm-card-value" id="ov-li-val">—</div></div>
-          <div class="pm-card"><div class="pm-card-label">Google</div><div class="pm-card-value" id="ov-ga-val">—</div></div>
+      <div class="card" style="display:flex;flex-direction:column">
+        <!-- SEO Status Header -->
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:40px;height:40px;border-radius:10px;background:#f3f4f6;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#4C4C4E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            </div>
+            <div>
+              <div style="font-size:15px;font-weight:700;color:#101828;letter-spacing:-.2px">SEO Status</div>
+              <div style="font-size:12px;color:#667085;margin-top:1px">SSR Phase 1 live · Apr 21</div>
+            </div>
+          </div>
+          <div style="display:inline-flex;align-items:center;gap:6px;background:#FFF1F1;border:1px solid #FFD5D6;border-radius:20px;padding:4px 12px;font-size:11px;font-weight:700;color:#EE3135;flex-shrink:0">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#EE3135" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            1 critical
+          </div>
         </div>
-        <div class="more-link" onclick="navTo('paid-media',document.querySelectorAll('.sb-item')[5])">View Paid Report →</div>
+        <!-- SEO Items -->
+        <div style="display:flex;flex-direction:column;gap:8px;flex:1" id="ov-seo-items"></div>
+        <div class="more-link" style="margin-top:14px" onclick="navTo('seo',document.querySelectorAll('.sb-item')[9])">View Full SEO →</div>
       </div>
     </div>
     <!-- GA4 + SEO -->
