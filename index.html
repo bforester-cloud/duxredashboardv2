@@ -29,7 +29,7 @@ button{font-family:var(--ff);cursor:pointer;border:none;background:none}
 .main{flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden}
 .content-area{flex:1;overflow-y:auto}
 /* ── SIDEBAR ── */
-.sb-logo{padding:18px 20px;display:flex;align-items:center;background:#101828;border-bottom:1px solid rgba(255,255,255,.08);min-height:52px}
+.sb-logo{padding:0 18px;display:flex;align-items:center;gap:10px;background:#101828;height:52px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.08)}
 .sb-logo img{max-height:22px;display:block}
 .sb-sec{padding:20px 14px 6px;font-size:10px;font-weight:600;letter-spacing:.08em;color:#9CA3AF;text-transform:uppercase}
 .sb-nav{padding:0 8px}
@@ -747,7 +747,10 @@ document.addEventListener('DOMContentLoaded', function(){
 <!-- ═══ SIDEBAR ═══ -->
 <nav class="sidebar" id="sidebar">
   <div class="sb-logo">
-    <img src="https://duxre.com/hubfs/Duxre%20logo.svg" alt="Duxre" style="height:22px;display:block;filter:brightness(0) invert(1)">
+    <div style="width:28px;height:28px;background:#EE3135;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="white"><rect x="2" y="2" width="9" height="9" rx="2"/><rect x="13" y="2" width="9" height="9" rx="2"/><rect x="2" y="13" width="9" height="9" rx="2"/><rect x="13" y="13" width="9" height="9" rx="2"/></svg>
+    </div>
+    <img src="https://duxre.com/hubfs/Duxre%20logo.svg" alt="Duxre" style="height:20px;display:block;filter:brightness(0) invert(1)">
   </div>
 
   <div class="sb-sec">Main</div>
