@@ -685,7 +685,7 @@ document.addEventListener('DOMContentLoaded', function(){
       try{
         var b64=window.DUXRE_GZ;
         var bytes=Uint8Array.from(atob(b64),function(c){return c.charCodeAt(0);});
-        var json=pako.inflate(bytes,{to:'string'});
+        var json=pako.ungzip(bytes,{to:'string'});
         window.DUXRE=JSON.parse(json);
       }catch(e){console.error('Decompress failed:',e);}
     }
