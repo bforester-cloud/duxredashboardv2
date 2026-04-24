@@ -516,36 +516,40 @@ function buildOverviewCharts(D){
   var hot=targets.filter(function(t){return t.priority==='hot'}).length;
   var warm=targets.filter(function(t){return t.priority==='warm'}).length;
   var closed=targets.filter(function(t){return t.priority==='closed'}).length;
-  mkChart('ov-pipe-donut','doughnut',{labels:['Hot','Warm','Closed'],datasets:[{data:[hot,warm,closed],backgroundColor:['#EE3135','#BFBEBF','#282828'],borderWidth:4,borderColor:'#fff',hoverOffset:3}]},{responsive:true,maintainAspectRatio:false,cutout:'68%',plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return' '+c.label+': '+c.raw+' deals'}}}}});
+  var donutEl=document.getElementById('ov-pipe-donut');
+  if(donutEl){
+    if(chartInstances['ov-pipe-donut']){chartInstances['ov-pipe-donut'].destroy();}
+    chartInstances['ov-pipe-donut']=new Chart(donutEl,{type:'doughnut',data:{labels:['Hot','Warm','Closed'],datasets:[{data:[hot,warm,closed],backgroundColor:['#EE3135','#BFBEBF','#282828'],borderWidth:4,borderColor:'#fff',hoverOffset:3}]},options:{responsive:false,maintainAspectRatio:true,cutout:'68%',plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return' '+c.label+': '+c.raw+' deals'}}}}}});
+  }
   // Login line
-  mkChart('ov-login-line','line',{
-    labels:['Apr 1','Apr 2','Apr 3','Apr 4','Apr 5','Apr 6','Apr 7','Apr 8','Apr 9','Apr 10','Apr 11','Apr 12','Apr 13','Apr 14','Apr 15','Apr 16','Apr 17','Apr 18','Apr 19','Apr 20','Apr 21','Apr 22'],
-    datasets:[{
-      data:[153,162,89,58,189,201,180,145,110,98,87,140,175,196,210,185,200,220,190,175,190,168],
-      borderColor:'#EE3135',
-      borderWidth:2.5,
-      fill:true,
-      backgroundColor:function(ctx){
-        var gradient=ctx.chart.ctx.createLinearGradient(0,0,0,ctx.chart.height);
-        gradient.addColorStop(0,'rgba(238,49,53,.18)');
-        gradient.addColorStop(1,'rgba(238,49,53,.01)');
-        return gradient;
+  var loginEl=document.getElementById('ov-login-line');
+  if(loginEl){
+    loginEl.style.width='100%';
+    loginEl.style.height='160px';
+    if(chartInstances['ov-login-line']){chartInstances['ov-login-line'].destroy();}
+    chartInstances['ov-login-line']=new Chart(loginEl,{
+      type:'line',
+      data:{
+        labels:['Apr 1','Apr 2','Apr 3','Apr 4','Apr 5','Apr 6','Apr 7','Apr 8','Apr 9','Apr 10','Apr 11','Apr 12','Apr 13','Apr 14','Apr 15','Apr 16','Apr 17','Apr 18','Apr 19','Apr 20','Apr 21','Apr 22'],
+        datasets:[{
+          data:[153,162,89,58,189,201,180,145,110,98,87,140,175,196,210,185,200,220,190,175,190,168],
+          borderColor:'#EE3135',borderWidth:2.5,fill:true,
+          backgroundColor:function(ctx){
+            var g=ctx.chart.ctx.createLinearGradient(0,0,0,160);
+            g.addColorStop(0,'rgba(238,49,53,.18)');g.addColorStop(1,'rgba(238,49,53,.01)');return g;
+          },
+          pointRadius:0,tension:.45
+        }]
       },
-      pointRadius:0,
-      tension:.45
-    }]
-  },{
-    responsive:true,
-    maintainAspectRatio:false,
-    plugins:{legend:{display:false},tooltip:{
-      mode:'index',
-      intersect:false,
-      callbacks:{label:function(c){return' '+c.raw+' logins';}}
-    }},
-    scales:{x:{display:false},y:{display:false,beginAtZero:false}},
-    layout:{padding:{left:0,right:0,top:8,bottom:0}}
-  });
-  // ECE bar
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,callbacks:{label:function(c){return' '+c.raw+' logins';}}}},
+        scales:{x:{display:false},y:{display:false,beginAtZero:false}},
+        layout:{padding:0}
+      }
+    });
+  }
+
 
   // Funnel
   // funnel chart removed — using stage cards
@@ -890,7 +894,7 @@ document.addEventListener('DOMContentLoaded', function(){
         <!-- Donut + Legend — flex:1 fills remaining space -->
         <div style="display:flex;align-items:center;gap:18px;margin-top:4px">
           <div style="position:relative;width:160px;height:160px;flex-shrink:0">
-            <canvas id="ov-pipe-donut"></canvas>
+            <canvas id="ov-pipe-donut" width="160" height="160" style="display:block"></canvas>
             <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none">
               <div id="donut-pct" style="font-family:var(--mono);font-size:24px;font-weight:700;color:#101828;line-height:1">—</div>
               <div style="font-size:10px;font-weight:700;color:#667085;letter-spacing:.08em;text-transform:uppercase;margin-top:3px">HOT</div>
@@ -939,8 +943,8 @@ document.addEventListener('DOMContentLoaded', function(){
         <!-- Gray microsite line -->
         <div id="login-comp" style="font-size:12px;color:#667085;margin-bottom:16px;font-weight:400"></div>
         <!-- Big area chart -->
-        <div style="position:relative;height:160px;margin:0 -4px">
-          <canvas id="ov-login-line"></canvas>
+        <div style="position:relative;height:160px;width:100%;margin:0 -4px">
+          <canvas id="ov-login-line" style="display:block;width:100%;height:160px"></canvas>
         </div>
         <div style="height:1px;background:#EAECF0;margin:14px 0 10px"></div>
         <div class="more-link" style="margin-top:0" onclick="navTo('adoption',document.querySelectorAll('.sb-item')[3])">View Adoption →</div>
