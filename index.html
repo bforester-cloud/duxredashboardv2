@@ -86,7 +86,17 @@ button{font-family:var(--ff);cursor:pointer;border:none;background:none}
 .kpi-row-5{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:12px}
 .kpi{background:#FFFFFF;border:1px solid #EAECF0;border-radius:12px;padding:18px 20px;position:relative;overflow:hidden;box-shadow:0 1px 3px rgba(16,24,40,.06),0 1px 2px rgba(16,24,40,.04)}
 .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
-.kpi.k-red::before{background:var(--red)}.kpi.k-green::before{background:var(--green)}.kpi.k-amber::before{background:var(--amber)}.kpi.k-blue::before{background:var(--blue)}.kpi.k-purple::before{background:var(--purple)}
+.kpi.k-red::before{background:#EE3135}
+.kpi.k-green::before{background:#12B76A}
+.kpi.k-amber::before{background:#B76E00}
+.kpi.k-blue::before{background:#2563eb}
+.kpi.k-dark::before{background:#282828}
+.kpi.k-mid::before{background:#4C4C4E}
+.kpi.k-gray::before{background:#636466}
+.kpi.k-purple::before{background:#7c3aed}
+.kpi-icon.dark{background:#f3f4f6}.kpi-icon.dark svg{color:#282828}
+.kpi-icon.mid{background:#f3f4f6}.kpi-icon.mid svg{color:#4C4C4E}
+.kpi-icon.gray{background:#f3f4f6}.kpi-icon.gray svg{color:#636466}
 .kpi-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
 .kpi-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .kpi-icon.red{background:var(--red-bg)}.kpi-icon.green{background:var(--green-bg)}.kpi-icon.amber{background:var(--amber-bg)}.kpi-icon.blue{background:var(--blue-bg)}.kpi-icon.purple{background:var(--purple-bg)}
@@ -386,7 +396,7 @@ function buildOverview(D){
   var row2El=document.getElementById('overview-kpis-2');
   if(row2El){
     var mktIcons=['<svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm.5 3h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1 0-1zm0 3h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1 0-1z"/></svg>','<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-3v-3h-3v3h-3a.5.5 0 0 1-.5-.5V7.207l4.5-4.5 4.5 4.5Z"/></svg>','<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-3v-3h-3v3h-3a.5.5 0 0 1-.5-.5V7.207l4.5-4.5 4.5 4.5Z"/></svg>','<svg viewBox="0 0 16 16" fill="currentColor"><path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/></svg>'];
-    var mktColors=['red','blue','green','purple'];
+    var mktColors=['red','dark','mid','green'];
     var mktData=[
       {label:'Active Listings',value:mkt.kpis[0].value,sub:'Live \u00b7 '+updated},
       {label:'For Sale',value:mkt.kpis[1].value,sub:'Active \u00b7 '+updated},
@@ -394,7 +404,12 @@ function buildOverview(D){
       {label:'New Ignites \u2014 Apr MTD',value:h[2].value,sub:h[2].sub}
     ];
     row2El.innerHTML=mktData.map(function(t,i){
-      return '<div class="kpi k-'+mktColors[i]+'"><div class="kpi-top"><div class="kpi-icon '+mktColors[i]+'">'+mktIcons[i]+'</div></div><div class="kpi-label">'+t.label+'</div><div class="kpi-value" style="font-size:22px">'+t.value+'</div><div class="kpi-meta">'+t.sub+'</div></div>';
+      return '<div class="kpi k-'+mktColors[i]+'">'
+        +'<div class="kpi-top"><div class="kpi-icon '+mktColors[i]+'">'+mktIcons[i]+'</div></div>'
+        +'<div class="kpi-label">'+t.label+'</div>'
+        +'<div class="kpi-value">'+t.value+'</div>'
+        +'<div class="kpi-meta">'+t.sub+'</div>'
+        +'</div>';
     }).join('');
   }
 
