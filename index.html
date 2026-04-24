@@ -469,7 +469,9 @@ function buildOverview(D){
   var lkpi=D.s5_platform.kpis.find(function(k){return k.label.indexOf('Login')>-1||k.label.indexOf('login')>-1});
   var pl=D.s5_platform.platformLogins;
   document.getElementById('login-big').textContent=lkpi?lkpi.value:'1,244';
-  document.getElementById('login-trend').innerHTML='<svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor"><path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/></svg>Dashboard '+pl.dashboard+' · Marketplace '+pl.marketplace;
+  document.getElementById('login-trend').innerHTML=
+    '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#12B76A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4"/><path d="M12 16V8"/></svg>'
+    +'<span style="color:#12B76A;font-weight:700">Dashboard '+pl.dashboard+' · Marketplace '+pl.marketplace+'</span>';
   document.getElementById('login-comp').textContent='Microsite '+pl.microsite+' · Mixpanel '+D.meta.updated;
 
   // ECE
@@ -507,7 +509,33 @@ function buildOverviewCharts(D){
   var closed=targets.filter(function(t){return t.priority==='closed'}).length;
   mkChart('ov-pipe-donut','doughnut',{labels:['Hot','Warm','Closed'],datasets:[{data:[hot,warm,closed],backgroundColor:['#EE3135','#BFBEBF','#282828'],borderWidth:4,borderColor:'#fff',hoverOffset:3}]},{responsive:true,maintainAspectRatio:false,cutout:'68%',plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return' '+c.label+': '+c.raw+' deals'}}}}});
   // Login line
-  mkChart('ov-login-line','line',{labels:['Apr 1','','','','5','','','','9','','','','13','','','','17','','','','22'],datasets:[{data:[153,162,89,58,189,201,180,145,110,98,87,140,175,196,210,185,200,220,190,175,168],borderColor:'#EE3135',borderWidth:2,fill:true,backgroundColor:'rgba(238,49,53,.06)',pointRadius:0,tension:.4}]},{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{display:false},y:{display:false}}});
+  mkChart('ov-login-line','line',{
+    labels:['Apr 1','Apr 2','Apr 3','Apr 4','Apr 5','Apr 6','Apr 7','Apr 8','Apr 9','Apr 10','Apr 11','Apr 12','Apr 13','Apr 14','Apr 15','Apr 16','Apr 17','Apr 18','Apr 19','Apr 20','Apr 21','Apr 22'],
+    datasets:[{
+      data:[153,162,89,58,189,201,180,145,110,98,87,140,175,196,210,185,200,220,190,175,190,168],
+      borderColor:'#EE3135',
+      borderWidth:2.5,
+      fill:true,
+      backgroundColor:function(ctx){
+        var gradient=ctx.chart.ctx.createLinearGradient(0,0,0,ctx.chart.height);
+        gradient.addColorStop(0,'rgba(238,49,53,.18)');
+        gradient.addColorStop(1,'rgba(238,49,53,.01)');
+        return gradient;
+      },
+      pointRadius:0,
+      tension:.45
+    }]
+  },{
+    responsive:true,
+    maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{
+      mode:'index',
+      intersect:false,
+      callbacks:{label:function(c){return' '+c.raw+' logins';}}
+    }},
+    scales:{x:{display:false},y:{display:false,beginAtZero:false}},
+    layout:{padding:{left:0,right:0,top:8,bottom:0}}
+  });
   // ECE bar
   mkChart('ov-ece-chart','bar',{labels:['C1','C2','C3','C4'],datasets:[{data:[38,41,44,43],backgroundColor:'rgba(238,49,53,.8)',borderRadius:4,borderSkipped:false},{data:[94,96,95,95],backgroundColor:'rgba(22,163,74,.15)',borderRadius:4,borderSkipped:false}]},{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{display:false},y:{display:false}}});
   // Funnel
@@ -880,13 +908,32 @@ document.addEventListener('DOMContentLoaded', function(){
         <div class="more-link" onclick="navTo('pipeline',document.querySelector('[onclick*=pipeline]'))">View Pipeline →</div>
       </div>
       <!-- Broker Logins -->
-      <div class="card">
-        <div class="card-hd"><div class="card-ht"><div class="card-title">Broker Logins</div><div class="card-sub" id="login-sub-ov">Mixpanel live</div></div><span class="badge b-live">Live</span></div>
-        <div class="ph-big" id="login-big">—</div>
-        <div class="ph-trend" id="login-trend"></div>
-        <div class="ph-comp" id="login-comp" style="margin-bottom:12px"></div>
-        <div style="height:85px;position:relative"><canvas id="ov-login-line"></canvas></div>
-        <div class="more-link" onclick="navTo('adoption',document.querySelectorAll('.sb-item')[3])">View Adoption →</div>
+      <div class="card" style="display:flex;flex-direction:column">
+        <!-- Broker Logins Header -->
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:40px;height:40px;border-radius:10px;background:#FFF1F1;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#EE3135" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div>
+              <div style="font-size:15px;font-weight:700;color:#101828;letter-spacing:-.2px">Broker Logins</div>
+              <div style="font-size:12px;color:#667085;margin-top:1px">Mixpanel live</div>
+            </div>
+          </div>
+          <span class="badge b-live" style="margin-top:2px">Live</span>
+        </div>
+        <!-- Big number -->
+        <div id="login-big" style="font-family:var(--mono);font-size:42px;font-weight:700;color:#101828;letter-spacing:-.04em;line-height:1;margin-bottom:10px">—</div>
+        <!-- Green platform breakdown -->
+        <div id="login-trend" style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:#12B76A;margin-bottom:4px"></div>
+        <!-- Gray microsite line -->
+        <div id="login-comp" style="font-size:12px;color:#667085;margin-bottom:16px;font-weight:400"></div>
+        <!-- Big area chart -->
+        <div style="flex:1;position:relative;min-height:130px;margin:0 -4px">
+          <canvas id="ov-login-line"></canvas>
+        </div>
+        <div style="height:1px;background:#EAECF0;margin:14px 0 10px"></div>
+        <div class="more-link" style="margin-top:0" onclick="navTo('adoption',document.querySelectorAll('.sb-item')[3])">View Adoption →</div>
       </div>
       <!-- ECE -->
       <div class="card">
