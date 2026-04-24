@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Duxre — Growth Command Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#EE3135;--red2:#c8272b;--red-bg:rgba(238,49,53,.07);--red-border:rgba(238,49,53,.18);
+  --dark:#111;--white:#fff;--off:#f9f9f8;--off2:#f3f3f1;--off3:#eceae7;
+  --border:#e4e2de;--border2:#d6d4cf;
+  --text:#111;--text2:#4a4845;--text3:#8a8680;--text4:#b8b5b0;
+  --green:#16a34a;--green-bg:rgba(22,163,74,.07);--green-border:rgba(22,163,74,.2);
+  --amber:#ca8a04;--amber-bg:rgba(202,138,4,.07);--amber-border:rgba(202,138,4,.2);
+  --blue:#2563eb;--blue-bg:rgba(37,99,235,.07);--blue-border:rgba(37,99,235,.2);
+  --purple:#7c3aed;--purple-bg:rgba(124,58,237,.07);
+  --ff:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;
+  --r:10px;--r-sm:7px;--sh:0 1px 2px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.04);--sh-md:0 4px 16px rgba(0,0,0,.07),0 1px 3px rgba(0,0,0,.05);
+}
+body{background:var(--off);font-family:var(--ff);color:var(--text);font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button{font-family:var(--ff);cursor:pointer;border:none;background:none}
+/* ── LAYOUT ── */
+.shell{display:flex;height:100dvh;overflow:hidden}
+.sidebar{width:228px;min-width:228px;background:var(--white);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;z-index:30;transition:transform .25s cubic-bezier(.4,0,.2,1)}
+.main{flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden}
+.content-area{flex:1;overflow-y:auto}
+/* ── SIDEBAR ── */
+.sb-logo{padding:18px 18px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.06)}
+.logo-mark{width:28px;height:28px;background:var(--red);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-mark svg{width:14px;height:14px;fill:#fff}
+.logo-text{font-size:14px;font-weight:800;color:#fff;letter-spacing:-.3px}
+.logo-badge{font-size:9px;font-weight:700;background:rgba(255,255,255,.1);color:rgba(255,255,255,.4);padding:2px 6px;border-radius:3px;margin-left:auto;letter-spacing:.05em}
+.sb-sec{padding:18px 14px 6px;font-size:9.5px;font-weight:600;letter-spacing:.1em;color:rgba(255,255,255,.25);text-transform:uppercase}
+.sb-nav{padding:0 8px}
+.sb-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;color:rgba(255,255,255,.4);font-size:12.5px;font-weight:500;width:100%;text-align:left;transition:all .12s;margin-bottom:1px}
+.sb-item:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.75)}
+.sb-item.active{background:var(--red);color:#fff}
+.sb-icon{width:14px;height:14px;flex-shrink:0;opacity:.45}
+.sb-item:hover .sb-icon,.sb-item.active .sb-icon{opacity:1}
+.sb-count{font-size:9px;font-weight:700;padding:1px 6px;border-radius:20px;margin-left:auto;flex-shrink:0}
+.sb-count.red{background:rgba(238,49,53,.25);color:#ff8080}
+.sb-count.amber{background:rgba(202,138,4,.2);color:#fbbf24}
+.sb-count.green{background:rgba(22,163,74,.2);color:#4ade80}
+.sb-dot{width:6px;height:6px;border-radius:50%;margin-left:auto;flex-shrink:0}
+.sb-dot.green{background:var(--green)}.sb-dot.red{background:var(--red)}
+.sb-bottom{margin-top:auto;padding:12px;border-top:1px solid rgba(255,255,255,.06)}
+.sb-user{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;cursor:pointer}
+.sb-user:hover{background:rgba(255,255,255,.06)}
+.sb-av{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,var(--red),var(--red2));display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#fff;flex-shrink:0}
+.sb-name{font-size:11.5px;font-weight:600;color:rgba(255,255,255,.8)}
+.sb-role{font-size:10px;color:rgba(255,255,255,.3);margin-top:1px}
+.sb-plan{margin-left:auto;font-size:8.5px;font-weight:700;padding:2px 6px;border-radius:3px;background:rgba(238,49,53,.2);color:var(--red);border:1px solid rgba(238,49,53,.3)}
+/* ── TOPBAR ── */
+.topbar{height:52px;background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:10px;flex-shrink:0;z-index:20}
+.hamburger{display:none;width:32px;height:32px;border-radius:7px;align-items:center;justify-content:center;background:var(--off2);border:1px solid var(--border)}
+.hamburger svg{width:16px;height:16px;color:var(--text2)}
+.search-box{display:flex;align-items:center;gap:8px;background:var(--off);border:1px solid var(--border);border-radius:var(--r-sm);padding:6px 11px;min-width:200px;max-width:260px;flex:1}
+.search-box svg{width:13px;height:13px;color:var(--text4);flex-shrink:0}
+.search-box input{background:none;border:none;outline:none;font-family:var(--ff);font-size:12.5px;color:var(--text2);width:100%}
+.search-box input::placeholder{color:var(--text4)}
+.search-kbd{font-family:var(--mono);font-size:9.5px;color:var(--text4);background:var(--off3);border:1px solid var(--border);padding:1px 5px;border-radius:4px;white-space:nowrap}
+.tb-sep{flex:1}
+.date-pill{display:flex;align-items:center;gap:7px;padding:6px 12px;background:var(--off);border:1px solid var(--border);border-radius:var(--r-sm);font-size:12px;font-weight:500;color:var(--text2);white-space:nowrap}
+.date-pill svg{width:13px;height:13px;color:var(--text3)}
+.period-toggle{display:flex;background:var(--off);border:1px solid var(--border);border-radius:var(--r-sm);overflow:hidden}
+.pt-btn{padding:5px 13px;font-size:12px;font-weight:500;color:var(--text3)}
+.pt-btn.active{background:var(--dark);color:#fff;font-weight:600}
+.tb-action{width:32px;height:32px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;background:var(--off);border:1px solid var(--border);position:relative;cursor:pointer}
+.tb-action svg{width:15px;height:15px;color:var(--text3)}
+.notif-dot{width:6px;height:6px;border-radius:50%;background:var(--red);position:absolute;top:5px;right:5px;border:1.5px solid var(--white)}
+.tb-av{width:28px;height:28px;border-radius:7px;background:var(--dark);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff}
+/* ── VIEWS ── */
+.view{display:none;padding:20px;max-width:1400px}
+.view.active{display:block}
+/* ── PAGE HEAD ── */
+.page-head{margin-bottom:18px}
+.page-title{font-size:20px;font-weight:800;color:var(--text);letter-spacing:-.4px;margin-bottom:2px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.page-sub{font-size:12.5px;color:var(--text3)}
+.live-badge{display:inline-flex;align-items:center;gap:5px;background:var(--green-bg);border:1px solid var(--green-border);border-radius:20px;padding:2px 9px;font-size:10px;font-weight:700;color:var(--green)}
+.live-dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+/* ── KPI ROW ── */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px}
+.kpi-row-3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+.kpi-row-5{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:12px}
+.kpi{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;position:relative;overflow:hidden;box-shadow:var(--sh)}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.kpi.k-red::before{background:var(--red)}.kpi.k-green::before{background:var(--green)}.kpi.k-amber::before{background:var(--amber)}.kpi.k-blue::before{background:var(--blue)}.kpi.k-purple::before{background:var(--purple)}
+.kpi-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
+.kpi-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.kpi-icon.red{background:var(--red-bg)}.kpi-icon.green{background:var(--green-bg)}.kpi-icon.amber{background:var(--amber-bg)}.kpi-icon.blue{background:var(--blue-bg)}.kpi-icon.purple{background:var(--purple-bg)}
+.kpi-icon svg{width:15px;height:15px}
+.kpi-icon.red svg{color:var(--red)}.kpi-icon.green svg{color:var(--green)}.kpi-icon.amber svg{color:var(--amber)}.kpi-icon.blue svg{color:var(--blue)}.kpi-icon.purple svg{color:var(--purple)}
+.kpi-sparkline{width:70px;height:32px;flex-shrink:0}
+.kpi-label{font-size:11px;font-weight:600;color:var(--text3);letter-spacing:.01em;margin-bottom:5px}
+.kpi-value{font-family:var(--mono);font-size:26px;font-weight:600;color:var(--text);line-height:1;letter-spacing:-.03em;margin-bottom:6px}
+.kpi-goal-txt{font-family:var(--mono);font-size:14px;color:var(--text3);font-weight:400}
+.kpi-bar{height:3px;background:var(--off3);border-radius:2px;margin-bottom:7px;overflow:hidden}
+.kpi-bar-fill{height:3px;border-radius:2px}
+.kpi-meta{font-size:11px;color:var(--text3);font-weight:500}
+.kpi-meta strong{font-weight:600;color:var(--text2)}
+/* ── GRID ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.g3{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:10px;margin-bottom:10px}
+.g31{display:grid;grid-template-columns:1fr 1.4fr;gap:10px;margin-bottom:10px}
+.g13{display:grid;grid-template-columns:1.4fr 1fr;gap:10px;margin-bottom:10px}
+/* ── CARD ── */
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:18px;box-shadow:var(--sh);margin-bottom:10px}
+.card-hd{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:8px}
+.card-ht{flex:1}
+.card-title{font-size:13.5px;font-weight:700;color:var(--text);letter-spacing:-.2px}
+.card-sub{font-size:11.5px;color:var(--text3);margin-top:2px}
+.card-menu{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--text4);flex-shrink:0}
+.card-menu:hover{background:var(--off2)}
+.card-menu svg{width:14px;height:14px}
+.more-link{font-size:11.5px;font-weight:600;color:var(--red);margin-top:14px;display:inline-flex;align-items:center;gap:4px;cursor:pointer}
+/* ── BADGES ── */
+.badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;display:inline-block;white-space:nowrap;letter-spacing:.02em}
+.b-red{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border)}
+.b-green{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
+.b-amber{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border)}
+.b-blue{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border)}
+.b-purple{background:var(--purple-bg);color:var(--purple);border:1px solid rgba(124,58,237,.2)}
+.b-gray{background:var(--off2);color:var(--text3);border:1px solid var(--border)}
+.b-dark{background:var(--dark);color:#fff}
+.b-live{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);display:inline-flex;align-items:center;gap:4px}
+.b-live::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;flex-shrink:0}
+/* ── TABLES ── */
+.tbl{width:100%;border-collapse:collapse;font-size:12px}
+.tbl th{padding:7px 10px;text-align:left;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text4);border-bottom:2px solid var(--border);white-space:nowrap}
+.tbl td{padding:9px 10px;color:var(--text2);border-bottom:1px solid var(--border);vertical-align:middle;line-height:1.4}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:var(--off)}
+.tbl td.bold{font-weight:600;color:var(--text)}
+.tbl td.mono{font-family:var(--mono);font-weight:600;color:var(--text)}
+/* ── PRIORITY BADGES ── */
+.p-hot{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border);border-radius:20px;padding:2px 8px;font-size:10px;font-weight:700;white-space:nowrap;display:inline-block}
+.p-warm{background:var(--off2);color:var(--text3);border:1px solid var(--border);border-radius:20px;padding:2px 8px;font-size:10px;font-weight:700;white-space:nowrap;display:inline-block}
+.p-closed{background:var(--dark);color:#fff;border-radius:20px;padding:2px 8px;font-size:10px;font-weight:700;white-space:nowrap;display:inline-block}
+/* ── DONUT ── */
+.donut-wrap{position:relative;width:90px;height:90px;flex-shrink:0}
+.donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
+.donut-pct{font-family:var(--mono);font-size:16px;font-weight:700;color:var(--text);line-height:1}
+.donut-lbl{font-size:8.5px;font-weight:700;color:var(--text3);letter-spacing:.07em;text-transform:uppercase}
+.donut-row{display:flex;align-items:center;gap:16px}
+.dl-item{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:12px}
+.dl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dl-name{color:var(--text2);flex:1}
+.dl-val{font-family:var(--mono);font-weight:600;color:var(--text)}
+/* ── PH BIG ── */
+.ph-big{font-family:var(--mono);font-size:32px;font-weight:600;color:var(--text);letter-spacing:-.03em;margin-bottom:4px}
+.ph-trend{font-size:12px;font-weight:600;color:var(--green);display:flex;align-items:center;gap:4px;margin-bottom:3px}
+.ph-comp{font-size:11px;color:var(--text3);margin-bottom:16px}
+/* ── ECE ── */
+.ece-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.ece-stat{background:var(--off);border-radius:var(--r-sm);padding:10px;text-align:center;border:1px solid var(--border)}
+.ece-stat-label{font-size:9.5px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px}
+.ece-stat-value{font-family:var(--mono);font-size:18px;font-weight:600;color:var(--text);line-height:1}
+.ece-stat-value.green{color:var(--green)}
+/* ── FUNNEL STAGES ── */
+.funnel-stages{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:12px}
+.fs{text-align:center;padding:8px 4px;background:var(--off);border-radius:var(--r-sm);border:1px solid var(--border)}
+.fs-label{font-size:9.5px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.fs-value{font-family:var(--mono);font-size:16px;font-weight:600;color:var(--text);line-height:1;margin-bottom:2px}
+.fs-conv{font-size:9.5px;color:var(--text3)}
+.fs-conv.good{color:var(--green);font-weight:600}
+/* ── SEO LIST ── */
+.seo-list{display:flex;flex-direction:column;gap:7px}
+.seo-item{display:flex;align-items:flex-start;gap:9px;padding:9px 11px;border-radius:var(--r-sm);border:1px solid var(--border)}
+.seo-item.done{background:var(--green-bg);border-color:var(--green-border)}
+.seo-item.pend{background:var(--amber-bg);border-color:var(--amber-border)}
+.seo-item.crit{background:var(--red-bg);border-color:var(--red-border)}
+.seo-check{width:16px;height:16px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;margin-top:1px;color:#fff}
+.seo-item.done .seo-check{background:var(--green)}
+.seo-item.pend .seo-check{background:var(--amber)}
+.seo-item.crit .seo-check{background:var(--red)}
+.seo-title{font-size:12px;font-weight:700;color:var(--text);margin-bottom:2px}
+.seo-item.done .seo-title{color:var(--green)}
+.seo-item.crit .seo-title{color:var(--red)}
+.seo-detail{font-size:11px;color:var(--text3);line-height:1.5}
+/* ── BUG LIST ── */
+.bug-item{display:flex;align-items:flex-start;gap:9px;padding:9px 0;border-bottom:1px solid var(--border)}
+.bug-item:last-child{border-bottom:none}
+.bug-ticket{font-family:var(--mono);font-size:10px;font-weight:600;flex-shrink:0;width:76px;padding-top:1px}
+.bug-ticket a{color:var(--red);text-decoration:none}
+.bug-ticket a:hover{text-decoration:underline}
+.bug-item.resolved{opacity:.55}
+.bug-item.resolved .bug-title{text-decoration:line-through;color:var(--text3)}
+.bug-title{font-size:11.5px;font-weight:600;color:var(--text);margin-bottom:2px;line-height:1.4}
+.bug-detail{font-size:11px;color:var(--text3);line-height:1.5}
+/* ── TEAM CARDS ── */
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px}
+.team-card{background:var(--off);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px}
+.tc-name{font-size:12px;font-weight:700;color:var(--text);margin-bottom:2px}
+.tc-company{font-size:10px;color:var(--text3);margin-bottom:8px}
+.tc-arr{background:var(--amber-bg);border:1px solid var(--amber-border);border-radius:4px;padding:4px 8px;font-size:10px;color:var(--amber);font-weight:600;margin-bottom:8px}
+.tc-member{display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid var(--border);font-size:11px}
+.tc-member:last-child{border-bottom:none}
+.tc-role{font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;flex-shrink:0}
+.tc-role.super{background:#111;color:#fff}
+.tc-role.admin{background:var(--off3);color:var(--text3);border:1px solid var(--border2)}
+/* ── CREATIVE CARDS ── */
+.creative-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px}
+.creative-card{background:var(--off);border:1px solid var(--border);border-radius:var(--r-sm);overflow:hidden}
+.creative-thumb{height:75px;display:flex;align-items:center;justify-content:center;padding:8px;position:relative}
+.creative-type{position:absolute;top:6px;left:6px;background:rgba(255,255,255,.18);border-radius:3px;font-size:8px;font-weight:700;color:#fff;padding:2px 5px}
+.creative-headline{font-size:10px;font-weight:700;color:#fff;text-align:center;line-height:1.4}
+.creative-body{padding:8px}
+.creative-badge{margin-bottom:5px}
+.creative-stat{display:flex;justify-content:space-between;font-size:11px;margin-bottom:2px;color:var(--text3)}
+.creative-stat span:last-child{font-weight:600;color:var(--text)}
+/* ── ALERT BAR ── */
+.alert{border-radius:var(--r-sm);padding:10px 14px;font-size:12px;font-weight:500;margin-bottom:12px;display:flex;align-items:flex-start;gap:8px;line-height:1.6}
+.alert.warn{background:var(--amber-bg);border:1px solid var(--amber-border);color:var(--amber)}
+.alert.crit{background:var(--red-bg);border:1px solid var(--red-border);color:var(--red)}
+.alert.ok{background:var(--green-bg);border:1px solid var(--green-border);color:var(--green)}
+.alert.info{background:var(--blue-bg);border:1px solid var(--blue-border);color:var(--blue)}
+/* ── LEGEND ── */
+.legend{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:500;color:var(--text3)}
+.leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+/* ── INFRA STATUS ── */
+.infra-item{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)}
+.infra-item:last-child{border-bottom:none}
+.infra-icon{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;margin-top:1px}
+.infra-icon.ok{background:var(--green-bg);color:var(--green)}
+.infra-icon.warn{background:var(--amber-bg);color:var(--amber)}
+.infra-icon.crit{background:var(--red-bg);color:var(--red)}
+/* ── PROGRESS BAR ── */
+.prog-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)}
+.prog-row:last-child{border-bottom:none}
+.prog-label{font-size:11px;font-weight:600;color:var(--text2);width:180px;flex-shrink:0}
+.prog-track{flex:1;background:var(--off3);border-radius:3px;height:6px;overflow:hidden}
+.prog-fill{height:6px;border-radius:3px}
+.prog-val{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--text);width:50px;text-align:right;flex-shrink:0}
+/* ── SPRINT CARD ── */
+.sprint-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+.sprint-item:last-child{border-bottom:none}
+.sprint-num{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+/* ── MOBILE OVERLAY ── */
+.sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:25;opacity:0;transition:opacity .25s}
+.sb-overlay.show{opacity:1}
+/* ── PM MINI CARDS ── */
+.pm-cards{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.pm-card{background:var(--off);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px}
+.pm-card-label{font-size:10px;font-weight:600;color:var(--text3);margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em}
+.pm-card-value{font-family:var(--mono);font-size:17px;font-weight:600;color:var(--text)}
+.pm-card-sub{font-size:10.5px;color:var(--text3);margin-top:2px}
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .sidebar{position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%);z-index:30}
+  .sidebar.open{transform:translateX(0)}
+  .sb-overlay{display:block}
+  .hamburger{display:flex}
+  .g2,.g3,.g31,.g13{grid-template-columns:1fr}
+  .kpi-row,.kpi-row-5{grid-template-columns:repeat(2,1fr)}
+  .kpi-row-3{grid-template-columns:repeat(2,1fr)}
+  .team-grid{grid-template-columns:repeat(2,1fr)}
+  .creative-grid{grid-template-columns:repeat(2,1fr)}
+  .funnel-stages{grid-template-columns:repeat(3,1fr)}
+  .search-kbd,.period-toggle{display:none}
+}
+@media(max-width:520px){
+  .kpi-row,.kpi-row-3,.kpi-row-5{grid-template-columns:1fr 1fr}
+  .kpi-sparkline{display:none}
+  .view{padding:12px}
+  .topbar{padding:0 12px}
+  .team-grid{grid-template-columns:1fr}
+  .creative-grid{grid-template-columns:1fr 1fr}
+  .tbl th:nth-child(4),.tbl td:nth-child(4){display:none}
+  .ece-stats{grid-template-columns:1fr 1fr}
+}
+</style>
+<script>
+// ─── MOBILE SIDEBAR ───
+function openSidebar(){document.getElementById('sidebar').classList.add('open');document.getElementById('sb-overlay').classList.add('show');document.body.style.overflow='hidden';}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sb-overlay').classList.remove('show');document.body.style.overflow='';}
+
+// ─── NAVIGATION ───
+var activeView = 'overview';
+var chartInstances = {};
+
+function navTo(viewId, btn){
+  // Hide all views
+  document.querySelectorAll('.view').forEach(function(v){v.classList.remove('active');});
+  document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('active');});
+  // Show target
+  var el = document.getElementById('view-'+viewId);
+  if(el) el.classList.add('active');
+  if(btn) btn.classList.add('active');
+  activeView = viewId;
+  // Update topbar title
+  document.getElementById('topbar-view').textContent = btn ? btn.querySelector('.nav-label').textContent : 'Dashboard';
+  // Init charts for this view if not already done
+  if(window.DUXRE) initViewCharts(viewId);
+  // Close sidebar on mobile
+  closeSidebar();
+}
+
+// ─── CHART DEFAULTS ───
+function setChartDefaults(){
+  Chart.defaults.font.family="'Inter',sans-serif";
+  Chart.defaults.color='#8a8680';
+  Chart.defaults.plugins.legend.display=false;
+}
+
+function spark(id,data,color){
+  var c=document.getElementById(id);if(!c)return;
+  if(chartInstances[id]){chartInstances[id].destroy();}
+  chartInstances[id]=new Chart(c,{type:'line',data:{labels:data.map(function(_,i){return i}),datasets:[{data:data,borderColor:color,borderWidth:1.5,fill:true,backgroundColor:color+'14',pointRadius:0,tension:.4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{display:false},y:{display:false}}}});
+}
+
+function mkChart(id, type, data, options){
+  var c=document.getElementById(id);if(!c)return;
+  if(chartInstances[id]){chartInstances[id].destroy();}
+  chartInstances[id]=new Chart(c,{type:type,data:data,options:options||{}});
+}
+
+// ─── MAIN RENDER ───
+function render(){
+  var D=window.DUXRE;
+  if(!D){setTimeout(render,50);return;}
+  setChartDefaults();
+  document.title='Duxre — '+D.meta.title;
+  document.getElementById('date-range-text').textContent='Apr 1 — '+D.meta.updated;
+  document.getElementById('page-sub-overview').textContent=D.meta.period+' · Updated '+D.meta.updated+' · HubSpot · GA4 · Mixpanel · Stripe · Jira';
+  document.getElementById('sb-bug-count').textContent=D.s6_health.bugCount;
+
+  buildOverview(D);
+  buildPipeline(D);
+  buildAcquisition(D);
+  buildAdoption(D);
+  buildPaidMedia(D);
+  buildProductHealth(D);
+  buildEmailEngine(D);
+  buildMarketplace(D);
+  buildSEO(D);
+  buildOutreach(D);
+
+  // Init charts for active view
+  initViewCharts('overview');
+}
+
+function initViewCharts(viewId){
+  var D=window.DUXRE;if(!D)return;
+  if(viewId==='overview'){
+    setTimeout(function(){
+      spark('sp0',[50,54,55,54,58,60,65],'#EE3135');
+      spark('sp1',[6,7,7,8,9,10,13],'#16a34a');
+      spark('sp2',[26,28,29,30,31,32,33],'#ca8a04');
+      spark('sp3',[234,236,238,240,242,245,248],'#2563eb');
+      buildOverviewCharts(D);
+    },50);
+  } else if(viewId==='adoption'){
+    setTimeout(function(){buildAdoptionCharts(D);},50);
+  } else if(viewId==='paid-media'){
+    setTimeout(function(){buildPaidCharts(D);},50);
+  } else if(viewId==='acquisition'){
+    setTimeout(function(){buildAcquisitionCharts(D);},50);
+  } else if(viewId==='email-engine'){
+    setTimeout(function(){buildECECharts(D);},50);
+  }
+}
+
+// ─────────────────────────────────────────
+// OVERVIEW
+// ─────────────────────────────────────────
+function buildOverview(D){
+  var h=D.hero;
+  var icons=['<svg viewBox="0 0 16 16" fill="currentColor"><path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73z"/></svg>','<svg viewBox="0 0 16 16" fill="currentColor"><path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1c.016-.142.045-.286.089-.43.182-.604.675-1.142 1.425-1.514l.094 1.943zm3.68-.004l.094-1.943c.75.372 1.243.91 1.424 1.514.045.144.074.288.09.43zm2.205.004H13a1 1 0 0 1-.293-.707v-.293c0-.35-.1-.674-.276-.963A7 7 0 0 0 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/></svg>','<svg viewBox="0 0 16 16" fill="currentColor"><path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187z"/></svg>','<svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm.5 3h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1 0-1zm0 3h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1 0-1z"/></svg>'];
+  var colors=['red','green','amber','blue'],kcols=['k-red','k-green','k-amber','k-blue'];
+  var barColors=['var(--red)','var(--green)','var(--amber)','var(--blue)'];
+  var el=document.getElementById('overview-kpis');
+  el.innerHTML=h.map(function(t,i){
+    var pct=t.goal?Math.min(100,Math.round(parseInt(t.value)/t.goal*100)):null;
+    var bar=pct?'<div class="kpi-bar"><div class="kpi-bar-fill" style="width:'+pct+'%;background:'+barColors[i]+'"></div></div>':'';
+    var goal=t.goal?'<span class="kpi-goal-txt"> /'+t.goal+'</span>':'';
+    return '<div class="kpi '+kcols[i]+'"><div class="kpi-top"><div class="kpi-icon '+colors[i]+'">'+icons[i]+'</div><canvas class="kpi-sparkline" id="sp'+i+'"></canvas></div><div class="kpi-label">'+t.label+'</div><div class="kpi-value">'+t.value+goal+'</div>'+bar+'<div class="kpi-meta">'+t.sub+'</div></div>';
+  }).join('');
+
+  // Pipeline donut
+  var targets=D.s1_targets;
+  var hot=targets.filter(function(t){return t.priority==='hot'}).length;
+  var warm=targets.filter(function(t){return t.priority==='warm'}).length;
+  var closed=targets.filter(function(t){return t.priority==='closed'}).length;
+  var total=hot+warm+closed;
+  document.getElementById('ph-big').textContent=total+' Deals';
+  document.getElementById('ph-comp').textContent=hot+' hot · '+warm+' warm · '+closed+' closed';
+  document.getElementById('donut-pct').textContent=Math.round(hot/total*100)+'%';
+  document.getElementById('dl-hot').textContent=hot;
+  document.getElementById('dl-warm').textContent=warm;
+  document.getElementById('dl-closed').textContent=closed;
+  var nextDemo=targets.find(function(t){return t.priority==='hot'});
+  document.getElementById('ph-trend').innerHTML='<svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor"><path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/></svg>'+(nextDemo?'Next: '+nextDemo.name+' · '+nextDemo.date:'Active pipeline');
+
+  // Logins
+  var lkpi=D.s5_platform.kpis.find(function(k){return k.label.indexOf('Login')>-1||k.label.indexOf('login')>-1});
+  var pl=D.s5_platform.platformLogins;
+  document.getElementById('login-big').textContent=lkpi?lkpi.value:'1,244';
+  document.getElementById('login-trend').innerHTML='<svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor"><path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/></svg>Dashboard '+pl.dashboard+' · Marketplace '+pl.marketplace;
+  document.getElementById('login-comp').textContent='Microsite '+pl.microsite+' · Mixpanel '+D.meta.updated;
+
+  // ECE
+  var ece=D.ece;
+  document.getElementById('ov-ece-sent').textContent=ece.kpis[0].value;
+  document.getElementById('ov-ece-open').textContent=ece.kpis[2].value;
+  document.getElementById('ov-ece-del').textContent=ece.kpis[1].value;
+
+  // Funnel stages
+  var ga4=D.s2_ga4;
+  document.getElementById('fs-imp').textContent='176K';
+  document.getElementById('fs-vis').textContent=ga4.kpis[0].value;
+  document.getElementById('fs-sig').textContent=D.hero[1].value;
+  document.getElementById('fs-dem').textContent=D.hero[4].value;
+  document.getElementById('fs-cls').textContent='5';
+
+  // Paid mini cards
+  document.getElementById('ov-li-val').textContent=D.linkedin.kpis[0].value;
+  document.getElementById('ov-ga-val').textContent=D.google_ads.kpis[0].value;
+
+  // GA4 totals
+  document.getElementById('ov-ga4-total').textContent=ga4.kpis[0].value;
+  document.getElementById('ov-ga4-ch1').textContent=ga4.byChannel[0].value.toLocaleString();
+  document.getElementById('ov-ga4-ch2').textContent=ga4.byChannel[1].value.toLocaleString();
+  document.getElementById('ov-ga4-ch3').textContent=ga4.byChannel[2].value.toLocaleString();
+}
+
+function buildOverviewCharts(D){
+  // Pipeline donut
+  var targets=D.s1_targets;
+  var hot=targets.filter(function(t){return t.priority==='hot'}).length;
+  var warm=targets.filter(function(t){return t.priority==='warm'}).length;
+  var closed=targets.filter(function(t){return t.priority==='closed'}).length;
+  mkChart('ov-pipe-donut','doughnut',{labels:['Hot','Warm','Closed'],datasets:[{data:[hot,warm,closed],backgroundColor:['#EE3135','#e4e2de','#1a1a1a'],borderWidth:3,borderColor:'#fff',hoverOffset:4}]},{responsive:true,maintainAspectRatio:false,cutout:'72%',plugins:{legend:{display:false}}});
+  // Login line
+  mkChart('ov-login-line','line',{labels:['Apr 1','','','','5','','','','9','','','','13','','','','17','','','','22'],datasets:[{data:[153,162,89,58,189,201,180,145,110,98,87,140,175,196,210,185,200,220,190,175,168],borderColor:'#EE3135',borderWidth:2,fill:true,backgroundColor:'rgba(238,49,53,.06)',pointRadius:0,tension:.4}]},{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{display:false},y:{display:false}}});
+  // ECE bar
+  mkChart('ov-ece-chart','bar',{labels:['C1','C2','C3','C4'],datasets:[{data:[38,41,44,43],backgroundColor:'rgba(238,49,53,.8)',borderRadius:4,borderSkipped:false},{data:[94,96,95,95],backgroundColor:'rgba(22,163,74,.15)',borderRadius:4,borderSkipped:false}]},{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{display:false},y:{display:false}}});
+  // Funnel
+  mkChart('ov-funnel-chart','bar',{labels:['Impressions','Visits','Sign Ups','Demos','Closed'],datasets:[{label:'This Month',data:[176251,3464,13,12,5],backgroundColor:'#EE3135',borderRadius:5,borderSkipped:false},{label:'Last Month',data:[120000,2800,10,8,3],backgroundColor:'#e4e2de',borderRadius:5,borderSkipped:false}]},{responsive:true,maintainAspectRatio:false,scales:{x:{grid:{display:false},ticks:{font:{size:10},color:'#8a8680'}},y:{display:false,beginAtZero:true}},plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return' '+c.dataset.label+': '+c.raw.toLocaleString()}}}}});
+  // Paid media
+  mkChart('ov-paid-chart','bar',{labels:['Apr 1','Apr 5','Apr 8','Apr 12','Apr 15','Apr 18','Apr 22'],datasets:[{label:'LinkedIn',data:[280,320,210,190,310,420,290],backgroundColor:'#EE3135',borderRadius:4,borderSkipped:false},{label:'Google',data:[0,4.79,0,0,0,0,0],backgroundColor:'#2563eb',borderRadius:4,borderSkipped:false}]},{responsive:true,maintainAspectRatio:false,scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{grid:{color:'rgba(0,0,0,.04)'},ticks:{font:{size:10},callback:function(v){return '$'+(v>=1000?(v/1000)+'K':v.toFixed(0))}}}},plugins:{legend:{display:false}}});
+  // GA4
+  var ga4=D.s2_ga4;
+  mkChart('ov-ga4-chart','bar',{labels:ga4.byChannel.map(function(c){return c.label}),datasets:[{data:ga4.byChannel.map(function(c){return c.value}),backgroundColor:['#EE3135','#1a1a1a','#555','#777','#999','#aaa','#bbb','#ccc'],borderRadius:5,borderSkipped:false}]},{indexAxis:'y',responsive:true,maintainAspectRatio:false,scales:{x:{grid:{color:'rgba(0,0,0,.04)'},ticks:{font:{size:10},callback:function(v){return v.toLocaleString()}}},y:{grid:{display:false},ticks:{font:{size:11,weight:'500'},color:'#4a4845'}}},plugins:{tooltip:{callbacks:{label:function(c){return' '+c.raw.toLocaleString()+' users'}}}}});
+}
+
+// ─────────────────────────────────────────
+// PIPELINE
+// ─────────────────────────────────────────
+function buildPipeline(D){
+  // Lead sources
+  var srcEl=document.getElementById('lead-sources');
+  srcEl.innerHTML=D.s1_leadSources.map(function(s){
+    return '<div style="border:1px solid var(--border);border-left:3px solid '+s.color+';border-radius:var(--r-sm);padding:12px 14px"><div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">'+s.label+'</div><div style="font-family:var(--mono);font-size:24px;font-weight:600;color:'+s.color+';line-height:1;margin-bottom:8px">'+s.count.toLocaleString()+'</div><div style="background:var(--off3);border-radius:3px;height:4px"><div style="background:'+s.color+';height:4px;border-radius:3px;width:'+s.pct+'%"></div></div><div style="font-size:10px;color:var(--text3);margin-top:4px">'+s.pct+'% of total</div></div>';
+  }).join('');
+
+  // Pipeline table — all targets
+  var tbl=document.getElementById('pipeline-all-tbody');
+  tbl.innerHTML=D.s1_targets.map(function(t){
+    var pri=t.priority==='hot'?'<span class="p-hot">🔥 Hot</span>':t.priority==='warm'?'<span class="p-warm">● Warm</span>':'<span class="p-closed">✓ Closed</span>';
+    var bg=t.priority==='hot'?'background:rgba(238,49,53,.02)':t.priority==='closed'?'background:var(--off)':'';
+    var dc=t.priority==='hot'?'b-red':t.date==='Active'||t.date==='Converting'||t.date.indexOf('✓')>-1?'b-green':'b-gray';
+    return '<tr style="'+bg+'"><td class="bold">'+t.name+'</td><td>'+t.company+'</td><td>'+pri+'</td><td>'+t.owner+'</td><td>'+t.status+'</td><td><span class="badge '+dc+'">'+t.date+'</span></td></tr>';
+  }).join('');
+  document.getElementById('pipeline-count').textContent=D.s1_targets.filter(function(t){return t.priority!=='closed'}).length+' active';
+}
+
+// ─────────────────────────────────────────
+// ACQUISITION
+// ─────────────────────────────────────────
+function buildAcquisition(D){
+  var ga4=D.s2_ga4;
+  // GA4 KPIs
+  var kpiEl=document.getElementById('ga4-kpis');
+  kpiEl.innerHTML=ga4.kpis.map(function(k){
+    return '<div class="kpi k-red" style="border-top-color:'+k.color+'"><div class="kpi-label">'+k.label+'</div><div class="kpi-value" style="color:'+k.color+';font-size:22px">'+k.value+'</div><div class="kpi-meta">'+k.sub+'</div></div>';
+  }).join('');
+
+  // City table
+  var cityEl=document.getElementById('city-table');
+  cityEl.innerHTML=ga4.byCity.map(function(c){
+    return '<div class="prog-row"><div class="prog-label" style="'+(c.warn?'color:var(--amber)':'')+'">'+c.label+'</div><div class="prog-track"><div class="prog-fill" style="width:'+Math.round(c.value/430*100)+'%;background:'+(c.warn?'var(--amber)':'var(--dark)')+'"></div></div><div class="prog-val">'+c.value+'</div></div>';
+  }).join('');
+
+  // Retention
+  var retEl=document.getElementById('retention-table');
+  retEl.innerHTML=ga4.retention.map(function(r){
+    return '<div class="prog-row"><div class="prog-label">'+r.label+'</div><div class="prog-track"><div class="prog-fill" style="width:'+r.pct+'%;background:'+(r.pct===100?'var(--dark)':'var(--red)')+'"></div></div><div class="prog-val">'+r.pct+'%</div></div>';
+  }).join('');
+
+  // GA4 Properties
+  var propEl=document.getElementById('ga4-properties');
+  propEl.innerHTML=ga4.properties.map(function(p){
+    var c=p.active?'#16a34a':'#b8b5b0';
+    return '<div style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--border);border-left:3px solid '+c+';border-radius:var(--r-sm)"><div style="width:7px;height:7px;border-radius:50%;background:'+c+';flex-shrink:0"></div><div><div style="font-size:11px;font-weight:700;color:var(--text)">'+p.name+'</div><div style="font-size:10px;color:var(--text3)">'+(p.id||'Install pending')+'</div></div></div>';
+  }).join('');
+}
+
+function buildAcquisitionCharts(D){
+  var ga4=D.s2_ga4;
+  mkChart('acq-channel-chart','bar',{labels:ga4.byChannel.map(function(c){return c.label}),datasets:[{data:ga4.byChannel.map(function(c){return c.value}),backgroundColor:['#EE3135','#1a1a1a','#555','#777','#999','#aaa','#bbb','#ccc'],borderRadius:5,borderSkipped:false}]},{indexAxis:'y',responsive:true,maintainAspectRatio:false,scales:{x:{grid:{color:'rgba(0,0,0,.04)'},ticks:{font:{size:11}}},y:{grid:{display:false},ticks:{font:{size:11,weight:'500'},color:'#4a4845'}}},plugins:{tooltip:{callbacks:{label:function(c){return' '+c.raw.toLocaleString()+' users'}}}}});
+}
+
+// ─────────────────────────────────────────
+// ADOPTION (Platform Intelligence)
+// ─────────────────────────────────────────
+function buildAdoption(D){
+  var plat=D.s5_platform;
+  // KPIs
+  var kpiEl=document.getElementById('adoption-kpis');
+  var kColors=['k-red','k-green','k-amber','k-blue'];
+  kpiEl.innerHTML=plat.kpis.map(function(k,i){
+    return '<div class="kpi '+kColors[i]+'"><div class="kpi-label">'+k.label+'</div><div class="kpi-value" style="font-size:22px">'+k.value+'</div><div class="kpi-meta">'+k.sub+'</div></div>';
+  }).join('');
+
+  // Apex teams
+  var teamsEl=document.getElementById('apex-teams');
+  teamsEl.innerHTML=plat.apexTeams.map(function(t){
+    var mems=t.members.map(function(m){return '<div class="tc-member"><span class="tc-role '+(m.role==='Super Admin'?'super':'admin')+'">'+m.role+'</span><span style="font-weight:600">'+m.name+'</span><span style="color:var(--text3);margin-left:auto;font-size:10px">'+m.title+'</span></div>';}).join('');
+    return '<div class="team-card"><div class="tc-name">'+t.name+'</div><div class="tc-company">'+t.company+'</div>'+(t.arr?'<div class="tc-arr">ARR: '+t.arr+'</div>':'')+mems+'</div>';
+  }).join('');
+
+  // Top users
+  var usersEl=document.getElementById('top-users-tbody');
+  usersEl.innerHTML=plat.topUsers.map(function(u){
+    return '<tr><td class="bold">'+u.name+'</td><td>'+u.company+'</td><td style="font-size:11px">'+u.team+'</td><td><span class="badge b-dark">'+u.tier+'</span></td><td class="mono">'+u.dash+'</td><td class="mono">'+u.mkt+'</td><td class="mono" style="color:var(--green);font-size:14px">'+u.total+'</td></tr>';
+  }).join('');
+
+  // ONB Queue
+  var onbEl=document.getElementById('onb-queue-tbody');
+  onbEl.innerHTML=plat.onbQueue.map(function(o){
+    var sc=o.status==='Just Closed'?'b-dark':o.status.indexOf('Scheduled')>-1||o.status.indexOf('Done')>-1?'b-green':'b-amber';
+    return '<tr><td class="bold">'+o.name+'</td><td>'+o.company+'</td><td><span class="badge '+sc+'">'+o.status+'</span></td><td class="bold">'+o.next+'</td></tr>';
+  }).join('');
+}
+
+function buildAdoptionCharts(D){
+  var pl=D.s5_platform.platformLogins;
+  mkChart('adoption-donut','doughnut',{labels:['Dashboard','Microsite','Marketplace'],datasets:[{data:[pl.dashboard,pl.microsite,pl.marketplace],backgroundColor:['#EE3135','#555','#aaa'],borderWidth:3,borderColor:'#fff',hoverOffset:3}]},{responsive:true,maintainAspectRatio:false,cutout:'68%',plugins:{legend:{display:false}}});
+  mkChart('adoption-logins-chart','bar',{labels:['Apr 1','Apr 2','Apr 3','Apr 5','Apr 7','Apr 8','Apr 9','Apr 10','Apr 12','Apr 13','Apr 14','Apr 15','Apr 16','Apr 18','Apr 20','Apr 22'],datasets:[{label:'Dashboard',data:[37,39,30,35,20,23,27,15,7,20,59,26,36,32,17,40],backgroundColor:'#EE3135',borderRadius:2,stack:'s'},{label:'Microsite',data:[44,58,84,14,9,9,5,3,0,2,3,19,20,10,15,25],backgroundColor:'#555',borderRadius:2,stack:'s'},{label:'Marketplace',data:[20,15,13,11,30,16,30,9,4,25,27,13,16,10,14,20],backgroundColor:'#aaa',borderRadius:2,stack:'s'}]},{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',callbacks:{footer:function(i){return'Total: '+i.reduce(function(s,x){return s+x.raw},0);}}}},scales:{x:{grid:{display:false},ticks:{color:'#999',font:{size:10},maxRotation:45},stacked:true},y:{grid:{color:'rgba(0,0,0,.04)'},ticks:{color:'#999',font:{size:10}},stacked:true}}});
+}
+
+// ─────────────────────────────────────────
+// PAID MEDIA
+// ─────────────────────────────────────────
+function buildPaidMedia(D){
+  var li=D.linkedin;
+  var ga=D.google_ads;
+  var meta=D.meta_ads;
+
+  // LinkedIn KPIs
+  var liKpiEl=document.getElementById('li-kpis');
+  liKpiEl.innerHTML=li.kpis.map(function(k){return '<div class="kpi k-blue" style="border-top-color:#0a66c2"><div class="kpi-label">'+k.label+'</div><div class="kpi-value" style="font-size:20px">'+k.value+'</div><div class="kpi-meta">'+k.sub+'</div></div>';}).join('');
+
+  // Creative cards
+  var creativeEl=document.getElementById('li-creatives');
+  creativeEl.innerHTML=li.creatives.map(function(c){
+    var stats=c.visits?'<div class="creative-stat"><span>Visits</span><span>'+c.visits+'</span></div><div class="creative-stat"><span>CTR</span><span style="color:var(--green)">'+c.ctr+'</span></div>':'<div class="creative-stat"><span>Reach</span><span>'+c.reach+'</span></div><div class="creative-stat"><span>CPM</span><span>'+c.cpm+'</span></div>';
+    return '<div class="creative-card"><div class="creative-thumb" style="background:linear-gradient('+c.gradient+')"><div class="creative-type">'+c.type+'</div><div class="creative-headline">'+c.headline.substring(0,45)+'…</div></div><div class="creative-body"><div class="creative-badge"><span class="badge b-dark" style="font-size:9px">'+c.badge+'</span></div>'+stats+'</div></div>';
+  }).join('');
+
+  // Ad set table
+  var adTbl=document.getElementById('li-adsets-tbody');
+  adTbl.innerHTML=li.adSets.map(function(a){
+    return '<tr><td class="bold" style="max-width:180px">'+a.name+'<br><span style="font-size:10px;color:var(--text3);font-weight:400">'+a.type+'</span></td><td><span class="badge b-dark">'+a.status+'</span></td><td class="mono">'+a.spend+'</td><td>'+a.impressions+'</td><td style="color:var(--green);font-weight:700">'+a.visits+'</td><td style="color:var(--green);font-weight:700">'+a.ctr+'</td><td>'+a.cpc+'</td></tr>';
+  }).join('');
+
+  // Google KPIs
+  var gaKpiEl=document.getElementById('ga-kpis');
+  gaKpiEl.innerHTML=ga.kpis.map(function(k){return '<div class="kpi k-red"><div class="kpi-label">'+k.label+'</div><div class="kpi-value" style="font-size:20px;'+(k.amber?'color:var(--amber)':'')+'">'+k.value+'</div><div class="kpi-meta">'+k.sub+'</div></div>';}).join('');
+
+  // Google campaigns
+  var gaCampEl=document.getElementById('ga-campaigns-tbody');
+  gaCampEl.innerHTML=ga.campaigns.map(function(c){return '<tr><td class="bold">'+c.name+'</td><td><span class="badge '+(c.status==='Active'?'b-dark':'b-amber')+'">'+c.status+'</span></td><td class="mono">'+c.spend+'</td><td>'+c.clicks+'</td><td style="color:var(--green);font-weight:700">'+c.ctr+'</td></tr>';}).join('');
+
+  // Meta
+  document.getElementById('meta-status').textContent=meta.status;
+  document.getElementById('meta-leads').textContent=meta.totalLeads.toLocaleString();
+  document.getElementById('meta-campaign').textContent=meta.campaign;
+  document.getElementById('meta-ctr').textContent=meta.ctr;
+  document.getElementById('meta-note').textContent=meta.note;
+}
+
+function buildPaidCharts(D){
+  mkChart('li-spend-chart','bar',{labels:['Apr 1','Apr 5','Apr 8','Apr 12','Apr 15','Apr 18','Apr 22'],datasets:[{label:'LinkedIn',data:[280,320,210,190,310,420,290],backgroundColor:'#0a66c2',borderRadius:4,borderSkipped:false}]},{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{grid:{color:'rgba(0,0,0,.04)'},ticks:{font:{size:10},callback:function(v){return'$'+v}}}}});
+}
+
+// ─────────────────────────────────────────
+// PRODUCT HEALTH
+// ─────────────────────────────────────────
+function buildProductHealth(D){
+  var h=D.s6_health;
+  document.getElementById('ph-bug-count').textContent=h.bugCount+' open bugs';
+  var bugsEl=document.getElementById('bug-list');
+  bugsEl.innerHTML=h.criticalBugs.map(function(b){
+    return '<div class="bug-item'+(b.resolved?' resolved':'')+'"><div class="bug-ticket"><a href="https://onestop.atlassian.net/browse/'+b.ticket+'" target="_blank">'+b.ticket+'</a></div><div><div class="bug-title">'+b.title+'</div><div class="bug-detail">'+b.detail+'</div></div></div>';
+  }).join('');
+  var sprintEl=document.getElementById('sprint-list');
+  sprintEl.innerHTML=h.sprint.map(function(s,i){
+    var bgc=i===0?'background:var(--green-bg);color:var(--green)':i===1?'background:var(--blue-bg);color:var(--blue)':'background:var(--amber-bg);color:var(--amber)';
+    return '<div class="sprint-item"><div class="sprint-num" style="'+bgc+'">'+s.num+'</div><div><div style="font-size:12.5px;font-weight:700;color:var(--text);margin-bottom:3px">'+s.title+'</div><div style="font-size:11.5px;color:var(--text3);line-height:1.6">'+s.detail+'</div></div></div>';
+  }).join('');
+}
+
+// ─────────────────────────────────────────
+// EMAIL ENGINE
+// ─────────────────────────────────────────
+function buildEmailEngine(D){
+  var ece=D.ece;
+  document.getElementById('ece-alert').textContent=ece.alert;
+
+  var kpiEl=document.getElementById('ece-kpis');
+  var kColors=['k-red','k-green','k-green','k-green'];
+  kpiEl.innerHTML=ece.kpis.map(function(k,i){
+    return '<div class="kpi '+kColors[i]+'"><div class="kpi-label">'+k.label+'</div><div class="kpi-value" style="font-size:22px;'+(k.good?'color:var(--green)':'')+'">'+k.value+'</div><div class="kpi-meta">'+k.sub+'</div></div>';
+  }).join('');
+
+  var bugsEl=document.getElementById('ece-bugs-list');
+  bugsEl.innerHTML=ece.bugs.map(function(b){
+    return '<div class="bug-item'+(b.resolved?' resolved':'')+(b.blocker?' style="background:var(--red-bg)"':'')+'"><div class="bug-ticket"><a href="https://onestop.atlassian.net/browse/'+b.ticket+'" target="_blank">'+b.ticket+'</a></div><div><div class="bug-title">'+b.title+'</div><div class="bug-detail">'+b.detail+'</div></div></div>';
+  }).join('');
+}
+
+function buildECECharts(D){
+  var f=D.ece.funnel;
+  mkChart('ece-funnel-chart','bar',{labels:['Requests','Delivered','Opened','Clicked'],datasets:[{data:[f.requests,f.delivered,f.opened,f.clicked],backgroundColor:['#555','#636466','#282828','#EE3135'],borderRadius:4,borderSkipped:false}]},{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(0,0,0,.04)'},ticks:{font:{size:11}}},y:{grid:{display:false},ticks:{font:{size:11,weight:'600'}}}}});
+  mkChart('ece-health-donut','doughnut',{labels:['Delivered','Bounced','Spam'],datasets:[{data:[f.delivered,60,0],backgroundColor:['#636466','#EE3135','#888'],borderWidth:3,borderColor:'#fff',hoverOffset:3}]},{responsive:true,maintainAspectRatio:false,cutout:'68%',plugins:{legend:{display:false}}});
+}
+
+// ─────────────────────────────────────────
+// MARKETPLACE
+// ─────────────────────────────────────────
+function buildMarketplace(D){
+  var mkt=D.s4_marketplace;
+  var kpiEl=document.getElementById('mkt-kpis');
+  var kColors=['k-red','k-blue','k-green','k-amber'];
+  kpiEl.innerHTML=mkt.kpis.map(function(k,i){
+    return '<div class="kpi '+kColors[i]+'"><div class="kpi-label">'+k.label+'</div><div class="kpi-value" style="font-size:22px">'+k.value+'</div><div class="kpi-meta">'+k.sub+'</div></div>';
+  }).join('');
+
+  var listEl=document.getElementById('top-listings-tbody');
+  listEl.innerHTML=mkt.topListings.map(function(l){
+    return '<tr><td class="bold">'+l.name+'</td><td class="mono" style="text-align:right">'+l.views+'</td></tr>';
+  }).join('');
+}
+
+// ─────────────────────────────────────────
+// SEO
+// ─────────────────────────────────────────
+function buildSEO(D){
+  var seo=D.s3_seo;
+  var doneEl=document.getElementById('seo-done-list');
+  doneEl.innerHTML=seo.completed.map(function(item){
+    return '<div class="seo-item done"><div class="seo-check">✓</div><div><div class="seo-title">'+item.title+(item.date?' <span class="badge b-red">'+item.date+'</span>':'')+'</div><div class="seo-detail">'+item.detail+'</div></div></div>';
+  }).join('');
+  var pendEl=document.getElementById('seo-pend-list');
+  pendEl.innerHTML=seo.pending.map(function(item){
+    var cls=item.priority==='red'?'crit':'pend';
+    var sym=item.priority==='red'?'!':'~';
+    return '<div class="seo-item '+cls+'"><div class="seo-check">'+sym+'</div><div><div class="seo-title">'+(item.ticket?item.ticket+' — ':'')+item.title+'</div><div class="seo-detail">'+item.detail+'</div></div></div>';
+  }).join('');
+}
+
+// ─────────────────────────────────────────
+// OUTREACH
+// ─────────────────────────────────────────
+function buildOutreach(D){
+  var o=D.outreach;
+  document.getElementById('vmd-volume').textContent=o.vmd.volume;
+  document.getElementById('vmd-note').textContent=o.vmd.note;
+  document.getElementById('scout-note').textContent=o.scout.note;
+  document.getElementById('avery-note').textContent=o.avery.note;
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  if(typeof Chart!=='undefined'){render();}
+  else{setTimeout(render,200);}
+});
+</script>
+</head>
+<body>
+<div class="sb-overlay" id="sb-overlay" onclick="closeSidebar()"></div>
+<div class="shell">
+
+<!-- ═══ SIDEBAR ═══ -->
+<nav class="sidebar" id="sidebar">
+  <div class="sb-logo">
+    <div class="logo-mark"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="9" height="9" rx="2"/><rect x="13" y="2" width="9" height="9" rx="2"/><rect x="2" y="13" width="9" height="9" rx="2"/><rect x="13" y="13" width="9" height="9" rx="2"/></svg></div>
+    <span class="logo-text">Duxre</span>
+    <span class="logo-badge">REVOPS</span>
+  </div>
+
+  <div class="sb-sec">Overview</div>
+  <div class="sb-nav">
+    <button class="sb-item active" onclick="navTo('overview',this)"><svg class="sb-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 4a.5.5 0 0 1 .5.5V6a.5.5 0 0 1-1 0V4.5A.5.5 0 0 1 8 4M3.732 5.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707M2 10a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 10m9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5m.754-4.246a.39.39 0 0 0-.527-.02L7.547 9.31a.91.91 0 1 0 1.302 1.258l3.434-4.297a.39.39 0 0 0-.029-.518z"/></svg><span class="nav-label">Command Center</span><div class="sb-dot green"></div></button>
+    <button class="sb-item" onclick="navTo('pipeline',this)"><svg class="sb-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 1h6a1 1 0 0 1 1 1v3H4V5a1 1 0 0 1 1-1m-1 5h8v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/></svg><span class="nav-label">Pipeline</span></button>
+    <button class="sb-item" onclick="navTo('acquisition',this)"><svg class="sb-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M0 0h1v15h15v1H0zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07z"/></svg><span class="nav-label">Acquisition</span></button>
+    <button class="sb-item" onclick="navTo('adoption',this)"><svg class="sb-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/></svg><span class="nav-label">Adoption</span></button>
+    <button class="sb-item" onclick="navTo('marketplace',this)"><svg class="sb-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0M1.5 8.5A.5.5 0 0 1 2 9v6h12V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5"/></svg><span class="nav-label">Marketplace</span></button>
+  </div>
+
+  <div class="sb-sec">Paid Media</div>
+  <div class="sb-nav">
+    <button class="sb-item" onclick="navTo('paid-media',this)"><svg class="sb-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/></svg><span class="nav-label">Paid Media</span></button>
+    <button class="sb-item" onclick="navTo('outreach',this)"><svg class="sb-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.6 17.6 0 0 0 4.168 6.608 17.6 17.6 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.68.68 0 0 0-.58-.122l-2.19.547a1.75 1.75 0 0 1-1.657-.459L5.482 8.062a1.75 1.75 0 0 1-.46-1.657l.548-2.19a.68.68 0 0 0-.122-.58z"/></svg><span class="nav-label">Outreach</span></button>
+  </div>
+
+  <div class="sb-sec">Product</div>
+  <div class="sb-nav">
+    <button class="sb-item" onclick="navTo('health',this)"><svg class="sb-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/><path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/></svg><span class="nav-label">Platform Health</span><span class="sb-count red" id="sb-bug-count">36</span></button>
+    <button class="sb-item" onclick="navTo('email-engine',this)"><svg class="sb-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741zM1 11.105l4.708-2.897L1 5.383z"/></svg><span class="nav-label">Email Engine</span><span class="sb-count amber">3 blkr</span></button>
+    <button class="sb-item" onclick="navTo('seo',this)"><svg class="sb-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.414zm-5.242 1.656a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11"/></svg><span class="nav-label">SEO</span></button>
+  </div>
+
+  <div class="sb-sec">Settings</div>
+  <div class="sb-nav">
+    <button class="sb-item"><svg class="sb-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/></svg><span class="nav-label">Team</span></button>
+    <button class="sb-item"><svg class="sb-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8.277.084a.5.5 0 0 0-.554 0l-7.5 5A.5.5 0 0 0 .5 6v10a.5.5 0 0 0 .5.5H15a.5.5 0 0 0 .5-.5V6a.5.5 0 0 0-.223-.416z"/></svg><span class="nav-label">Integrations</span></button>
+    <button class="sb-item"><svg class="sb-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4 4 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4 4 0 0 0-3.203-3.92zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0C11.28 1.56 13 3.58 13 6c0 .88.32 4.2 1.22 6"/></svg><span class="nav-label">Alerts</span><span class="sb-count red">3</span></button>
+  </div>
+
+  <div class="sb-bottom">
+    <div class="sb-user">
+      <div class="sb-av">BF</div>
+      <div><div class="sb-name">Bryan Forester</div><div class="sb-role">VP Revenue Operations</div></div>
+      <div class="sb-plan">Ent</div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ MAIN ═══ -->
+<div class="main">
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <button class="hamburger" onclick="openSidebar()"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h12"/></svg></button>
+    <div class="search-box">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6.5" cy="6.5" r="4.5"/><path d="m10 10 3.5 3.5"/></svg>
+      <input type="text" placeholder="Search metrics, reports, users…">
+      <span class="search-kbd">⌘K</span>
+    </div>
+    <div class="tb-sep"></div>
+    <div class="date-pill">
+      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/></svg>
+      <span id="date-range-text">Apr 2026 MTD</span>
+    </div>
+    <div class="period-toggle">
+      <button class="pt-btn active">MTD</button>
+      <button class="pt-btn">Weekly</button>
+    </div>
+    <div class="tb-action">
+      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4 4 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4 4 0 0 0-3.203-3.92zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0C11.28 1.56 13 3.58 13 6c0 .88.32 4.2 1.22 6"/></svg>
+      <div class="notif-dot"></div>
+    </div>
+    <div class="tb-av">BF</div>
+  </div>
+
+  <div class="content-area">
+
+  <!-- ═══ OVERVIEW ═══ -->
+  <div class="view active" id="view-overview">
+    <div class="page-head">
+      <div class="page-title">Growth Command Center <span class="live-badge"><span class="live-dot"></span>Live</span></div>
+      <div class="page-sub" id="page-sub-overview">Apr 2026 MTD</div>
+    </div>
+    <div class="kpi-row" id="overview-kpis"></div>
+    <div class="g3">
+      <!-- Pipeline Health -->
+      <div class="card">
+        <div class="card-hd"><div class="card-ht"><div class="card-title">Pipeline Health</div><div class="card-sub">Active deals · HubSpot live</div></div><button class="card-menu"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg></button></div>
+        <div class="ph-big" id="ph-big">—</div>
+        <div class="ph-trend" id="ph-trend"></div>
+        <div class="ph-comp" id="ph-comp"></div>
+        <div class="donut-row">
+          <div class="donut-wrap"><canvas id="ov-pipe-donut"></canvas><div class="donut-center"><div class="donut-pct" id="donut-pct">—</div><div class="donut-lbl">Hot</div></div></div>
+          <div style="flex:1">
+            <div class="dl-item"><div class="dl-dot" style="background:#EE3135"></div><div class="dl-name">Hot</div><div class="dl-val" id="dl-hot">—</div></div>
+            <div class="dl-item"><div class="dl-dot" style="background:#e4e2de;border:1px solid #d6d4cf"></div><div class="dl-name">Warm</div><div class="dl-val" id="dl-warm">—</div></div>
+            <div class="dl-item"><div class="dl-dot" style="background:#111"></div><div class="dl-name">Closed</div><div class="dl-val" id="dl-closed">—</div></div>
+          </div>
+        </div>
+        <div class="more-link" onclick="navTo('pipeline',document.querySelector('[onclick*=pipeline]'))">View Pipeline →</div>
+      </div>
+      <!-- Broker Logins -->
+      <div class="card">
+        <div class="card-hd"><div class="card-ht"><div class="card-title">Broker Logins</div><div class="card-sub" id="login-sub-ov">Mixpanel live</div></div><span class="badge b-live">Live</span></div>
+        <div class="ph-big" id="login-big">—</div>
+        <div class="ph-trend" id="login-trend"></div>
+        <div class="ph-comp" id="login-comp" style="margin-bottom:12px"></div>
+        <div style="height:85px;position:relative"><canvas id="ov-login-line"></canvas></div>
+        <div class="more-link" onclick="navTo('adoption',document.querySelectorAll('.sb-item')[3])">View Adoption →</div>
+      </div>
+      <!-- ECE -->
+      <div class="card">
+        <div class="card-hd"><div class="card-ht"><div class="card-title">Email Engine</div><div class="card-sub">Campus 56 · 4 campaigns</div></div></div>
+        <div class="ece-stats">
+          <div class="ece-stat"><div class="ece-stat-label">Sent</div><div class="ece-stat-value" id="ov-ece-sent">—</div></div>
+          <div class="ece-stat"><div class="ece-stat-label">Open Rate</div><div class="ece-stat-value green" id="ov-ece-open">—</div></div>
+          <div class="ece-stat"><div class="ece-stat-label">Delivered</div><div class="ece-stat-value green" id="ov-ece-del">—</div></div>
+        </div>
+        <div style="height:72px;position:relative;margin-bottom:10px"><canvas id="ov-ece-chart"></canvas></div>
+        <div class="more-link" onclick="navTo('email-engine',document.querySelectorAll('.sb-item')[8])">View all campaigns →</div>
+      </div>
+    </div>
+    <!-- Funnel + Paid -->
+    <div class="g31">
+      <div class="card">
+        <div class="card-hd"><div class="card-ht"><div class="card-title">Acquisition Funnel</div><div class="card-sub">First touch → closed · Apr MTD</div></div><div class="legend"><div class="leg-item"><div class="leg-dot" style="background:#EE3135"></div>This Month</div><div class="leg-item"><div class="leg-dot" style="background:#e4e2de"></div>Last</div></div></div>
+        <div class="funnel-stages">
+          <div class="fs"><div class="fs-label">Impr.</div><div class="fs-value" id="fs-imp">—</div><div class="fs-conv">—</div></div>
+          <div class="fs"><div class="fs-label">Visits</div><div class="fs-value" id="fs-vis">—</div><div class="fs-conv">1.97%</div></div>
+          <div class="fs"><div class="fs-label">Sign Ups</div><div class="fs-value" id="fs-sig">—</div><div class="fs-conv good">0.38%</div></div>
+          <div class="fs"><div class="fs-label">Demos</div><div class="fs-value" id="fs-dem">—</div><div class="fs-conv good">92%</div></div>
+          <div class="fs"><div class="fs-label">Closed</div><div class="fs-value" id="fs-cls">—</div><div class="fs-conv good">41.7%</div></div>
+        </div>
+        <div style="height:130px;position:relative"><canvas id="ov-funnel-chart"></canvas></div>
+        <div class="more-link" onclick="navTo('acquisition',document.querySelectorAll('.sb-item')[2])">View Full Funnel →</div>
+      </div>
+      <div class="card">
+        <div class="card-hd"><div class="card-ht"><div class="card-title">Paid Media</div><div class="card-sub">Spend · Apr MTD</div></div><div class="legend"><div class="leg-item"><div class="leg-dot" style="background:#EE3135"></div>LinkedIn</div><div class="leg-item"><div class="leg-dot" style="background:#2563eb"></div>Google</div></div></div>
+        <div style="height:150px;position:relative"><canvas id="ov-paid-chart"></canvas></div>
+        <div class="pm-cards">
+          <div class="pm-card"><div class="pm-card-label">LinkedIn</div><div class="pm-card-value" id="ov-li-val">—</div></div>
+          <div class="pm-card"><div class="pm-card-label">Google</div><div class="pm-card-value" id="ov-ga-val">—</div></div>
+        </div>
+        <div class="more-link" onclick="navTo('paid-media',document.querySelectorAll('.sb-item')[5])">View Paid Report →</div>
+      </div>
+    </div>
+    <!-- GA4 + SEO -->
+    <div class="g2">
+      <div class="card">
+        <div class="card-hd"><div class="card-ht"><div class="card-title">Traffic by Channel</div><div class="card-sub">GA4 live · Apr MTD · <span id="ov-ga4-total">—</span> total users</div></div><span class="badge b-live">GA4</span></div>
+        <div style="height:200px;position:relative"><canvas id="ov-ga4-chart"></canvas></div>
+        <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+          <div style="text-align:center"><div style="font-size:10px;color:var(--text3);font-weight:600;margin-bottom:2px">Paid Social</div><div style="font-family:var(--mono);font-size:16px;font-weight:600" id="ov-ga4-ch1">—</div></div>
+          <div style="text-align:center"><div style="font-size:10px;color:var(--text3);font-weight:600;margin-bottom:2px">Direct</div><div style="font-family:var(--mono);font-size:16px;font-weight:600" id="ov-ga4-ch2">—</div></div>
+          <div style="text-align:center"><div style="font-size:10px;color:var(--text3);font-weight:600;margin-bottom:2px">Email</div><div style="font-family:var(--mono);font-size:16px;font-weight:600" id="ov-ga4-ch3">—</div></div>
+        </div>
+        <div class="more-link" onclick="navTo('acquisition',document.querySelectorAll('.sb-item')[2])">View Acquisition →</div>
+      </div>
+      <div class="card">
+        <div class="card-hd"><div class="card-ht"><div class="card-title">SEO Status</div><div class="card-sub">SSR Phase 1 live · Apr 21</div></div><span class="badge b-amber">1 critical</span></div>
+        <div class="seo-list" id="ov-seo-snippet"></div>
+        <div class="more-link" onclick="navTo('seo',document.querySelectorAll('.sb-item')[9])">View Full SEO →</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PIPELINE ═══ -->
+  <div class="view" id="view-pipeline">
+    <div class="page-head"><div class="page-title">Pipeline Command</div><div class="page-sub">HubSpot live · All active deals · Shermin Manalel</div></div>
+    <div class="card">
+      <div class="card-hd"><div class="card-ht"><div class="card-title">Priority Targets — Apr 2026</div><div class="card-sub">Full pipeline · HubSpot live</div></div><span class="badge b-red" id="pipeline-count">— active</span></div>
+      <table class="tbl"><thead><tr><th>Name</th><th>Company</th><th>Priority</th><th>Owner</th><th>Status</th><th>Date</th></tr></thead><tbody id="pipeline-all-tbody"></tbody></table>
+    </div>
+    <div class="card">
+      <div class="card-hd"><div class="card-ht"><div class="card-title">Lead Source Breakdown</div><div class="card-sub">Total contacts · Apr MTD</div></div></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px" id="lead-sources"></div>
+    </div>
+  </div>
+
+  <!-- ═══ ACQUISITION ═══ -->
+  <div class="view" id="view-acquisition">
+    <div class="page-head"><div class="page-title">Acquisition <span class="live-badge"><span class="live-dot"></span>GA4 Live</span></div><div class="page-sub">Traffic · Funnel · Retention · Apr 2026 MTD</div></div>
+    <div class="kpi-row" id="ga4-kpis"></div>
+    <div class="g2">
+      <div class="card">
+        <div class="card-hd"><div class="card-ht"><div class="card-title">Sessions by Channel</div><div class="card-sub">GA4 · Apr 1–22 2026</div></div><span class="badge b-live">GA4</span></div>
+        <div style="height:240px;position:relative"><canvas id="acq-channel-chart"></canvas></div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-hd"><div class="card-ht"><div class="card-title">Active Users by City</div><div class="card-sub">GA4 · Top 7 cities</div></div></div>
+          <div id="city-table"></div>
+        </div>
+        <div class="card">
+          <div class="card-hd"><div class="card-ht"><div class="card-title">Cohort Retention</div><div class="card-sub">6 weeks · Mar 1 – Apr 22</div></div></div>
+          <div id="retention-table"></div>
+          <div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--border);font-size:11px;color:var(--text3);line-height:1.8">95.5% of users don't return after Week 1. Re-engagement sequences needed.</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-hd"><div class="card-ht"><div class="card-title">GA4 Properties — All Live</div><div class="card-sub">Tracking active across all broker microsites</div></div></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px" id="ga4-properties"></div>
+    </div>
+  </div>
+
+  <!-- ═══ ADOPTION ═══ -->
+  <div class="view" id="view-adoption">
+    <div class="page-head"><div class="page-title">Adoption <span class="live-badge"><span class="live-dot"></span>Mixpanel Live</span></div><div class="page-sub">Platform intelligence · Broker engagement · Apr 2026 MTD</div></div>
+    <div class="kpi-row" id="adoption-kpis"></div>
+    <div class="g2">
+      <div class="card">
+        <div class="card-hd"><div class="card-ht"><div class="card-title">Daily Logins — All Platforms</div><div class="card-sub">Apr 1–22 · Stacked by platform</div></div><div class="legend"><div class="leg-item"><div class="leg-dot" style="background:#EE3135"></div>Dashboard</div><div class="leg-item"><div class="leg-dot" style="background:#555"></div>Microsite</div><div class="leg-item"><div class="leg-dot" style="background:#aaa"></div>Marketplace</div></div></div>
+        <div style="height:200px;position:relative"><canvas id="adoption-logins-chart"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-hd"><div class="card-ht"><div class="card-title">Login Split by Platform</div><div class="card-sub">30-day totals · Mixpanel live</div></div></div>
+        <div style="display:flex;align-items:center;gap:20px;margin-bottom:16px">
+          <div style="position:relative;width:120px;height:120px;flex-shrink:0"><canvas id="adoption-donut"></canvas></div>
+          <div style="flex:1">
+            <div class="prog-row"><div class="prog-label" style="width:110px">Dashboard</div><div class="prog-track"><div class="prog-fill" style="width:100%;background:#EE3135"></div></div><div class="prog-val" id="adp-dash">—</div></div>
+            <div class="prog-row"><div class="prog-label" style="width:110px">Microsite</div><div class="prog-track"><div class="prog-fill" style="width:58%;background:#555"></div></div><div class="prog-val" id="adp-micro">—</div></div>
+            <div class="prog-row"><div class="prog-label" style="width:110px">Marketplace</div><div class="prog-track"><div class="prog-fill" style="width:64%;background:#aaa"></div></div><div class="prog-val" id="adp-mkt">—</div></div>
+          </div>
+        </div>
+        <script>
+        // Inline data binding for adoption platform split
+        document.addEventListener('DOMContentLoaded',function(){
+          function setAdp(){
+            var D=window.DUXRE;if(!D)return setTimeout(setAdp,100);
+            var pl=D.s5_platform.platformLogins;
+            document.getElementById('adp-dash').textContent=pl.dashboard;
+            document.getElementById('adp-micro').textContent=pl.microsite;
+            document.getElementById('adp-mkt').textContent=pl.marketplace;
+          }
+          setAdp();
+        });
+        </script>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-hd"><div class="card-ht"><div class="card-title">Apex Account Roster — 7 Teams · 22 Users</div><div class="card-sub">Verified · CSV + HubSpot</div></div><span class="badge b-dark">Apex</span></div>
+      <div class="team-grid" id="apex-teams"></div>
+    </div>
+    <div class="g2">
+      <div class="card">
+        <div class="card-hd"><div class="card-ht"><div class="card-title">Top Users by Engagement</div><div class="card-sub">Mixpanel live · Apr 22</div></div></div>
+        <table class="tbl"><thead><tr><th>Name</th><th>Company</th><th>Team</th><th>Tier</th><th>Dash</th><th>Mktplace</th><th>Total</th></tr></thead><tbody id="top-users-tbody"></tbody></table>
+      </div>
+      <div class="card">
+        <div class="card-hd"><div class="card-ht"><div class="card-title">ONB Queue + Watch List</div><div class="card-sub">Alina Garmatyuk · Active</div></div><span class="badge b-amber">Action needed</span></div>
+        <table class="tbl"><thead><tr><th>Name</th><th>Company</th><th>Status</th><th>Next</th></tr></thead><tbody id="onb-queue-tbody"></tbody></table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ MARKETPLACE ═══ -->
+  <div class="view" id="view-marketplace">
+    <div class="page-head"><div class="page-title">Marketplace & Listings</div><div class="page-sub">Active listings · Quality program · Apr 2026</div></div>
+    <div class="kpi-row" id="mkt-kpis"></div>
+    <div class="g2">
+      <div class="card">
+        <div class="card-hd"><div class="card-ht"><div class="card-title">Most-Viewed Listings — 30 Days</div><div class="card-sub">Mixpanel · Apr 20 · Live</div></div></div>
+        <table class="tbl"><thead><tr><th>Listing</th><th style="text-align:right">Views</th></tr></thead><tbody id="top-listings-tbody"></tbody></table>
+      </div>
+      <div class="card">
+        <div class="card-hd"><div class="card-ht"><div class="card-title">Listing Quality Program</div><div class="card-sub">5-category scoring · A–D grading</div></div><span class="badge b-amber">Active</span></div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:14px">
+          <div style="background:var(--off);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px;text-align:center"><div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">A — Description</div><div style="font-family:var(--mono);font-size:22px;font-weight:600;color:var(--text)">30 pts</div></div>
+          <div style="background:var(--off);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px;text-align:center"><div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">B — Images</div><div style="font-family:var(--mono);font-size:22px;font-weight:600;color:var(--text)">30 pts</div></div>
+          <div style="background:var(--off);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px;text-align:center"><div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">C — Data</div><div style="font-family:var(--mono);font-size:22px;font-weight:600;color:var(--text)">20 pts</div></div>
+          <div style="background:var(--off);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px;text-align:center"><div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">D — OM</div><div style="font-family:var(--mono);font-size:22px;font-weight:600;color:var(--text)">15 pts</div></div>
+          <div style="background:var(--off);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px;text-align:center"><div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">E — Fresh</div><div style="font-family:var(--mono);font-size:22px;font-weight:600;color:var(--text)">5 pts</div></div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <span class="badge b-green">A · 90–100 · Publish</span>
+          <span class="badge b-blue">B · 75–89 · Minor fixes</span>
+          <span class="badge b-amber">C · 55–74 · Needs work</span>
+          <span class="badge b-red">D · 0–54 · Return to Alina</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PAID MEDIA ═══ -->
+  <div class="view" id="view-paid-media">
+    <div class="page-head"><div class="page-title">Paid Media</div><div class="page-sub">LinkedIn · Google Ads · Meta Ads · Apr 2026 MTD</div></div>
+    <!-- LinkedIn -->
+    <div class="card">
+      <div class="card-hd"><div class="card-ht"><div class="card-title"><svg width="14" height="14" viewBox="0 0 16 16" fill="#0a66c2" style="margin-right:5px;vertical-align:middle"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/></svg>LinkedIn Ads</div><div class="card-sub">5 active ad sets · Apr MTD</div></div><span class="badge b-live">Live Apr 12</span></div>
+      <div class="kpi-row" id="li-kpis"></div>
+      <div class="card-title" style="margin-bottom:12px;font-size:12px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em">Creative Performance</div>
+      <div class="creative-grid" id="li-creatives"></div>
+      <div style="height:160px;position:relative;margin-bottom:14px"><canvas id="li-spend-chart"></canvas></div>
+      <div class="card-title" style="margin-bottom:10px;font-size:12px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em">Ad Set Performance</div>
+      <table class="tbl"><thead><tr><th style="width:28%">Ad Set</th><th>Status</th><th>Spend</th><th>Impressions</th><th>Visits</th><th>CTR</th><th>CPC</th></tr></thead><tbody id="li-adsets-tbody"></tbody></table>
+    </div>
+    <!-- Google Ads -->
+    <div class="card">
+      <div class="card-hd"><div class="card-ht"><div class="card-title">Google Ads</div><div class="card-sub">Early launch · Apr MTD</div></div><span class="badge b-amber">Early</span></div>
+      <div class="alert warn">⚠️ <strong>Google Ads — Early Launch Stage.</strong> One campaign paused · one active with $0 spend. All activity from a single Sunday run. 13 keywords live — not yet serving.</div>
+      <div class="kpi-row" id="ga-kpis"></div>
+      <table class="tbl"><thead><tr><th>Campaign</th><th>Status</th><th>Spend</th><th>Clicks</th><th>CTR</th></tr></thead><tbody id="ga-campaigns-tbody"></tbody></table>
+    </div>
+    <!-- Meta Ads -->
+    <div class="card">
+      <div class="card-hd"><div class="card-ht"><div class="card-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="#1877F2" style="margin-right:5px;vertical-align:middle"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>Meta Ads</div><div class="card-sub" id="meta-note">—</div></div><span class="badge b-live" id="meta-status">Active</span></div>
+      <div class="kpi-row-3">
+        <div class="kpi k-blue" style="border-top-color:#1877F2"><div class="kpi-label">Total Leads All-Time</div><div class="kpi-value" id="meta-leads" style="font-size:22px">—</div><div class="kpi-meta">HubSpot · Facebook lead forms</div></div>
+        <div class="kpi k-blue" style="border-top-color:#1877F2"><div class="kpi-label">Active Campaign</div><div class="kpi-value" id="meta-campaign" style="font-size:13px;line-height:1.3">—</div><div class="kpi-meta">Conversions objective</div></div>
+        <div class="kpi k-blue" style="border-top-color:#1877F2"><div class="kpi-label">Mar 2026 CTR</div><div class="kpi-value" id="meta-ctr" style="font-size:22px">—</div><div class="kpi-meta">45% above industry avg</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ OUTREACH ═══ -->
+  <div class="view" id="view-outreach">
+    <div class="page-head"><div class="page-title">Outreach Intelligence</div><div class="page-sub">VMD · Scout · Avery · Instantly · Apr 2026</div></div>
+    <div class="alert info">📋 <strong>Outreach data pending.</strong> Scout and Avery metrics will populate once LinkedIn Sales Nav API or export is connected. VMD tracked manually below.</div>
+    <div class="kpi-row-3">
+      <div class="kpi k-red"><div class="kpi-top"><div class="kpi-icon red"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.6 17.6 0 0 0 4.168 6.608 17.6 17.6 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.68.68 0 0 0-.58-.122l-2.19.547a1.75 1.75 0 0 1-1.657-.459L5.482 8.062a1.75 1.75 0 0 1-.46-1.657l.548-2.19a.68.68 0 0 0-.122-.58z"/></svg></div></div><div class="kpi-label">VMD — Voicemail Drops</div><div class="kpi-value" id="vmd-volume" style="font-size:22px">—</div><div class="kpi-meta" id="vmd-note">—</div></div>
+      <div class="kpi k-blue"><div class="kpi-top"><div class="kpi-icon blue"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/></svg></div></div><div class="kpi-label">Scout — LinkedIn Connections</div><div class="kpi-value" style="font-size:22px">—</div><div class="kpi-meta" id="scout-note">—</div></div>
+      <div class="kpi k-purple"><div class="kpi-top"><div class="kpi-icon purple"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/></svg></div></div><div class="kpi-label">Avery — AI Follow-Up Bot</div><div class="kpi-value" style="font-size:22px">—</div><div class="kpi-meta" id="avery-note">—</div></div>
+    </div>
+  </div>
+
+  <!-- ═══ PRODUCT HEALTH ═══ -->
+  <div class="view" id="view-health">
+    <div class="page-head"><div class="page-title">Platform Health <span class="badge b-red" id="ph-bug-count">36 open bugs</span></div><div class="page-sub">Jira live · ECE · DTM · DASH · CHILD projects</div></div>
+    <div class="alert warn">⚠ <strong>Dash MVP — May 1 deadline.</strong> Sprint 1 complete Apr 12 · Sprint 2 Apr 13–27 · Demo Apr 27 · North star: Generation-to-Send ≥ 40%.</div>
+    <div class="g13">
+      <div class="card">
+        <div class="card-hd"><div class="card-ht"><div class="card-title">Active Production Bugs</div><div class="card-sub">Jira · Apr 22 · Live pull</div></div><span class="badge b-red">Critical</span></div>
+        <div id="bug-list"></div>
+      </div>
+      <div class="card">
+        <div class="card-hd"><div class="card-ht"><div class="card-title">Dash MVP — Sprint Status</div><div class="card-sub">May 1 hard deadline</div></div><span class="badge b-amber">In Progress</span></div>
+        <div id="sprint-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ EMAIL ENGINE ═══ -->
+  <div class="view" id="view-email-engine">
+    <div class="page-head"><div class="page-title">Email Campaign Engine</div><div class="page-sub">SendGrid · AtData · Unlayer · Apr 2026</div></div>
+    <div class="alert crit" id="ece-alert" style="font-size:11px"></div>
+    <div class="kpi-row" id="ece-kpis"></div>
+    <div class="g2">
+      <div class="card">
+        <div class="card-hd"><div class="card-ht"><div class="card-title">Email Funnel</div><div class="card-sub">Campus 56 · 4 campaigns · Apr MTD</div></div></div>
+        <div style="height:180px;position:relative"><canvas id="ece-funnel-chart"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-hd"><div class="card-ht"><div class="card-title">Delivery Health</div><div class="card-sub">SendGrid · Apr MTD</div></div></div>
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px">
+          <div style="position:relative;width:110px;height:110px;flex-shrink:0"><canvas id="ece-health-donut"></canvas><div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="font-family:var(--mono);font-size:16px;font-weight:700">95.2%</div><div style="font-size:9px;font-weight:600;color:var(--text3);letter-spacing:.05em">DELIVERED</div></div></div>
+          <div style="flex:1">
+            <div class="prog-row"><div class="prog-label">Delivered</div><div class="prog-track"><div class="prog-fill" style="width:95%;background:#282828"></div></div><div class="prog-val">1,975</div></div>
+            <div class="prog-row"><div class="prog-label">Bounced</div><div class="prog-track"><div class="prog-fill" style="width:3%;background:var(--red)"></div></div><div class="prog-val">60</div></div>
+            <div class="prog-row"><div class="prog-label">Spam Reports</div><div class="prog-track"><div class="prog-fill" style="width:0%;background:#888"></div></div><div class="prog-val">0</div></div>
+          </div>
+        </div>
+        <div class="alert ok">✅ <strong>Domain auth solid.</strong> DKIM · SPF · DMARC all passing on email-engine-prod subuser. campaigns@duxre.com verified. 0 spam reports.</div>
+        <div style="margin-top:10px">
+          <div class="infra-item"><div class="infra-icon ok">✓</div><div><div style="font-size:12px;font-weight:700;color:var(--text)">SendGrid — email-engine-prod subuser</div><div style="font-size:11px;color:var(--text3)">DKIM · SPF · DMARC all passing · campaigns@duxre.com verified</div></div></div>
+          <div class="infra-item"><div class="infra-icon ok">✓</div><div><div style="font-size:12px;font-weight:700;color:var(--text)">Event webhook live — Signed</div><div style="font-size:11px;color:var(--text3)">campaigns-api.duxre.com/api/v1/webhooks/sendgrid · Active since Apr 1</div></div></div>
+          <div class="infra-item"><div class="infra-icon ok">✓</div><div><div style="font-size:12px;font-weight:700;color:var(--green)">CAN-SPAM compliant footer — Live</div><div style="font-size:11px;color:var(--text3)">Unlayer → AtData → SendGrid stack live. Resolved Apr 12.</div></div></div>
+          <div class="infra-item"><div class="infra-icon ok">✓</div><div><div style="font-size:12px;font-weight:700;color:var(--text)">ECE-141 — Unsubscribe link bug ✅ Resolved</div><div style="font-size:11px;color:var(--text3)">Closed. New blockers ECE-145 + ECE-146 now active.</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-hd"><div class="card-ht"><div class="card-title">Active ECE Bugs</div><div class="card-sub">Jira · Apr 22 · Live</div></div><span class="badge b-red">Jira</span></div>
+      <div id="ece-bugs-list"></div>
+    </div>
+  </div>
+
+  <!-- ═══ SEO ═══ -->
+  <div class="view" id="view-seo">
+    <div class="page-head"><div class="page-title">SEO</div><div class="page-sub">SSR Phase 1 live · Apr 21 · 234 listings indexed</div></div>
+    <div class="g2">
+      <div class="card"><div class="card-hd"><div class="card-ht"><div class="card-title">✅ Completed</div><div class="card-sub">All resolved and live</div></div></div><div class="seo-list" id="seo-done-list"></div></div>
+      <div class="card"><div class="card-hd"><div class="card-ht"><div class="card-title">🚧 Pending / In Progress</div><div class="card-sub">Action needed</div></div><span class="badge b-red">1 critical</span></div><div class="seo-list" id="seo-pend-list"></div></div>
+    </div>
+  </div>
+
+  </div><!-- /content-area -->
+</div><!-- /main -->
+</div><!-- /shell -->
+
+<script>
+// Wire overview SEO snippet after render
+function wireOverviewSEO(){
+  var D=window.DUXRE;if(!D)return setTimeout(wireOverviewSEO,100);
+  var el=document.getElementById('ov-seo-snippet');if(!el)return;
+  var items=D.s3_seo.completed.slice(0,2).concat(D.s3_seo.pending.slice(0,2));
+  el.innerHTML=items.map(function(item,i){
+    var cls=i<2?'done':item.priority==='red'?'crit':'pend';
+    var sym=i<2?'✓':item.priority==='red'?'!':'~';
+    return '<div class="seo-item '+cls+'"><div class="seo-check">'+sym+'</div><div><div class="seo-title">'+(item.ticket?item.ticket+' — ':'')+item.title+'</div><div class="seo-detail">'+item.detail.substring(0,80)+'…</div></div></div>';
+  }).join('');
+}
+document.addEventListener('DOMContentLoaded',wireOverviewSEO);
+</script>
+<script src="data.js"></script>
+</body>
+</html>
