@@ -448,20 +448,22 @@ function buildOverview(D){
 
 
 
-  // Pipeline donut
+  // Pipeline Health card
   var targets=D.s1_targets;
   var hot=targets.filter(function(t){return t.priority==='hot'}).length;
   var warm=targets.filter(function(t){return t.priority==='warm'}).length;
   var closed=targets.filter(function(t){return t.priority==='closed'}).length;
   var total=hot+warm+closed;
+  var nextDemo=targets.find(function(t){return t.priority==='hot'});
   document.getElementById('ph-big').textContent=total+' Deals';
   document.getElementById('ph-comp').textContent=hot+' hot · '+warm+' warm · '+closed+' closed';
   document.getElementById('donut-pct').textContent=Math.round(hot/total*100)+'%';
   document.getElementById('dl-hot').textContent=hot;
   document.getElementById('dl-warm').textContent=warm;
   document.getElementById('dl-closed').textContent=closed;
-  var nextDemo=targets.find(function(t){return t.priority==='hot'});
-  document.getElementById('ph-trend').innerHTML='<svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor"><path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/></svg>'+(nextDemo?'Next: '+nextDemo.name+' · '+nextDemo.date:'Active pipeline');
+  document.getElementById('ph-trend').innerHTML=
+    '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#12B76A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4"/><path d="M12 16V8"/></svg>'
+    +(nextDemo?'<span>Next: '+nextDemo.name+' · '+nextDemo.date+'</span>':'<span>Active pipeline</span>');
 
   // Logins
   var lkpi=D.s5_platform.kpis.find(function(k){return k.label.indexOf('Login')>-1||k.label.indexOf('login')>-1});
@@ -481,7 +483,7 @@ function buildOverview(D){
   document.getElementById('fs-imp').textContent='176K';
   document.getElementById('fs-vis').textContent=ga4.kpis[0].value;
   document.getElementById('fs-sig').textContent=D.hero[1].value;
-  document.getElementById('fs-dem').textContent=D.hero[4].value;
+  document.getElementById('fs-dem').textContent=D.hero[3].value;
   document.getElementById('fs-cls').textContent='5';
 
   // Paid mini cards
@@ -503,7 +505,7 @@ function buildOverviewCharts(D){
   var hot=targets.filter(function(t){return t.priority==='hot'}).length;
   var warm=targets.filter(function(t){return t.priority==='warm'}).length;
   var closed=targets.filter(function(t){return t.priority==='closed'}).length;
-  mkChart('ov-pipe-donut','doughnut',{labels:['Hot','Warm','Closed'],datasets:[{data:[hot,warm,closed],backgroundColor:['#EE3135','#e4e2de','#1a1a1a'],borderWidth:3,borderColor:'#fff',hoverOffset:4}]},{responsive:true,maintainAspectRatio:false,cutout:'72%',plugins:{legend:{display:false}}});
+  mkChart('ov-pipe-donut','doughnut',{labels:['Hot','Warm','Closed'],datasets:[{data:[hot,warm,closed],backgroundColor:['#EE3135','#BFBEBF','#282828'],borderWidth:4,borderColor:'#fff',hoverOffset:3}]},{responsive:true,maintainAspectRatio:false,cutout:'68%',plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return' '+c.label+': '+c.raw+' deals'}}}}});
   // Login line
   mkChart('ov-login-line','line',{labels:['Apr 1','','','','5','','','','9','','','','13','','','','17','','','','22'],datasets:[{data:[153,162,89,58,189,201,180,145,110,98,87,140,175,196,210,185,200,220,190,175,168],borderColor:'#EE3135',borderWidth:2,fill:true,backgroundColor:'rgba(238,49,53,.06)',pointRadius:0,tension:.4}]},{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{display:false},y:{display:false}}});
   // ECE bar
@@ -829,16 +831,50 @@ document.addEventListener('DOMContentLoaded', function(){
     <div class="g3">
       <!-- Pipeline Health -->
       <div class="card">
-        <div class="card-hd"><div class="card-ht"><div class="card-title">Pipeline Health</div><div class="card-sub">Active deals · HubSpot live</div></div><button class="card-menu"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg></button></div>
-        <div class="ph-big" id="ph-big">—</div>
-        <div class="ph-trend" id="ph-trend"></div>
-        <div class="ph-comp" id="ph-comp"></div>
-        <div class="donut-row">
-          <div class="donut-wrap"><canvas id="ov-pipe-donut"></canvas><div class="donut-center"><div class="donut-pct" id="donut-pct">—</div><div class="donut-lbl">Hot</div></div></div>
+        <!-- Pipeline Health Header -->
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:40px;height:40px;border-radius:10px;background:#FFF1F1;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#EE3135" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div>
+              <div style="font-size:15px;font-weight:700;color:#101828;letter-spacing:-.2px">Pipeline Health</div>
+              <div style="font-size:12px;color:#667085;margin-top:1px">Active deals · HubSpot live</div>
+            </div>
+          </div>
+          <button class="card-menu"><svg viewBox="0 0 16 16" fill="currentColor" width="14" height="14"><path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg></button>
+        </div>
+        <!-- Big deal count -->
+        <div id="ph-big" style="font-family:var(--mono);font-size:42px;font-weight:700;color:#101828;letter-spacing:-.04em;line-height:1;margin-bottom:10px">—</div>
+        <!-- Next deal indicator -->
+        <div id="ph-trend" style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#12B76A;margin-bottom:3px"></div>
+        <!-- Hot / Warm / Closed breakdown -->
+        <div id="ph-comp" style="font-size:12px;color:#667085;margin-bottom:18px"></div>
+        <!-- Donut + Legend -->
+        <div style="display:flex;align-items:center;gap:20px">
+          <div style="position:relative;width:110px;height:110px;flex-shrink:0">
+            <canvas id="ov-pipe-donut"></canvas>
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none">
+              <div id="donut-pct" style="font-family:var(--mono);font-size:20px;font-weight:700;color:#101828;line-height:1">—</div>
+              <div style="font-size:9px;font-weight:700;color:#667085;letter-spacing:.08em;text-transform:uppercase;margin-top:2px">HOT</div>
+            </div>
+          </div>
           <div style="flex:1">
-            <div class="dl-item"><div class="dl-dot" style="background:#EE3135"></div><div class="dl-name">Hot</div><div class="dl-val" id="dl-hot">—</div></div>
-            <div class="dl-item"><div class="dl-dot" style="background:#e4e2de;border:1px solid #d6d4cf"></div><div class="dl-name">Warm</div><div class="dl-val" id="dl-warm">—</div></div>
-            <div class="dl-item"><div class="dl-dot" style="background:#111"></div><div class="dl-name">Closed</div><div class="dl-val" id="dl-closed">—</div></div>
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #EAECF0">
+              <div style="width:10px;height:10px;border-radius:50%;background:#EE3135;flex-shrink:0"></div>
+              <div style="font-size:13px;color:#344054;font-weight:500;flex:1">Hot</div>
+              <div id="dl-hot" style="font-family:var(--mono);font-size:14px;font-weight:700;color:#101828">—</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #EAECF0">
+              <div style="width:10px;height:10px;border-radius:50%;background:#BFBEBF;flex-shrink:0"></div>
+              <div style="font-size:13px;color:#344054;font-weight:500;flex:1">Warm</div>
+              <div id="dl-warm" style="font-family:var(--mono);font-size:14px;font-weight:700;color:#101828">—</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 0">
+              <div style="width:10px;height:10px;border-radius:50%;background:#282828;flex-shrink:0"></div>
+              <div style="font-size:13px;color:#344054;font-weight:500;flex:1">Closed</div>
+              <div id="dl-closed" style="font-family:var(--mono);font-size:14px;font-weight:700;color:#101828">—</div>
+            </div>
           </div>
         </div>
         <div class="more-link" onclick="navTo('pipeline',document.querySelector('[onclick*=pipeline]'))">View Pipeline →</div>
