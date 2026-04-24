@@ -29,11 +29,8 @@ button{font-family:var(--ff);cursor:pointer;border:none;background:none}
 .main{flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden}
 .content-area{flex:1;overflow-y:auto}
 /* ── SIDEBAR ── */
-.sb-logo{padding:18px 18px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #e4e2de}
-.logo-mark{width:28px;height:28px;background:var(--red);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.logo-mark svg{width:14px;height:14px;fill:#fff}
-.logo-text{font-size:14px;font-weight:800;color:#fff;letter-spacing:-.3px}
-.logo-badge{font-size:9px;font-weight:700;background:#f3f3f1;color:#888;padding:2px 6px;border-radius:3px;margin-left:auto;letter-spacing:.05em;border:1px solid #e4e2de}
+.sb-logo{padding:18px 18px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #EAECF0}
+.sb-logo img{max-height:22px;display:block}
 .sb-sec{padding:20px 14px 6px;font-size:10px;font-weight:600;letter-spacing:.08em;color:#9CA3AF;text-transform:uppercase}
 .sb-nav{padding:0 8px}
 .sb-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;color:#555;font-size:12.5px;font-weight:500;width:100%;text-align:left;transition:all .12s;margin-bottom:1px}
@@ -58,17 +55,17 @@ button{font-family:var(--ff);cursor:pointer;border:none;background:none}
 .topbar{height:52px;background:#FFFFFF;border-bottom:1px solid #EAECF0;display:flex;align-items:center;padding:0 20px;gap:10px;flex-shrink:0;z-index:20}
 .hamburger{display:none;width:32px;height:32px;border-radius:7px;align-items:center;justify-content:center;background:var(--off2);border:1px solid var(--border)}
 .hamburger svg{width:16px;height:16px;color:var(--text2)}
-.search-box{display:flex;align-items:center;gap:8px;background:#F9FAFB;border:1px solid #EAECF0;border-radius:8px;padding:7px 12px;min-width:200px;max-width:260px;flex:1}
-.search-box svg{width:13px;height:13px;color:var(--text4);flex-shrink:0}
-.search-box input{background:none;border:none;outline:none;font-family:var(--ff);font-size:12.5px;color:var(--text2);width:100%}
-.search-box input::placeholder{color:var(--text4)}
-.search-kbd{font-family:var(--mono);font-size:9.5px;color:var(--text4);background:var(--off3);border:1px solid var(--border);padding:1px 5px;border-radius:4px;white-space:nowrap}
+
+
+
+
+
 .tb-sep{flex:1}
 .date-pill{display:flex;align-items:center;gap:7px;padding:6px 12px;background:#F9FAFB;border:1px solid #EAECF0;border-radius:8px;font-size:12px;font-weight:500;color:#344054;white-space:nowrap}
 .date-pill svg{width:13px;height:13px;color:var(--text3)}
-.period-toggle{display:flex;background:#F9FAFB;border:1px solid #EAECF0;border-radius:8px;overflow:hidden;padding:3px}
-.pt-btn{padding:4px 12px;font-size:12px;font-weight:500;color:#667085;border-radius:6px}
-.pt-btn.active{background:#FFFFFF;color:#101828;font-weight:600;box-shadow:0 1px 3px rgba(16,24,40,.1)}
+
+
+
 .tb-action{width:32px;height:32px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;background:var(--off);border:1px solid var(--border);position:relative;cursor:pointer}
 .tb-action svg{width:15px;height:15px;color:var(--text3)}
 .notif-dot{width:6px;height:6px;border-radius:50%;background:var(--red);position:absolute;top:5px;right:5px;border:1.5px solid var(--white)}
@@ -262,7 +259,7 @@ button{font-family:var(--ff);cursor:pointer;border:none;background:none}
   .team-grid{grid-template-columns:repeat(2,1fr)}
   .creative-grid{grid-template-columns:repeat(2,1fr)}
   .funnel-stages{grid-template-columns:repeat(3,1fr)}
-  .search-kbd,.period-toggle{display:none}
+  
 }
 @media(max-width:520px){
   .kpi-row,.kpi-row-3,.kpi-row-5{grid-template-columns:1fr 1fr}
@@ -371,9 +368,10 @@ function initViewCharts(viewId){
 // ─────────────────────────────────────────
 function buildOverview(D){
   var h=D.hero;
-  var icons=['<svg viewBox="0 0 16 16" fill="currentColor"><path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73z"/></svg>','<svg viewBox="0 0 16 16" fill="currentColor"><path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1c.016-.142.045-.286.089-.43.182-.604.675-1.142 1.425-1.514l.094 1.943zm3.68-.004l.094-1.943c.75.372 1.243.91 1.424 1.514.045.144.074.288.09.43zm2.205.004H13a1 1 0 0 1-.293-.707v-.293c0-.35-.1-.674-.276-.963A7 7 0 0 0 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/></svg>','<svg viewBox="0 0 16 16" fill="currentColor"><path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187z"/></svg>','<svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm.5 3h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1 0-1zm0 3h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1 0-1z"/></svg>'];
-  var colors=['red','green','amber','blue'],kcols=['k-red','k-green','k-amber','k-blue'];
-  var barColors=['var(--red)','var(--green)','var(--amber)','var(--blue)'];
+  // Icons: Total ARR, Power Brokers, New Ignites, Demos Booked
+  var icons=['<svg viewBox="0 0 16 16" fill="currentColor"><path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73z"/></svg>','<svg viewBox="0 0 16 16" fill="currentColor"><path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187z"/></svg>','<svg viewBox="0 0 16 16" fill="currentColor"><path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1c.016-.142.045-.286.089-.43.182-.604.675-1.142 1.425-1.514l.094 1.943zm3.68-.004l.094-1.943c.75.372 1.243.91 1.424 1.514.045.144.074.288.09.43zm2.205.004H13a1 1 0 0 1-.293-.707v-.293c0-.35-.1-.674-.276-.963A7 7 0 0 0 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/></svg>','<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 4a.5.5 0 0 1 .5.5V6a.5.5 0 0 1-1 0V4.5A.5.5 0 0 1 8 4M3.732 5.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707M2 10a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 10m9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5m.754-4.246a.39.39 0 0 0-.527-.02L7.547 9.31a.91.91 0 1 0 1.302 1.258l3.434-4.297a.39.39 0 0 0-.029-.518z"/></svg>'];
+  var colors=['red','amber','green','blue'],kcols=['k-red','k-amber','k-green','k-blue'];
+  var barColors=['var(--red)','var(--amber)','var(--green)','var(--blue)'];
   var el=document.getElementById('overview-kpis');
   el.innerHTML=h.map(function(t,i){
     var pct=t.goal?Math.min(100,Math.round(parseInt(t.value)/t.goal*100)):null;
@@ -381,6 +379,33 @@ function buildOverview(D){
     var goal=t.goal?'<span class="kpi-goal-txt"> /'+t.goal+'</span>':'';
     return '<div class="kpi '+kcols[i]+'"><div class="kpi-top"><div class="kpi-icon '+colors[i]+'">'+icons[i]+'</div><canvas class="kpi-sparkline" id="sp'+i+'"></canvas></div><div class="kpi-label">'+t.label+'</div><div class="kpi-value">'+t.value+goal+'</div>'+bar+'<div class="kpi-meta">'+t.sub+'</div></div>';
   }).join('');
+
+  // Second row — marketplace tiles
+  var mkt=D.s4_marketplace;
+  var updated=D.meta.updated;
+  var row2El=document.getElementById('overview-kpis-2');
+  if(row2El){
+    var mktIcons=['<svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm.5 3h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1 0-1zm0 3h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1 0-1z"/></svg>','<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-3v-3h-3v3h-3a.5.5 0 0 1-.5-.5V7.207l4.5-4.5 4.5 4.5Z"/></svg>','<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-3v-3h-3v3h-3a.5.5 0 0 1-.5-.5V7.207l4.5-4.5 4.5 4.5Z"/></svg>','<svg viewBox="0 0 16 16" fill="currentColor"><path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/></svg>'];
+    var mktColors=['red','blue','green','purple'];
+    var mktData=[
+      {label:'Active Listings',value:mkt.kpis[0].value,sub:'Live \u00b7 '+updated},
+      {label:'For Sale',value:mkt.kpis[1].value,sub:'Active \u00b7 '+updated},
+      {label:'For Lease',value:mkt.kpis[2].value,sub:'Active \u00b7 '+updated},
+      {label:'New Ignites \u2014 Apr MTD',value:h[2].value,sub:h[2].sub}
+    ];
+    row2El.innerHTML=mktData.map(function(t,i){
+      return '<div class="kpi k-'+mktColors[i]+'"><div class="kpi-top"><div class="kpi-icon '+mktColors[i]+'">'+mktIcons[i]+'</div></div><div class="kpi-label">'+t.label+'</div><div class="kpi-value" style="font-size:22px">'+t.value+'</div><div class="kpi-meta">'+t.sub+'</div></div>';
+    }).join('');
+  }
+
+
+  // Sparklines for top KPI row
+  setTimeout(function(){
+    spark('sp0',[50,54,55,54,58,60,65],'#EE3135');
+    spark('sp1',[26,28,29,30,31,32,33],'#B76E00');
+    spark('sp2',[6,7,7,8,9,10,13],'#12B76A');
+    spark('sp3',[8,8,9,9,10,10,12],'#2563eb');
+  },50);
 
   // Pipeline donut
   var targets=D.s1_targets;
@@ -430,6 +455,14 @@ function buildOverview(D){
 }
 
 function buildOverviewCharts(D){
+  // Sparklines for top KPI row
+  setTimeout(function(){
+    spark('sp0',[50,54,55,54,58,60,65],'#EE3135');
+    spark('sp1',[26,28,29,30,31,32,33],'#B76E00');
+    spark('sp2',[6,7,7,8,9,10,13],'#12B76A');
+    spark('sp3',[8,8,9,9,10,10,12],'#2563eb');
+  },50);
+
   // Pipeline donut
   var targets=D.s1_targets;
   var hot=targets.filter(function(t){return t.priority==='hot'}).length;
@@ -690,9 +723,7 @@ document.addEventListener('DOMContentLoaded', function(){
 <!-- ═══ SIDEBAR ═══ -->
 <nav class="sidebar" id="sidebar">
   <div class="sb-logo">
-    <div class="logo-mark"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="9" height="9" rx="2"/><rect x="13" y="2" width="9" height="9" rx="2"/><rect x="2" y="13" width="9" height="9" rx="2"/><rect x="13" y="13" width="9" height="9" rx="2"/></svg></div>
-    <span class="logo-text">Duxre</span>
-    
+    <img src="https://duxre.com/hubfs/Duxre%20logo.svg" alt="Duxre" style="height:22px;display:block">
   </div>
 
   <div class="sb-sec">Main</div>
@@ -738,21 +769,12 @@ document.addEventListener('DOMContentLoaded', function(){
   <!-- TOPBAR -->
   <div class="topbar">
     <button class="hamburger" onclick="openSidebar()"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h12"/></svg></button>
-    <div class="search-box">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6.5" cy="6.5" r="4.5"/><path d="m10 10 3.5 3.5"/></svg>
-      <input type="text" placeholder="Search metrics, reports, users…">
-      <span class="search-kbd">⌘K</span>
-    </div>
     <div class="tb-sep"></div>
     <div class="date-pill">
       <svg viewBox="0 0 16 16" fill="currentColor"><path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/></svg>
-      <span id="date-range-text">Apr 2026 MTD</span>
+      <span id="date-range-text">Apr 1 — Apr 22, 2026</span>
     </div>
-    <div class="period-toggle">
-      <button class="pt-btn active">MTD</button>
-      <button class="pt-btn">Weekly</button>
-    </div>
-    <div class="tb-action">
+    <div class="tb-action" onclick="navTo('alerts', document.querySelector('[onclick*=alerts]'))" style="cursor:pointer" title="Alerts">
       <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4 4 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4 4 0 0 0-3.203-3.92zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0C11.28 1.56 13 3.58 13 6c0 .88.32 4.2 1.22 6"/></svg>
       <div class="notif-dot"></div>
     </div>
@@ -768,6 +790,7 @@ document.addEventListener('DOMContentLoaded', function(){
       <div class="page-sub" id="page-sub-overview">Apr 2026 MTD</div>
     </div>
     <div class="kpi-row" id="overview-kpis"></div>
+    <div class="kpi-row" id="overview-kpis-2" style="margin-bottom:16px"></div>
     <div class="g3">
       <!-- Pipeline Health -->
       <div class="card">
