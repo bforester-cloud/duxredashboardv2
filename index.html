@@ -367,7 +367,7 @@ function initViewCharts(viewId){
       spark('sp2',[26,28,29,30,31,32,33],'#ca8a04');
       spark('sp3',[234,236,238,240,242,245,248],'#2563eb');
       buildOverviewCharts(D);
-    },50);
+    },150);
   } else if(viewId==='adoption'){
     setTimeout(function(){buildAdoptionCharts(D);},50);
   } else if(viewId==='paid-media'){
@@ -888,7 +888,7 @@ document.addEventListener('DOMContentLoaded', function(){
         <!-- Breakdown -->
         <div id="ph-comp" style="font-size:12px;color:#667085;margin-bottom:14px;font-weight:400"></div>
         <!-- Donut + Legend — flex:1 fills remaining space -->
-        <div style="display:flex;align-items:center;gap:18px;flex:1;min-height:160px">
+        <div style="display:flex;align-items:center;gap:18px;margin-top:4px">
           <div style="position:relative;width:160px;height:160px;flex-shrink:0">
             <canvas id="ov-pipe-donut"></canvas>
             <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none">
@@ -939,7 +939,7 @@ document.addEventListener('DOMContentLoaded', function(){
         <!-- Gray microsite line -->
         <div id="login-comp" style="font-size:12px;color:#667085;margin-bottom:16px;font-weight:400"></div>
         <!-- Big area chart -->
-        <div style="flex:1;position:relative;min-height:130px;margin:0 -4px">
+        <div style="position:relative;height:160px;margin:0 -4px">
           <canvas id="ov-login-line"></canvas>
         </div>
         <div style="height:1px;background:#EAECF0;margin:14px 0 10px"></div>
