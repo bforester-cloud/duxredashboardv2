@@ -6,6 +6,7 @@
 <title>Duxre — Growth Command Center</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -678,8 +679,25 @@ function buildOutreach(D){
 }
 
 document.addEventListener('DOMContentLoaded', function(){
-  if(typeof Chart!=='undefined'){render();}
-  else{setTimeout(render,200);}
+  // Decompress data.js if it uses gzip compression
+  function initDashboard(){
+    if(window.DUXRE_GZ && !window.DUXRE){
+      try{
+        var b64=window.DUXRE_GZ;
+        var bytes=Uint8Array.from(atob(b64),function(c){return c.charCodeAt(0);});
+        var json=pako.inflate(bytes,{to:'string'});
+        window.DUXRE=JSON.parse(json);
+      }catch(e){console.error('Decompress failed:',e);}
+    }
+    if(typeof Chart!=='undefined'){render();}
+    else{setTimeout(function(){if(typeof Chart!=='undefined'){render();}else{setTimeout(render,400);}},200);}
+  }
+  // Wait for pako if needed
+  if(window.DUXRE_GZ && typeof pako==='undefined'){
+    setTimeout(initDashboard,100);
+  } else {
+    initDashboard();
+  }
 });
 </script>
 </head>
