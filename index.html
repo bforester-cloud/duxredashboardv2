@@ -548,7 +548,20 @@ function buildOverviewCharts(D){
   // ECE bar
 
   // Funnel
-  mkChart('ov-funnel-chart','bar',{labels:['Impressions','Visits','Sign Ups','Demos','Closed'],datasets:[{label:'This Month',data:[176251,3464,13,12,5],backgroundColor:'#EE3135',borderRadius:5,borderSkipped:false},{label:'Last Month',data:[120000,2800,10,8,3],backgroundColor:'#e4e2de',borderRadius:5,borderSkipped:false}]},{responsive:true,maintainAspectRatio:false,scales:{x:{grid:{display:false},ticks:{font:{size:10},color:'#8a8680'}},y:{display:false,beginAtZero:true}},plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return' '+c.dataset.label+': '+c.raw.toLocaleString()}}}}});
+  mkChart('ov-funnel-chart','bar',{
+    labels:['Impressions','Visits','Sign Ups','Demos','Closed'],
+    datasets:[
+      {label:'This Month',data:[176251,3464,13,12,5],backgroundColor:'#EE3135',borderRadius:6,borderSkipped:false,barPercentage:0.55,categoryPercentage:0.8},
+      {label:'Last',data:[120000,2800,10,8,3],backgroundColor:'#BFBEBF',borderRadius:6,borderSkipped:false,barPercentage:0.55,categoryPercentage:0.8}
+    ]
+  },{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return' '+c.dataset.label+': '+c.raw.toLocaleString();}}}},
+    scales:{
+      x:{grid:{display:false},border:{display:false},ticks:{font:{size:11,weight:'500'},color:'#667085',padding:6}},
+      y:{display:false,beginAtZero:true,grace:'10%'}
+    }
+  });
   // Paid media
   mkChart('ov-paid-chart','bar',{labels:['Apr 1','Apr 5','Apr 8','Apr 12','Apr 15','Apr 18','Apr 22'],datasets:[{label:'LinkedIn',data:[280,320,210,190,310,420,290],backgroundColor:'#EE3135',borderRadius:4,borderSkipped:false},{label:'Google',data:[0,4.79,0,0,0,0,0],backgroundColor:'#2563eb',borderRadius:4,borderSkipped:false}]},{responsive:true,maintainAspectRatio:false,scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{grid:{color:'rgba(0,0,0,.04)'},ticks:{font:{size:10},callback:function(v){return '$'+(v>=1000?(v/1000)+'K':v.toFixed(0))}}}},plugins:{legend:{display:false}}});
   // GA4
@@ -1002,17 +1015,50 @@ document.addEventListener('DOMContentLoaded', function(){
     </div>
     <!-- Funnel + Paid -->
     <div class="g31">
-      <div class="card">
-        <div class="card-hd"><div class="card-ht"><div class="card-title">Acquisition Funnel</div><div class="card-sub">First touch → closed · Apr MTD</div></div><div class="legend"><div class="leg-item"><div class="leg-dot" style="background:#EE3135"></div>This Month</div><div class="leg-item"><div class="leg-dot" style="background:#e4e2de"></div>Last</div></div></div>
-        <div class="funnel-stages">
-          <div class="fs"><div class="fs-label">Impr.</div><div class="fs-value" id="fs-imp">—</div><div class="fs-conv">—</div></div>
-          <div class="fs"><div class="fs-label">Visits</div><div class="fs-value" id="fs-vis">—</div><div class="fs-conv">1.97%</div></div>
-          <div class="fs"><div class="fs-label">Sign Ups</div><div class="fs-value" id="fs-sig">—</div><div class="fs-conv good">0.38%</div></div>
-          <div class="fs"><div class="fs-label">Demos</div><div class="fs-value" id="fs-dem">—</div><div class="fs-conv good">92%</div></div>
-          <div class="fs"><div class="fs-label">Closed</div><div class="fs-value" id="fs-cls">—</div><div class="fs-conv good">41.7%</div></div>
+      <div class="card" style="display:flex;flex-direction:column">
+        <!-- Funnel Header -->
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px">
+          <div>
+            <div style="font-size:15px;font-weight:700;color:#101828;letter-spacing:-.2px">Acquisition Funnel</div>
+            <div style="font-size:12px;color:#667085;margin-top:2px">First touch → closed · Apr MTD</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;flex-shrink:0">
+            <div style="display:flex;align-items:center;gap:5px;font-size:11.5px;font-weight:500;color:#344054"><div style="width:8px;height:8px;border-radius:50%;background:#EE3135"></div>This Month</div>
+            <div style="display:flex;align-items:center;gap:5px;font-size:11.5px;font-weight:500;color:#98a2b3"><div style="width:8px;height:8px;border-radius:50%;background:#BFBEBF"></div>Last</div>
+          </div>
         </div>
-        <div style="height:130px;position:relative"><canvas id="ov-funnel-chart"></canvas></div>
-        <div class="more-link" onclick="navTo('acquisition',document.querySelectorAll('.sb-item')[2])">View Full Funnel →</div>
+        <!-- Five stat boxes -->
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px">
+          <div style="border:1px solid #EAECF0;border-radius:10px;padding:10px 12px">
+            <div style="font-size:9.5px;font-weight:600;color:#98a2b3;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">IMPR.</div>
+            <div id="fs-imp" style="font-family:var(--mono);font-size:20px;font-weight:700;color:#101828;line-height:1;margin-bottom:3px">—</div>
+            <div style="font-size:10px;color:#98a2b3">—</div>
+          </div>
+          <div style="border:1px solid #EAECF0;border-radius:10px;padding:10px 12px">
+            <div style="font-size:9.5px;font-weight:600;color:#98a2b3;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">VISITS</div>
+            <div id="fs-vis" style="font-family:var(--mono);font-size:20px;font-weight:700;color:#101828;line-height:1;margin-bottom:3px">—</div>
+            <div style="font-size:10px;color:#667085">1.97%</div>
+          </div>
+          <div style="border:1px solid #EAECF0;border-radius:10px;padding:10px 12px">
+            <div style="font-size:9.5px;font-weight:600;color:#98a2b3;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">SIGN UPS</div>
+            <div id="fs-sig" style="font-family:var(--mono);font-size:20px;font-weight:700;color:#101828;line-height:1;margin-bottom:3px">—</div>
+            <div style="font-size:10px;color:#12B76A;font-weight:600">0.38%</div>
+          </div>
+          <div style="border:1px solid #EAECF0;border-radius:10px;padding:10px 12px">
+            <div style="font-size:9.5px;font-weight:600;color:#98a2b3;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">DEMOS</div>
+            <div id="fs-dem" style="font-family:var(--mono);font-size:20px;font-weight:700;color:#101828;line-height:1;margin-bottom:3px">—</div>
+            <div style="font-size:10px;color:#12B76A;font-weight:600">92%</div>
+          </div>
+          <div style="border:1px solid #EAECF0;border-radius:10px;padding:10px 12px">
+            <div style="font-size:9.5px;font-weight:600;color:#98a2b3;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">CLOSED</div>
+            <div id="fs-cls" style="font-family:var(--mono);font-size:20px;font-weight:700;color:#101828;line-height:1;margin-bottom:3px">—</div>
+            <div style="font-size:10px;color:#12B76A;font-weight:600">41.7%</div>
+          </div>
+        </div>
+        <!-- Grouped bar chart -->
+        <div style="flex:1;position:relative;min-height:140px"><canvas id="ov-funnel-chart"></canvas></div>
+        <div class="more-link" style="margin-top:14px" onclick="navTo('acquisition',document.querySelectorAll('.sb-item')[2])">View Full Funnel →</div>
+      </div>
       </div>
       <div class="card">
         <div class="card-hd"><div class="card-ht"><div class="card-title">Paid Media</div><div class="card-sub">Spend · Apr MTD</div></div><div class="legend"><div class="leg-item"><div class="leg-dot" style="background:#EE3135"></div>LinkedIn</div><div class="leg-item"><div class="leg-dot" style="background:#2563eb"></div>Google</div></div></div>
