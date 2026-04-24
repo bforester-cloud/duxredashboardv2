@@ -479,6 +479,15 @@ function buildOverview(D){
   document.getElementById('ov-ece-sent').textContent=ece.kpis[0].value;
   document.getElementById('ov-ece-open').textContent=ece.kpis[2].value;
   document.getElementById('ov-ece-del').textContent=ece.kpis[1].value;
+  // Funnel counts
+  if(document.getElementById('ece-f-sent')) document.getElementById('ece-f-sent').textContent=ece.funnel.requests.toLocaleString();
+  if(document.getElementById('ece-f-del')) document.getElementById('ece-f-del').textContent=ece.funnel.delivered.toLocaleString();
+  if(document.getElementById('ece-f-open')) document.getElementById('ece-f-open').textContent=ece.funnel.opened.toLocaleString();
+  // Progress bars
+  var sentTotal=ece.funnel.requests||2074;
+  if(document.getElementById('ece-b-sent')) document.getElementById('ece-b-sent').style.width='100%';
+  if(document.getElementById('ece-b-del')) document.getElementById('ece-b-del').style.width=Math.round(ece.funnel.delivered/sentTotal*100)+'%';
+  if(document.getElementById('ece-b-open')) document.getElementById('ece-b-open').style.width=Math.round(ece.funnel.opened/sentTotal*100)+'%';
 
   // Funnel stages
   var ga4=D.s2_ga4;
@@ -537,7 +546,7 @@ function buildOverviewCharts(D){
     layout:{padding:{left:0,right:0,top:8,bottom:0}}
   });
   // ECE bar
-  mkChart('ov-ece-chart','bar',{labels:['C1','C2','C3','C4'],datasets:[{data:[38,41,44,43],backgroundColor:'rgba(238,49,53,.8)',borderRadius:4,borderSkipped:false},{data:[94,96,95,95],backgroundColor:'rgba(22,163,74,.15)',borderRadius:4,borderSkipped:false}]},{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{display:false},y:{display:false}}});
+
   // Funnel
   mkChart('ov-funnel-chart','bar',{labels:['Impressions','Visits','Sign Ups','Demos','Closed'],datasets:[{label:'This Month',data:[176251,3464,13,12,5],backgroundColor:'#EE3135',borderRadius:5,borderSkipped:false},{label:'Last Month',data:[120000,2800,10,8,3],backgroundColor:'#e4e2de',borderRadius:5,borderSkipped:false}]},{responsive:true,maintainAspectRatio:false,scales:{x:{grid:{display:false},ticks:{font:{size:10},color:'#8a8680'}},y:{display:false,beginAtZero:true}},plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return' '+c.dataset.label+': '+c.raw.toLocaleString()}}}}});
   // Paid media
@@ -937,14 +946,57 @@ document.addEventListener('DOMContentLoaded', function(){
       </div>
       <!-- ECE -->
       <div class="card">
-        <div class="card-hd"><div class="card-ht"><div class="card-title">Email Engine</div><div class="card-sub">Campus 56 · 4 campaigns</div></div></div>
-        <div class="ece-stats">
-          <div class="ece-stat"><div class="ece-stat-label">Sent</div><div class="ece-stat-value" id="ov-ece-sent">—</div></div>
-          <div class="ece-stat"><div class="ece-stat-label">Open Rate</div><div class="ece-stat-value green" id="ov-ece-open">—</div></div>
-          <div class="ece-stat"><div class="ece-stat-label">Delivered</div><div class="ece-stat-value green" id="ov-ece-del">—</div></div>
+        <!-- Email Engine Header -->
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:40px;height:40px;border-radius:10px;background:#FFF1F1;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#EE3135" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            </div>
+            <div>
+              <div style="font-size:15px;font-weight:700;color:#101828;letter-spacing:-.2px">Email Engine</div>
+              <div style="font-size:12px;color:#667085;margin-top:1px">Campus 56 · 4 campaigns</div>
+            </div>
+          </div>
         </div>
-        <div style="height:72px;position:relative;margin-bottom:10px"><canvas id="ov-ece-chart"></canvas></div>
-        <div class="more-link" onclick="navTo('email-engine',document.querySelectorAll('.sb-item')[8])">View all campaigns →</div>
+        <!-- Three stat boxes -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px">
+          <div style="border:1px solid #EAECF0;border-radius:10px;padding:12px 14px">
+            <div style="font-size:10px;font-weight:600;color:#98a2b3;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">Sent</div>
+            <div id="ov-ece-sent" style="font-family:var(--mono);font-size:22px;font-weight:700;color:#101828;line-height:1">—</div>
+          </div>
+          <div style="border:1px solid #EAECF0;border-radius:10px;padding:12px 14px">
+            <div style="font-size:10px;font-weight:600;color:#98a2b3;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">Open Rate</div>
+            <div id="ov-ece-open" style="font-family:var(--mono);font-size:22px;font-weight:700;color:#12B76A;line-height:1">—</div>
+          </div>
+          <div style="border:1px solid #EAECF0;border-radius:10px;padding:12px 14px">
+            <div style="font-size:10px;font-weight:600;color:#98a2b3;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">Delivered</div>
+            <div id="ov-ece-del" style="font-family:var(--mono);font-size:22px;font-weight:700;color:#12B76A;line-height:1">—</div>
+          </div>
+        </div>
+        <!-- Email funnel with progress bars -->
+        <div>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px">
+            <div style="width:32px;height:32px;border-radius:50%;background:#EAFBF2;border:1.5px solid #a6f4c5;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#12B76A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div>
+            <div style="font-size:13px;font-weight:600;color:#344054;flex:1">Sent</div>
+            <div id="ece-f-sent" style="font-family:var(--mono);font-size:13px;font-weight:700;color:#101828">2,074</div>
+          </div>
+          <div style="background:#EAECF0;border-radius:4px;height:6px;margin-bottom:6px;overflow:hidden"><div style="height:6px;border-radius:4px;background:#12B76A;width:100%"></div></div>
+          <div style="padding:3px 0 3px 14px;color:#d0d5dd;font-size:13px">&#8595;</div>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px">
+            <div style="width:32px;height:32px;border-radius:50%;background:#EAFBF2;border:1.5px solid #a6f4c5;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#12B76A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+            <div style="font-size:13px;font-weight:600;color:#344054;flex:1">Delivered</div>
+            <div id="ece-f-del" style="font-family:var(--mono);font-size:13px;font-weight:700;color:#101828">1,975</div>
+          </div>
+          <div style="background:#EAECF0;border-radius:4px;height:6px;margin-bottom:6px;overflow:hidden"><div style="height:6px;border-radius:4px;background:#12B76A;width:95%"></div></div>
+          <div style="padding:3px 0 3px 14px;color:#d0d5dd;font-size:13px">&#8595;</div>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px">
+            <div style="width:32px;height:32px;border-radius:50%;background:#EAFBF2;border:1.5px solid #a6f4c5;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#12B76A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+            <div style="font-size:13px;font-weight:600;color:#344054;flex:1">Opened</div>
+            <div id="ece-f-open" style="font-family:var(--mono);font-size:13px;font-weight:700;color:#101828">886</div>
+          </div>
+          <div style="background:#EAECF0;border-radius:4px;height:6px;margin-bottom:16px;overflow:hidden"><div style="height:6px;border-radius:4px;background:#12B76A;width:43%"></div></div>
+        </div>
+        <div class="more-link" style="margin-top:0" onclick="navTo('email-engine',document.querySelectorAll('.sb-item')[8])">View all campaigns →</div>
       </div>
     </div>
     <!-- Funnel + Paid -->
