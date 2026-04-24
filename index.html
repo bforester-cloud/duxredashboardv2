@@ -52,24 +52,24 @@ button{font-family:var(--ff);cursor:pointer;border:none;background:none}
 .sb-role{font-size:11px;color:#667085;margin-top:1px;font-weight:400}
 .sb-plan{margin-left:auto;font-size:8.5px;font-weight:700;padding:2px 6px;border-radius:3px;background:rgba(238,49,53,.2);color:var(--red);border:1px solid rgba(238,49,53,.3)}
 /* ── TOPBAR ── */
-.topbar{height:52px;background:#FFFFFF;border-bottom:1px solid #EAECF0;display:flex;align-items:center;padding:0 20px;gap:10px;flex-shrink:0;z-index:20}
-.hamburger{display:none;width:32px;height:32px;border-radius:7px;align-items:center;justify-content:center;background:var(--off2);border:1px solid var(--border)}
-.hamburger svg{width:16px;height:16px;color:var(--text2)}
+.topbar{height:52px;background:#101828;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;padding:0 20px;gap:10px;flex-shrink:0;z-index:20}
+.hamburger{display:none;width:32px;height:32px;border-radius:7px;align-items:center;justify-content:center;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15)}
+.hamburger svg{width:16px;height:16px;color:rgba(255,255,255,.8)}
 
 
 
 
 
 .tb-sep{flex:1}
-.date-pill{display:flex;align-items:center;gap:7px;padding:6px 12px;background:#F9FAFB;border:1px solid #EAECF0;border-radius:8px;font-size:12px;font-weight:500;color:#344054;white-space:nowrap}
-.date-pill svg{width:13px;height:13px;color:var(--text3)}
+.date-pill{display:flex;align-items:center;gap:7px;padding:6px 12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:8px;font-size:12px;font-weight:500;color:rgba(255,255,255,.85);white-space:nowrap}
+.date-pill svg{width:13px;height:13px;color:rgba(255,255,255,.5)}
 
 
 
-.tb-action{width:32px;height:32px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;background:var(--off);border:1px solid var(--border);position:relative;cursor:pointer}
-.tb-action svg{width:15px;height:15px;color:var(--text3)}
-.notif-dot{width:6px;height:6px;border-radius:50%;background:var(--red);position:absolute;top:5px;right:5px;border:1.5px solid var(--white)}
-.tb-av{width:28px;height:28px;border-radius:7px;background:var(--dark);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff}
+.tb-action{width:32px;height:32px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);position:relative;cursor:pointer}
+.tb-action svg{width:15px;height:15px;color:rgba(255,255,255,.8)}
+.notif-dot{width:6px;height:6px;border-radius:50%;background:#EE3135;position:absolute;top:5px;right:5px;border:1.5px solid #101828}
+.tb-av{width:28px;height:28px;border-radius:7px;background:#EE3135;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;border:1.5px solid rgba(255,255,255,.2)}
 /* ── VIEWS ── */
 .view{display:none;padding:24px;max-width:1400px}
 .view.active{display:block}
@@ -747,7 +747,7 @@ document.addEventListener('DOMContentLoaded', function(){
 <!-- ═══ SIDEBAR ═══ -->
 <nav class="sidebar" id="sidebar">
   <div class="sb-logo">
-    <img src="https://duxre.com/hubfs/Duxre%20logo.svg" alt="Duxre" style="height:22px;display:block">
+    <img src="https://duxre.com/hubfs/Duxre%20logo.svg" alt="Duxre" style="height:22px;display:block;filter:brightness(0) invert(1)">
   </div>
 
   <div class="sb-sec">Main</div>
