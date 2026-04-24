@@ -396,18 +396,27 @@ function buildOverview(D){
   var row2El=document.getElementById('overview-kpis-2');
   if(row2El){
     var mktIcons=['<svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm.5 3h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1 0-1zm0 3h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1 0-1z"/></svg>','<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-3v-3h-3v3h-3a.5.5 0 0 1-.5-.5V7.207l4.5-4.5 4.5 4.5Z"/></svg>','<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-3v-3h-3v3h-3a.5.5 0 0 1-.5-.5V7.207l4.5-4.5 4.5 4.5Z"/></svg>','<svg viewBox="0 0 16 16" fill="currentColor"><path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/></svg>'];
-    var mktColors=['red','dark','mid','green'];
+    var mktColors=['red','dark','mid','gray'];
+    var listVal=parseInt(mkt.kpis[0].value)||248;
+    var listGoal=300;
+    var listRemain=listGoal-listVal;
+    var listPct=Math.round(listVal/listGoal*100);
     var mktData=[
-      {label:'Active Listings',value:mkt.kpis[0].value,sub:'Live \u00b7 '+updated},
+      {label:'Active Listings',value:mkt.kpis[0].value,goal:300,sub:'Live \u00b7 '+updated+' \u00b7 '+listPct+'% to goal'},
       {label:'For Sale',value:mkt.kpis[1].value,sub:'Active \u00b7 '+updated},
       {label:'For Lease',value:mkt.kpis[2].value,sub:'Active \u00b7 '+updated},
-      {label:'New Ignites \u2014 Apr MTD',value:h[2].value,sub:h[2].sub}
+      {label:'Listings to Goal',value:listRemain,sub:listVal+' of '+listGoal+' \u00b7 Need '+listRemain+' more to hit target',goal:null}
     ];
     row2El.innerHTML=mktData.map(function(t,i){
+      var pct=t.goal?Math.min(100,Math.round(parseInt(t.value)/t.goal*100)):null;
+      var barColors2=['var(--red)','#282828','#4C4C4E','var(--green)'];
+      var bar=pct?'<div class="kpi-bar"><div class="kpi-bar-fill" style="width:'+pct+'%;background:'+barColors2[i]+'"></div></div>':'';
+      var goal=t.goal?'<span class="kpi-goal-txt"> /'+t.goal+'</span>':'';
       return '<div class="kpi k-'+mktColors[i]+'">'
         +'<div class="kpi-top"><div class="kpi-icon '+mktColors[i]+'">'+mktIcons[i]+'</div></div>'
         +'<div class="kpi-label">'+t.label+'</div>'
-        +'<div class="kpi-value">'+t.value+'</div>'
+        +'<div class="kpi-value">'+t.value+goal+'</div>'
+        +bar
         +'<div class="kpi-meta">'+t.sub+'</div>'
         +'</div>';
     }).join('');
