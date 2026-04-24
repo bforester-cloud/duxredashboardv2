@@ -895,6 +895,22 @@ document.addEventListener('DOMContentLoaded', function(){
         <div style="display:flex;align-items:center;gap:18px;margin-top:4px">
           <div style="position:relative;width:160px;height:160px;flex-shrink:0">
             <canvas id="ov-pipe-donut" width="160" height="160" style="display:block"></canvas>
+            <script>
+            (function(){
+              function tryDonut(){
+                var el=document.getElementById('ov-pipe-donut');
+                var D=window.DUXRE;
+                if(!el||!D||typeof Chart==='undefined'){setTimeout(tryDonut,100);return;}
+                if(el._chartInst){el._chartInst.destroy();}
+                var targets=D.s1_targets;
+                var hot=targets.filter(function(t){return t.priority==='hot'}).length;
+                var warm=targets.filter(function(t){return t.priority==='warm'}).length;
+                var closed=targets.filter(function(t){return t.priority==='closed'}).length;
+                el._chartInst=new Chart(el,{type:'doughnut',data:{labels:['Hot','Warm','Closed'],datasets:[{data:[hot,warm,closed],backgroundColor:['#EE3135','#BFBEBF','#282828'],borderWidth:4,borderColor:'#fff',hoverOffset:3}]},options:{responsive:false,maintainAspectRatio:false,cutout:'68%',plugins:{legend:{display:false}}}});
+              }
+              document.addEventListener('DOMContentLoaded',function(){setTimeout(tryDonut,200);});
+            })();
+            </script>
             <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none">
               <div id="donut-pct" style="font-family:var(--mono);font-size:24px;font-weight:700;color:#101828;line-height:1">—</div>
               <div style="font-size:10px;font-weight:700;color:#667085;letter-spacing:.08em;text-transform:uppercase;margin-top:3px">HOT</div>
@@ -945,6 +961,22 @@ document.addEventListener('DOMContentLoaded', function(){
         <!-- Big area chart -->
         <div style="position:relative;height:160px;width:100%;margin:0 -4px">
           <canvas id="ov-login-line" style="display:block;width:100%;height:160px"></canvas>
+          <script>
+          (function(){
+            function tryLogin(){
+              var el=document.getElementById('ov-login-line');
+              if(!el||typeof Chart==='undefined'){setTimeout(tryLogin,100);return;}
+              if(el._chartInst){el._chartInst.destroy();}
+              var g=el.getContext('2d').createLinearGradient(0,0,0,160);
+              g.addColorStop(0,'rgba(238,49,53,.18)');g.addColorStop(1,'rgba(238,49,53,.01)');
+              el._chartInst=new Chart(el,{type:'line',data:{
+                labels:['','','','','','','','','','','','','','','','','','','','','',''],
+                datasets:[{data:[153,162,89,58,189,201,180,145,110,98,87,140,175,196,210,185,200,220,190,175,190,168],borderColor:'#EE3135',borderWidth:2.5,fill:true,backgroundColor:g,pointRadius:0,tension:.45}]
+              },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},scales:{x:{display:false},y:{display:false,beginAtZero:false}},layout:{padding:0}}});
+            }
+            document.addEventListener('DOMContentLoaded',function(){setTimeout(tryLogin,200);});
+          })();
+          </script>
         </div>
         <div style="height:1px;background:#EAECF0;margin:14px 0 10px"></div>
         <div class="more-link" style="margin-top:0" onclick="navTo('adoption',document.querySelectorAll('.sb-item')[3])">View Adoption →</div>
