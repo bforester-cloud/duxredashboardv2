@@ -5,11 +5,10 @@ meta: {
   period: "April 2026 MTD"
 },
 hero: [
-  { label: "Total Apex ARR", value: "$65K", sub: "7 teams · 22 users", color: "#EE3135" },
-  { label: "New Ignites MTD", value: "13", sub: "April 2026 · 3 added Apr 21 via email/LinkedIn/VMD", color: "#282828" },
-  { label: "Power Brokers", value: "33", goal: 50, sub: "4 Apex · 29 Ignite confirmed", color: "#EE3135" },
-  { label: "Active Listings", value: "248", goal: 300, sub: "82.7% to goal · For Sale 158 · For Lease 90", color: "#282828" },
-  { label: "Demos Booked MTD", value: "12", goal: 20, sub: "60% to goal · Virgilio Fernandez added Apr 21", color: "#EE3135" }
+  { label: "Total ARR", value: "$65K", sub: "7 Apex teams · 22 users · Stripe live", color: "#EE3135" },
+  { label: "Power Brokers", value: "33", goal: 50, sub: "4 Apex · 29 Ignite confirmed · 66% to goal", color: "#EE3135" },
+  { label: "New Ignites MTD", value: "13", sub: "April 2026 · 3 added Apr 21 via outreach", color: "#282828" },
+  { label: "Demos Booked MTD", value: "12", goal: 20, sub: "60% to goal · Apr 2026 MTD", color: "#EE3135" }
 ],
 s1_targets: [
   { name: "Joe Cesta", company: "CBRE Capital Markets", priority: "hot", owner: "Shermin", status: "Demo Apr 27 · BlackRock client · Sean invited · confirmed", date: "Apr 27" },
