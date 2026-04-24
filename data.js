@@ -7,7 +7,7 @@ meta: {
 hero: [
   { label: "Total ARR", value: "$65K", sub: "7 Apex teams · 22 users · Stripe live", color: "#EE3135" },
   { label: "Power Brokers", value: "33", goal: 50, sub: "4 Apex · 29 Ignite confirmed · 66% to goal", color: "#EE3135" },
-  { label: "New Ignites MTD", value: "13", sub: "April 2026 · 3 added Apr 21 via outreach", color: "#282828" },
+  { label: "New Ignites MTD", value: "13", goal: 20, sub: "65% to goal · 3 added Apr 21 via outreach", color: "#12B76A" },
   { label: "Demos Booked MTD", value: "12", goal: 20, sub: "60% to goal · Apr 2026 MTD", color: "#EE3135" }
 ],
 s1_targets: [
