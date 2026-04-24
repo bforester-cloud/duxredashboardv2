@@ -867,9 +867,9 @@ document.addEventListener('DOMContentLoaded', function(){
     <div class="kpi-row" id="overview-kpis-2" style="margin-bottom:16px"></div>
     <div class="g3">
       <!-- Pipeline Health -->
-      <div class="card">
+      <div class="card" style="display:flex;flex-direction:column">
         <!-- Pipeline Health Header -->
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px">
           <div style="display:flex;align-items:center;gap:12px">
             <div style="width:40px;height:40px;border-radius:10px;background:#FFF1F1;display:flex;align-items:center;justify-content:center;flex-shrink:0">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#EE3135" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
@@ -882,42 +882,38 @@ document.addEventListener('DOMContentLoaded', function(){
           <button class="card-menu"><svg viewBox="0 0 16 16" fill="currentColor" width="14" height="14"><path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg></button>
         </div>
         <!-- Big deal count -->
-        <div id="ph-big" style="font-family:var(--mono);font-size:42px;font-weight:700;color:#101828;letter-spacing:-.04em;line-height:1;margin-bottom:10px">—</div>
+        <div id="ph-big" style="font-family:var(--mono);font-size:42px;font-weight:700;color:#101828;letter-spacing:-.04em;line-height:1;margin-bottom:8px">—</div>
         <!-- Next deal indicator -->
         <div id="ph-trend" style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#12B76A;margin-bottom:3px"></div>
-        <!-- Hot / Warm / Closed breakdown -->
-        <div id="ph-comp" style="font-size:12px;color:#667085;margin-bottom:18px"></div>
-        <!-- Donut + Legend -->
-        <!-- Donut + Legend -->
-        <div style="display:flex;align-items:center;gap:16px;flex:1">
-          <!-- Larger donut -->
-          <div style="position:relative;width:140px;height:140px;flex-shrink:0">
+        <!-- Breakdown -->
+        <div id="ph-comp" style="font-size:12px;color:#667085;margin-bottom:14px;font-weight:400"></div>
+        <!-- Donut + Legend — flex:1 fills remaining space -->
+        <div style="display:flex;align-items:center;gap:18px;flex:1;min-height:160px">
+          <div style="position:relative;width:160px;height:160px;flex-shrink:0">
             <canvas id="ov-pipe-donut"></canvas>
             <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none">
-              <div id="donut-pct" style="font-family:var(--mono);font-size:22px;font-weight:700;color:#101828;line-height:1">—</div>
-              <div style="font-size:9px;font-weight:700;color:#667085;letter-spacing:.08em;text-transform:uppercase;margin-top:3px">HOT</div>
+              <div id="donut-pct" style="font-family:var(--mono);font-size:24px;font-weight:700;color:#101828;line-height:1">—</div>
+              <div style="font-size:10px;font-weight:700;color:#667085;letter-spacing:.08em;text-transform:uppercase;margin-top:3px">HOT</div>
             </div>
           </div>
-          <!-- Legend — tight, numbers right-aligned -->
           <div style="flex:1;min-width:0">
-            <div style="display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid #EAECF0">
-              <div style="width:9px;height:9px;border-radius:50%;background:#EE3135;flex-shrink:0"></div>
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #EAECF0">
+              <div style="width:10px;height:10px;border-radius:50%;background:#EE3135;flex-shrink:0"></div>
               <div style="font-size:13px;color:#344054;font-weight:500;flex:1">Hot</div>
-              <div id="dl-hot" style="font-family:var(--mono);font-size:15px;font-weight:700;color:#101828">—</div>
+              <div id="dl-hot" style="font-family:var(--mono);font-size:16px;font-weight:700;color:#101828">—</div>
             </div>
-            <div style="display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid #EAECF0">
-              <div style="width:9px;height:9px;border-radius:50%;background:#BFBEBF;flex-shrink:0"></div>
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #EAECF0">
+              <div style="width:10px;height:10px;border-radius:50%;background:#BFBEBF;flex-shrink:0"></div>
               <div style="font-size:13px;color:#344054;font-weight:500;flex:1">Warm</div>
-              <div id="dl-warm" style="font-family:var(--mono);font-size:15px;font-weight:700;color:#101828">—</div>
+              <div id="dl-warm" style="font-family:var(--mono);font-size:16px;font-weight:700;color:#101828">—</div>
             </div>
-            <div style="display:flex;align-items:center;gap:8px;padding:9px 0">
-              <div style="width:9px;height:9px;border-radius:50%;background:#282828;flex-shrink:0"></div>
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 0">
+              <div style="width:10px;height:10px;border-radius:50%;background:#282828;flex-shrink:0"></div>
               <div style="font-size:13px;color:#344054;font-weight:500;flex:1">Closed</div>
-              <div id="dl-closed" style="font-family:var(--mono);font-size:15px;font-weight:700;color:#101828">—</div>
+              <div id="dl-closed" style="font-family:var(--mono);font-size:16px;font-weight:700;color:#101828">—</div>
             </div>
           </div>
         </div>
-        <!-- Divider + Link — matches other two cards -->
         <div style="height:1px;background:#EAECF0;margin:14px 0 10px"></div>
         <div class="more-link" style="margin-top:0" onclick="navTo('pipeline',document.querySelector('[onclick*=pipeline]'))">View Pipeline →</div>
       </div>
