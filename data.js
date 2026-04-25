@@ -227,11 +227,11 @@ ece: {
   alert: "Campus 56 — Colliers · 4 campaigns · Apr 16. 2,074 total requests · 95.22% delivered · 42.73% open rate · 2.89% bounce · 0 spam. Campaign 4 sent Apr 16 · Subscription Manager restored ✅ — Eitan + Brant now activated. ⚠️ ECE blockers still open: ECE-145 (send timeout 500+ contacts) · ECE-146 (login failure post-large-send) · ECE-158 (CEO: brokerage-scoped campaigns) · ECE-165 (AtData valid bucket separation). Uladzi assigned.",
   kpis: [
     { label: "Requests — Campus 56", value: "2,074", sub: "Total · 4 campaigns · Colliers · Apr 16 latest" },
-    { label: "Delivery Rate", value: "95.22%", sub: "1,975 delivered · 60 bounced", good: true },
-    { label: "Open Rate", value: "42.73%", sub: "886 opens · well above avg · 4 campaigns", good: true },
+    { label: "Delivery Rate", value: "97.34%", sub: "1,975 delivered · 60 bounced", good: true },
+    { label: "Open Rate", value: "39.95%", sub: "886 opens · well above avg · 4 campaigns", good: true },
     { label: "Bounce Rate", value: "2.89%", sub: "60 bounced · 0 spam · stable", good: true }
   ],
-  funnel: { requests: 2074, delivered: 1975, opened: 886, clicked: 1502 },
+  funnel: { requests: 14003, delivered: 13631, opened: 5594, clicked: 1502 },
   bugs: [
     { ticket: "ECE-146", title: "🔥 BLOCKER — campaigns.duxre.com login failure after large send", detail: "Platform unresponsive. Uladzi Paulovich · Open.", blocker: true },
     { ticket: "ECE-145", title: "🔥 BLOCKER — Campaign send timeout on large list (500 contacts)", detail: "Bulk sends non-functional. Uladzi Paulovich · Open.", blocker: true },
