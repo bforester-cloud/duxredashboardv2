@@ -505,11 +505,11 @@ function buildOverview(D){
   document.getElementById('fs-vis').textContent=ga4.kpis[0].value;
   document.getElementById('fs-sig').textContent=D.hero[1].value;
   document.getElementById('fs-dem').textContent=D.hero[3].value;
-  document.getElementById('fs-cls').textContent='5';
+  if(document.getElementById('fs-cls')) document.getElementById('fs-cls').textContent='5';
 
   // Paid mini cards
-  document.getElementById('ov-li-val').textContent=D.linkedin.kpis[0].value;
-  document.getElementById('ov-ga-val').textContent=D.google_ads.kpis[0].value;
+  if(document.getElementById('ov-li-val')) document.getElementById('ov-li-val').textContent=D.linkedin.kpis[0].value;
+  if(document.getElementById('ov-ga-val')) document.getElementById('ov-ga-val').textContent=D.google_ads.kpis[0].value;
 
   // GA4 totals
   document.getElementById('ov-ga4-total').textContent=ga4.kpis[0].value;
@@ -888,6 +888,7 @@ document.addEventListener('DOMContentLoaded', function(){
   <div class="topbar">
     <button class="hamburger" onclick="openSidebar()"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h12"/></svg></button>
     <div class="tb-sep"></div>
+    <span id="topbar-view" style="font-size:12px;font-weight:600;color:rgba(255,255,255,.7);letter-spacing:.03em">Overview</span>
     <div class="date-pill">
       <svg viewBox="0 0 16 16" fill="currentColor"><path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/></svg>
       <span id="date-range-text">Apr 1 — Apr 22, 2026</span>
