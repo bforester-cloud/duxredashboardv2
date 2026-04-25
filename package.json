@@ -1,0 +1,11 @@
+{
+  "name": "duxre-dashboard-automation",
+  "version": "1.0.0",
+  "description": "Duxre RevOps Dashboard data refresh automation",
+  "scripts": {
+    "fetch": "node scripts/fetch-data.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.0"
+  }
+}
