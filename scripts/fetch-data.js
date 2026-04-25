@@ -216,7 +216,7 @@ async function updateDataJs(mixpanel, hubspot, stripe, sendgrid) {
     const todayDate = today();
     // Update ECE kpis in data.js
     data = data.replace(
-      /\{ label: "Sent", value: "[^"]+"/,
+      /\{ label: "Requests[^"]*", value: "[^"]+"/,
       `{ label: "Sent", value: "${sendgrid.requests.toLocaleString()}"`
     );
     data = data.replace(
