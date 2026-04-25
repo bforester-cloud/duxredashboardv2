@@ -153,7 +153,7 @@ async function fetchStripe() {
 }
 
 // ─── UPDATE DATA.JS ──────────────────────────────────────────────────────────
-async function updateDataJs(mixpanel, hubspot, stripe) {
+async function updateDataJs(mixpanel, hubspot, stripe, sendgrid) {
   console.log('\n📝 Updating data.js...');
   let data = fs.readFileSync('data.js', 'utf8');
   const todayDate = today();
@@ -211,18 +211,100 @@ async function updateDataJs(mixpanel, hubspot, stripe) {
     }
   }
 
+  // ── SendGrid ECE stats ──
+  if (sendgrid && sendgrid.requests > 0) {
+    const todayDate = today();
+    // Update ECE kpis in data.js
+    data = data.replace(
+      /\{ label: "Sent", value: "[^"]+"/,
+      `{ label: "Sent", value: "${sendgrid.requests.toLocaleString()}"`
+    );
+    data = data.replace(
+      /\{ label: "Open Rate", value: "[^"]+"/,
+      `{ label: "Open Rate", value: "${sendgrid.openRate}%"`
+    );
+    data = data.replace(
+      /\{ label: "Delivery Rate", value: "[^"]+"/,
+      `{ label: "Delivery Rate", value: "${sendgrid.deliveryRate}%"`
+    );
+    // Update funnel
+    data = data.replace(
+      /requests: \d+/,
+      `requests: ${sendgrid.requests}`
+    );
+    data = data.replace(
+      /delivered: \d+/,
+      `delivered: ${sendgrid.delivered}`
+    );
+    data = data.replace(
+      /opened: \d+/,
+      `opened: ${sendgrid.opens}`
+    );
+    console.log(`  ✅ Email Engine → Sent: ${sendgrid.requests.toLocaleString()}, Open Rate: ${sendgrid.openRate}%, Delivered: ${sendgrid.deliveryRate}%`);
+  }
+
   fs.writeFileSync('data.js', data);
   console.log('\n✅ data.js updated successfully');
+}
+
+
+// ─── SENDGRID ─────────────────────────────────────────────────────────────────
+async function fetchSendGrid() {
+  console.log('📧 Fetching SendGrid Email Engine stats...');
+  try {
+    const headers = {
+      Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,
+      'Content-Type': 'application/json'
+    };
+
+    // MTD date range
+    const now = new Date();
+    const startDate = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-01`;
+    const endDate = now.toISOString().split('T')[0];
+
+    // Pull stats for the email-engine-prod subuser
+    const res = await axios.get('https://api.sendgrid.com/v3/subusers/email-engine-prod/stats', {
+      params: { start_date: startDate, end_date: endDate, aggregated_by: 'month' },
+      headers
+    });
+
+    const stats = res.data && res.data[0] && res.data[0].stats && res.data[0].stats[0]
+      ? res.data[0].stats[0].metrics
+      : null;
+
+    if (!stats) {
+      console.log('  ⚠️ No SendGrid stats returned');
+      return null;
+    }
+
+    const requests = stats.requests || 0;
+    const delivered = stats.delivered || 0;
+    const opens = stats.opens || 0;
+    const bounces = stats.bounces || 0;
+
+    const deliveryRate = requests > 0 ? ((delivered / requests) * 100).toFixed(2) : '0';
+    const openRate = delivered > 0 ? ((opens / delivered) * 100).toFixed(2) : '0';
+
+    console.log(`  ✅ Sent: ${requests.toLocaleString()}`);
+    console.log(`  ✅ Delivered: ${delivered.toLocaleString()} (${deliveryRate}%)`);
+    console.log(`  ✅ Opens: ${opens.toLocaleString()} (${openRate}%)`);
+    console.log(`  ✅ Bounces: ${bounces}`);
+
+    return { requests, delivered, opens, bounces, deliveryRate, openRate };
+  } catch (e) {
+    console.error('❌ SendGrid error:', e.message);
+    return null;
+  }
 }
 
 // ─── MAIN ────────────────────────────────────────────────────────────────────
 async function main() {
   console.log('🚀 Duxre Dashboard Data Refresh — ' + today());
   console.log('==========================================\n');
-  const [mixpanel, hubspot, stripe] = await Promise.all([
-    fetchMixpanel(), fetchHubSpot(), fetchStripe()
+  const [mixpanel, hubspot, stripe, sendgrid] = await Promise.all([
+    fetchMixpanel(), fetchHubSpot(), fetchStripe(), fetchSendGrid()
   ]);
-  await updateDataJs(mixpanel, hubspot, stripe);
+  await updateDataJs(mixpanel, hubspot, stripe, sendgrid);
   console.log('\n==========================================');
   console.log('✅ Refresh complete');
 }
