@@ -1195,17 +1195,51 @@ document.addEventListener('DOMContentLoaded', function(){
             type:"bar",
             data:{
               labels:channels.map(function(c){return c.label;}),
-              datasets:[{data:channels.map(function(c){return c.value;}),
-                backgroundColor:["#EE3135","#282828","#4C4C4E","#636466","#888","#aaa","#bbb","#ccc"],
-                borderRadius:5,borderSkipped:false}]
+              datasets:[{
+                data:channels.map(function(c){return c.value;}),
+                backgroundColor:["#EE3135","#282828","#4C4C4E","#636466","#888","#aaa","#bbb","#ccc","#ddd"],
+                borderRadius:4,
+                borderSkipped:false,
+                barPercentage:0.7,
+                categoryPercentage:0.85
+              }]
             },
             options:{
-              indexAxis:"y",responsive:true,maintainAspectRatio:false,
-              plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return" "+c.raw.toLocaleString()+" users";}}}},
+              indexAxis:"y",
+              responsive:true,
+              maintainAspectRatio:false,
+              layout:{padding:{right:40}},
+              plugins:{
+                legend:{display:false},
+                tooltip:{enabled:true,callbacks:{label:function(c){return" "+c.raw.toLocaleString()+" users";}}},
+                datalabels:false
+              },
               scales:{
-                x:{grid:{color:"rgba(0,0,0,.04)"},ticks:{font:{size:11},callback:function(v){return v.toLocaleString();}}},
-                y:{grid:{display:false},ticks:{font:{size:11,weight:"500"},color:"#344054"}}
-              }
+                x:{
+                  grid:{color:"rgba(0,0,0,.05)"},
+                  border:{display:false},
+                  ticks:{font:{size:11},color:"#98a2b3",callback:function(v){return v>=1000?(v/1000)+"K":v;}}
+                },
+                y:{
+                  grid:{display:false},
+                  border:{display:false},
+                  ticks:{font:{size:11,weight:"500"},color:"#344054",align:"end"}
+                }
+              },
+              animation:{onComplete:function(){
+                var ctx=this.ctx;
+                ctx.textAlign="left";
+                ctx.textBaseline="middle";
+                ctx.font="600 11px Inter,sans-serif";
+                ctx.fillStyle="#344054";
+                this.data.datasets.forEach(function(ds,di){
+                  var meta=this.getDatasetMeta(di);
+                  meta.data.forEach(function(bar,idx){
+                    var val=ds.data[idx];
+                    ctx.fillText(val.toLocaleString(),bar.x+6,bar.y);
+                  });
+                },this);
+              }}
             }
           });
           // Populate stat cells
