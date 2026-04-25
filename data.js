@@ -226,9 +226,9 @@ s6_health: {
 ece: {
   alert: "Campus 56 — Colliers · 4 campaigns · Apr 16. 2,074 total requests · 95.22% delivered · 42.73% open rate · 2.89% bounce · 0 spam. Campaign 4 sent Apr 16 · Subscription Manager restored ✅ — Eitan + Brant now activated. ⚠️ ECE blockers still open: ECE-145 (send timeout 500+ contacts) · ECE-146 (login failure post-large-send) · ECE-158 (CEO: brokerage-scoped campaigns) · ECE-165 (AtData valid bucket separation). Uladzi assigned.",
   kpis: [
-    { label: "Requests — Campus 56", value: "2,074", sub: "Total · 4 campaigns · Colliers · Apr 16 latest" },
-    { label: "Delivery Rate", value: "97.34%", sub: "1,975 delivered · 60 bounced", good: true },
-    { label: "Open Rate", value: "39.95%", sub: "886 opens · well above avg · 4 campaigns", good: true },
+    { label: "Requests — Apr MTD", value: "14,003", sub: "Total · 4 campaigns · SendGrid live · Apr 25" },
+    { label: "Delivery Rate", value: "97.34%", sub: "13,631 delivered · 188 bounced · Reputation 97%", good: true },
+    { label: "Open Rate", value: "39.95%", sub: "5,594 opens · well above avg · Clicked 86.92%", good: true },
     { label: "Bounce Rate", value: "2.89%", sub: "60 bounced · 0 spam · stable", good: true }
   ],
   funnel: { requests: 14003, delivered: 13631, opened: 5594, clicked: 1502 },
