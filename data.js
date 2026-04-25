@@ -6,7 +6,7 @@ meta: {
 },
 hero: [
   { label: "Total ARR", value: "$65K", sub: "7 Apex teams · 22 users · Stripe live", color: "#EE3135" },
-  { label: "Power Brokers", value: "1100 /50", goal: 50, sub: "HubSpot live · 1100 tagged", color: "#282828" },
+  { label: "Power Brokers", value: "50 /50", goal: 50, sub: "HubSpot live · Ignite + Apex + Command tagged", color: "#282828" },
   { label: "New Ignites MTD", value: "15", goal: 20, sub: "75% to goal · 2 added Apr 24 via Stripe · Stripe live", color: "#12B76A" },
   { label: "Demos Booked MTD", value: "10", goal: 20, sub: "50% to goal · HubSpot live Apr 24, 2026", color: "#EE3135" }
 ],

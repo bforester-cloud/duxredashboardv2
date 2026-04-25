@@ -90,12 +90,18 @@ async function fetchHubSpot() {
     const warm = deals.filter(d => ['1083942044','1083942045'].includes(d.properties.dealstage)).length;
     console.log(`  ✅ Pipeline: ${deals.length} total (hot: ${hot}, warm: ${warm})`);
 
-    // Power Brokers
+        // Power Brokers — contacts tagged Ignite OR Apex OR Command
     const pbRes = await axios.post(
       'https://api.hubapi.com/crm/v3/objects/contacts/search',
-      { filterGroups: [{ filters: [
-        { propertyName: 'hs_content_membership_notes', operator: 'HAS_PROPERTY' }
-      ]}], properties: ['hs_content_membership_notes'], limit: 200 },
+      {
+        filterGroups: [
+          { filters: [{ propertyName: 'hs_content_membership_notes', operator: 'CONTAINS_TOKEN', value: 'Ignite' }] },
+          { filters: [{ propertyName: 'hs_content_membership_notes', operator: 'CONTAINS_TOKEN', value: 'Apex' }] },
+          { filters: [{ propertyName: 'hs_content_membership_notes', operator: 'CONTAINS_TOKEN', value: 'Command' }] }
+        ],
+        properties: ['hs_content_membership_notes'],
+        limit: 1
+      },
       { headers }
     );
     const powerBrokers = pbRes.data.total || 0;
