@@ -1,0 +1,43 @@
+name: Refresh Dashboard Data
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # Run every day at 6am CST (12:00 UTC)
+    - cron: '0 12 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install axios
+
+      - name: Fetch live data and rebuild data.js
+        env:
+          MIXPANEL_PROJECT_ID: ${{ secrets.MIXPANEL_PROJECT_ID }}
+          MIXPANEL_SERVICE_ACCOUNT_USERNAME: ${{ secrets.MIXPANEL_SERVICE_ACCOUNT_USERNAME }}
+          MIXPANEL_SERVICE_ACCOUNT_SECRET: ${{ secrets.MIXPANEL_SERVICE_ACCOUNT_SECRET }}
+          HUBSPOT_API_KEY: ${{ secrets.HUBSPOT_API_KEY }}
+          GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
+          GA4_SERVICE_ACCOUNT_JSON: ${{ secrets.GA4_SERVICE_ACCOUNT_JSON }}
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+        run: node scripts/fetch-data.js
+
+      - name: Commit updated data.js if changed
+        run: |
+          git config user.name "Duxre RevOps Bot"
+          git config user.email "revops@duxre.com"
+          git add data.js
+          git diff --staged --quiet || git commit -m "Auto: Live data refresh $(date +'%b %d, %Y %H:%M UTC')"
+          git push
