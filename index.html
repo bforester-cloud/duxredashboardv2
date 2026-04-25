@@ -362,10 +362,6 @@ function initViewCharts(viewId){
   var D=window.DUXRE;if(!D)return;
   if(viewId==='overview'){
     setTimeout(function(){
-      spark('sp0',[50,54,55,54,58,60,65],'#EE3135');
-      spark('sp1',[6,7,7,8,9,10,13],'#16a34a');
-      spark('sp2',[26,28,29,30,31,32,33],'#ca8a04');
-      spark('sp3',[234,236,238,240,242,245,248],'#2563eb');
       buildOverviewCharts(D);
     },150);
   } else if(viewId==='pipeline'){
