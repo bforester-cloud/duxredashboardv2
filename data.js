@@ -1,14 +1,14 @@
 window.DUXRE = {
 meta: {
   title: "Revenue Operations — April 2026",
-  updated: "Apr 22, 2026",
-  period: "April 2026 MTD"
+  updated: "Apr 24, 2026",
+  period: "Apr 1 — Apr 24, 2026"
 },
 hero: [
   { label: "Total ARR", value: "$65K", sub: "7 Apex teams · 22 users · Stripe live", color: "#EE3135" },
   { label: "Power Brokers", value: "33", goal: 50, sub: "4 Apex · 29 Ignite confirmed · 66% to goal", color: "#EE3135" },
   { label: "New Ignites MTD", value: "13", goal: 20, sub: "65% to goal · 3 added Apr 21 via outreach", color: "#12B76A" },
-  { label: "Demos Booked MTD", value: "12", goal: 20, sub: "60% to goal · Apr 2026 MTD", color: "#EE3135" }
+  { label: "Demos Booked MTD", value: "12", goal: 20, sub: "60% to goal · HubSpot live Apr 24", color: "#EE3135" }
 ],
 s1_targets: [
   { name: "Joe Cesta", company: "CBRE Capital Markets", priority: "hot", owner: "Shermin", status: "Demo Apr 27 · BlackRock client · Sean invited · confirmed", date: "Apr 27" },
@@ -129,13 +129,13 @@ s4_marketplace: {
 },
 s5_platform: {
   kpis: [
-    { label: "Broker Logins — Apr MTD", value: "1,244", sub: "Dashboard 559 · Marketplace 358 · Microsite 327 · Live Apr 22" },
+    { label: "Broker Logins — Apr MTD", value: "1,357", sub: "Dashboard 613 · Marketplace 397 · Microsite 347 · Live Apr 22" },
     { label: "Listing Detail Views — 30d", value: "905", sub: "826 page views · 274 contact views" },
-    { label: "Active Subscriptions", value: "110+", sub: "Ignite + Apex · Stripe live · 3 new added Apr 21" },
+    { label: "Active Subscriptions", value: "100+", sub: "Stripe live · Apr 24 2026" },
     { label: "CAC (Apr MTD)", value: "$160", sub: "$640.19 ÷ 4 closes · LinkedIn-only" }
   ],
   platformLogins: {
-    dashboard: 559, microsite: 327, marketplace: 358
+    dashboard: 613, microsite: 347, marketplace: 397
   },
   apexTeams: [
     { name: "Colliers Western Region", company: "Colliers", members: [
