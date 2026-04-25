@@ -6,9 +6,9 @@ meta: {
 },
 hero: [
   { label: "Total ARR", value: "$65K", sub: "7 Apex teams · 22 users · Stripe live", color: "#EE3135" },
-  { label: "Power Brokers", value: "33", goal: 50, sub: "4 Apex · 29 Ignite confirmed · 66% to goal", color: "#EE3135" },
+  { label: "Power Brokers", value: "1100 /50", goal: 50, sub: "HubSpot live · 1100 tagged", color: "#282828" },
   { label: "New Ignites MTD", value: "13", goal: 20, sub: "65% to goal · 3 added Apr 21 via outreach", color: "#12B76A" },
-  { label: "Demos Booked MTD", value: "12", goal: 20, sub: "60% to goal · HubSpot live Apr 24", color: "#EE3135" }
+  { label: "Demos Booked MTD", value: "10", goal: 20, sub: "50% to goal · HubSpot live Apr 24, 2026", color: "#EE3135" }
 ],
 s1_targets: [
   { name: "Joe Cesta", company: "CBRE Capital Markets", priority: "hot", owner: "Shermin", status: "Demo Apr 27 · BlackRock client · Sean invited · confirmed", date: "Apr 27" },
@@ -129,13 +129,13 @@ s4_marketplace: {
 },
 s5_platform: {
   kpis: [
-    { label: "Broker Logins — Apr MTD", value: "1,357", sub: "Dashboard 613 · Marketplace 397 · Microsite 347 · Live Apr 22" },
+    { label: "Broker Logins — Apr MTD", value: "5,647", sub: "Dashboard 2706 · Marketplace 1685 · Microsite 1256 · Live Apr 24, 2026" },
     { label: "Listing Detail Views — 30d", value: "905", sub: "826 page views · 274 contact views" },
     { label: "Active Subscriptions", value: "100+", sub: "Stripe live · Apr 24 2026" },
     { label: "CAC (Apr MTD)", value: "$160", sub: "$640.19 ÷ 4 closes · LinkedIn-only" }
   ],
   platformLogins: {
-    dashboard: 613, microsite: 347, marketplace: 397
+    dashboard: 2706, microsite: 1256, marketplace: 397
   },
   apexTeams: [
     { name: "Colliers Western Region", company: "Colliers", members: [
