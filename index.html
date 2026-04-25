@@ -368,14 +368,24 @@ function initViewCharts(viewId){
       spark('sp3',[234,236,238,240,242,245,248],'#2563eb');
       buildOverviewCharts(D);
     },150);
-  } else if(viewId==='adoption'){
-    setTimeout(function(){buildAdoptionCharts(D);},50);
-  } else if(viewId==='paid-media'){
-    setTimeout(function(){buildPaidCharts(D);},50);
+  } else if(viewId==='pipeline'){
+    setTimeout(function(){buildPipeline(D);},50);
   } else if(viewId==='acquisition'){
     setTimeout(function(){buildAcquisitionCharts(D);},50);
+  } else if(viewId==='adoption'){
+    setTimeout(function(){buildAdoptionCharts(D);},50);
+  } else if(viewId==='marketplace'){
+    setTimeout(function(){buildMarketplace(D);},50);
+  } else if(viewId==='paid-media'){
+    setTimeout(function(){buildPaidCharts(D);},50);
+  } else if(viewId==='outreach'){
+    setTimeout(function(){buildOutreach(D);},50);
+  } else if(viewId==='platform'){
+    setTimeout(function(){buildPlatform(D);},50);
   } else if(viewId==='email-engine'){
     setTimeout(function(){buildECECharts(D);},50);
+  } else if(viewId==='seo'){
+    setTimeout(function(){buildSEO(D);},50);
   }
 }
 
