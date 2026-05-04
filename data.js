@@ -11,28 +11,32 @@ hero: [
   { label: "Demos Booked MTD", value: "4", goal: 20, sub: "20% to goal · HubSpot live · May 4", color: "#EE3135" }
 ],
 s1_targets: [
-  { name: "Joe Cesta", company: "CBRE Capital Markets", priority: "hot", owner: "Shermin", status: "Demo Apr 27 · BlackRock client · Sean invited · confirmed", date: "Apr 27" },
-  { name: "Kevin Ramon", company: "Texas Close'em", priority: "hot", owner: "Shermin", status: "Microsite + Apex · 60% prob · close target Apr 30", date: "Apr 30" },
-  { name: "Felipe Echarte", company: "Marcus & Millichap", priority: "hot", owner: "Shermin", status: "Demo ✅ confirmed Thu 4/23 · 6:00pm EST · Senior MD Investments", date: "Apr 23" },
-  { name: "Virgilio Fernandez", company: "Cushman & Wakefield", priority: "hot", owner: "Shermin", status: "Demo Fri 4/24 · 4:00pm EST · FL Institutional Multifamily · Andres joining", date: "Apr 24" },
-  { name: "Jake Allen", company: "Matthews", priority: "hot", owner: "Shermin", status: "Demo Thu 4/24 · 8:30am EST", date: "Apr 24" },
-  { name: "Austin Bull", company: "Bull Realty Atlanta", priority: "hot", owner: "Shermin", status: "Demo Apr 22 · 9:00am EST · VP of The Office Group", date: "Apr 22" },
-  { name: "Alex Bernaldo", company: "Americas CRE", priority: "warm", owner: "Shermin", status: "Demo ✅ Apr 22 completed · Team member signing up Ignite · Boutique industrial CRE Miami · Alina on standby", date: "Converting" },
-  { name: "Brett Intrater", company: "Cushman & Wakefield", priority: "hot", owner: "Shermin", status: "Demo No Show · 10% prob · May 31 · re-engage needed", date: "May 31" },
-  { name: "Josh Blackledge", company: "Gulf States Commercial", priority: "warm", owner: "Shermin", status: "Demo completed Apr 21 · Marketing Manager attended · follow-up active", date: "Apr 21 ✓" },
-  { name: "Sam Aaron", company: "CBRE", priority: "warm", owner: "Shermin", status: "Demo completed · partner discussion in progress", date: "Apr 13 ✓" },
-  { name: "Jason Fefer", company: "M&M Los Angeles", priority: "warm", owner: "Shermin", status: "Demo completed · 30% prob · follow-up Jun 2", date: "Jun 2" },
-  { name: "Antonio Diona", company: "Matthews", priority: "warm", owner: "Shermin", status: "30% prob · follow-up Apr 24", date: "Apr 24" },
-  { name: "Fabio Faerman", company: "FA Commercial", priority: "warm", owner: "Shermin", status: "Demo scheduled · follow-up Apr 22", date: "Apr 22" },
-  { name: "Team Rodriguez", company: "CBRE", priority: "warm", owner: "Shermin", status: "Leticia Mendez login resolved Apr 21 · listings visible · website push this week", date: "Active" },
-  { name: "Cole Neville", company: "NAI Horizon", priority: "warm", owner: "Alina", status: "Onboarding rescheduled Apr 21 · 10:00am MT", date: "Apr 21 ✓" },
-  { name: "Shane Young", company: "Young Lewin Advisors", priority: "closed", owner: "Shermin", status: "Ignite · $800M+ volume · Apex upsell target", date: "Apr 7" },
-  { name: "Filip Niculete", company: "Marcus & Millichap", priority: "closed", owner: "Alina", status: "Ignite closed · 25 listings · Command upsell", date: "Onboarded" },
-  { name: "Brant Yasaka", company: "NAI CBI Hawaii", priority: "closed", owner: "Shermin", status: "Ignite activated · onboarding follow-up", date: "Activated" },
-  { name: "Eitan Hakami", company: "—", priority: "closed", owner: "Shermin", status: "Ignite activated · onboarding follow-up", date: "Activated" },
-  { name: "Daniel Tour", company: "Omninet Capital", priority: "closed", owner: "Alina", status: "Ignite Free signup Apr 20 · Beverly Hills CA · Strong ICP · Command upsell target", date: "Apr 20" },
-  { name: "Andrew Naegele", company: "—", priority: "closed", owner: "Alina", status: "Ignite Free signup Apr 15 · qualification pending", date: "Apr 15" }
+  { name: "Adam English", company: "STREAM Capital Partners", priority: "hot", owner: "Shermin", status: "Demo May 6 2pm EST · Managing Director", date: "May 6" },
+  { name: "Marcus Benson", company: "NAI Global (Sioux Falls)", priority: "hot", owner: "Shermin", status: "Demo May 4 10:30am CST · AI capabilities focus", date: "May 4" },
+  { name: "Patrick Wilkinson", company: "Archer Wilkinson", priority: "hot", owner: "Shermin", status: "Demo completed May 1 · Follow-up pending", date: "May 1" },
+  { name: "Cameron Bice", company: "Stride Commercial", priority: "hot", owner: "Shermin", status: "Demo completed May 1 · Partner Matt Cooper on call", date: "May 1" },
+  { name: "Nick Dullea", company: "Corbett & Dullea Real Estate", priority: "hot", owner: "Shermin", status: "Demo stage · Tier 2 target", date: "May 7" },
+  { name: "Jason Fefer", company: "Marcus & Millichap LA", priority: "hot", owner: "Shermin", status: "Demo stage · Tier 1 priority", date: "May 7" },
+  { name: "Kyle Fant", company: "SRS Real Estate Partners NY", priority: "hot", owner: "Shermin", status: "Demo stage · Tier 1 priority", date: "May 8" },
+  { name: "Dan Blackwell", company: "CBRE Orange County", priority: "hot", owner: "Shermin", status: "Demo stage · Tier 1 priority", date: "May 8" },
+  { name: "Austin Ehrat", company: "Newmark", priority: "warm", owner: "Shermin", status: "Active outreach · Tier 1", date: "May 9" },
+  { name: "Andrew Fagundo", company: "Matthews", priority: "warm", owner: "Shermin", status: "Active outreach · Tier 1", date: "May 9" },
+  { name: "Fabio Faerman", company: "FA Commercial", priority: "warm", owner: "Shermin", status: "Active outreach · Tier 1", date: "May 10" },
+  { name: "Scott Brady", company: "Newmark Mountain West", priority: "warm", owner: "Shermin", status: "Active outreach · Tier 1", date: "May 10" },
+  { name: "Austin Bull", company: "Bull Realty Atlanta", priority: "warm", owner: "Shermin", status: "Advanced stage · Tier 1", date: "May 11" },
+  { name: "Erica Balin", company: "Lee & Associates LA North", priority: "warm", owner: "Shermin", status: "Active outreach", date: "May 11" },
+  { name: "Jeff Beard", company: "SVN J. Beard Real Estate", priority: "warm", owner: "Shermin", status: "Active outreach", date: "May 12" },
+  { name: "Ashley Bloom", company: "SVN Commercial Partners", priority: "warm", owner: "Shermin", status: "Active outreach · Tier 2", date: "May 12" },
+  { name: "Ryan Bodine", company: "NewGen Advisory", priority: "warm", owner: "Shermin", status: "Demo stage · Tier 2", date: "May 13" },
+  { name: "Randy Best", company: "Best Corporate Real Estate", priority: "warm", owner: "Shermin", status: "Demo stage · Tier 2", date: "May 13" },
+  { name: "Benjamin Farthing", company: "CBRE Phoenix", priority: "warm", owner: "Shermin", status: "Active outreach · Tier 1", date: "May 14" },
+  { name: "Adam Abushagur", company: "Marcus & Millichap", priority: "warm", owner: "Shermin", status: "Demo stage · active", date: "May 14" },
+  { name: "Kevin Diener", company: "Matthews", priority: "closed", owner: "Shermin", status: "Demo completed · follow-up", date: "Apr 21" },
+  { name: "Joe Cesta", company: "CBRE Capital Markets", priority: "closed", owner: "Sean", status: "Demo completed Apr 27 · Sean led · follow-up in 2 weeks", date: "Apr 27" },
+  { name: "Virgilio Fernandez", company: "Cushman & Wakefield", priority: "closed", owner: "Shermin", status: "Demo completed Apr 24 · warm nurture · 30+ listings", date: "Apr 24" },
+  { name: "Felipe Echarte", company: "Broker", priority: "closed", owner: "Shermin", status: "Demo completed Apr 23 · added to platform", date: "Apr 23" }
 ],
+s1_leadSources:,
 s1_leadSources: [
   { label: "Smart List · Top Brokers 2026", count: 1028, pct: 75.5, color: "#EE3135" },
   { label: "C&W Canada Scout · +245 this month", count: 291, pct: 21.4, color: "#EE3135" },
@@ -129,13 +133,13 @@ s4_marketplace: {
 },
 s5_platform: {
   kpis: [
-    { label: "Broker Logins — Apr MTD", value: "315", sub: "Dashboard 145 · Marketplace 116 · Microsite 54 · Live May 4, 2026" },
+    { label: "Broker Logins — Apr MTD", value: "97", sub: "Dashboard 45 · Marketplace 31 · Microsite 21 · Live May 4" },
     { label: "Listing Detail Views — 30d", value: "905", sub: "826 page views · 274 contact views" },
     { label: "Active Subscriptions", value: "100+", sub: "Stripe live · Apr 24 2026" },
     { label: "CAC (Apr MTD)", value: "$160", sub: "$640.19 ÷ 4 closes · LinkedIn-only" }
   ],
   platformLogins: {
-    dashboard: 145, microsite: 54, marketplace: 28
+    dashboard: 45, microsite: 21, marketplace: 31
   },
   apexTeams: [
     { name: "Colliers Western Region", company: "Colliers", members: [
