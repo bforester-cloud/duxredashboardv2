@@ -153,7 +153,7 @@ async function fetchStripe() {
 }
 
 // ─── UPDATE DATA.JS ──────────────────────────────────────────────────────────
-async function updateDataJs(mixpanel, hubspot, stripe, sendgrid) {
+async function updateDataJs(mixpanel, hubspot, stripe, sendgrid, jira) {
   console.log('\n📝 Updating data.js...');
   let data = fs.readFileSync('data.js', 'utf8');
   const todayDate = today();
@@ -243,6 +243,16 @@ async function updateDataJs(mixpanel, hubspot, stripe, sendgrid) {
     console.log(`  ✅ Email Engine → Sent: ${sendgrid.requests.toLocaleString()}, Open Rate: ${sendgrid.openRate}%, Delivered: ${sendgrid.deliveryRate}%`);
   }
 
+  // ── Jira bug count ──
+  if (jira && jira.bugCount >= 0) {
+    data = data.replace(/bugCount:\s*\d+/, `bugCount: ${jira.bugCount}`);
+    data = data.replace(
+      /alert: "[^"]*bugCount[^"]*"/,
+      `alert: "${jira.bugCount} open bugs · Jira live ${todayDate}"`
+    );
+    console.log(`  ✅ Bug count → ${jira.bugCount}`);
+  }
+
   fs.writeFileSync('data.js', data);
   console.log('\n✅ data.js updated successfully');
 }
@@ -297,14 +307,68 @@ async function fetchSendGrid() {
   }
 }
 
+
+// ─── JIRA ─────────────────────────────────────────────────────────────────────
+async function fetchJira() {
+  console.log('🎫 Fetching Jira tickets...');
+  try {
+    const auth = Buffer.from(
+      `${process.env.ATLASSIAN_EMAIL}:${process.env.ATLASSIAN_API_TOKEN}`
+    ).toString('base64');
+    const headers = {
+      'Authorization': `Basic ${auth}`,
+      'Accept': 'application/json'
+    };
+    const baseUrl = 'https://onestop.atlassian.net/rest/api/3';
+
+    // Count open bugs across DTM + ECE projects
+    const bugsRes = await axios.get(`${baseUrl}/search`, {
+      params: {
+        jql: 'project in (DTM, ECE) AND status not in (Closed, Done) AND issuetype = Bug ORDER BY priority ASC',
+        maxResults: 50,
+        fields: 'summary,status,assignee,priority'
+      },
+      headers
+    });
+    const bugCount = bugsRes.data.total || 0;
+    const bugs = bugsRes.data.issues || [];
+    console.log(`  ✅ Open bugs: ${bugCount}`);
+
+    // Check specific SEO/key tickets
+    const seoTickets = ['DTM-5681', 'DTM-5808'];
+    const seoStatuses = {};
+    for (const ticket of seoTickets) {
+      try {
+        const res = await axios.get(`${baseUrl}/issue/${ticket}`, {
+          params: { fields: 'summary,status' },
+          headers
+        });
+        seoStatuses[ticket] = {
+          status: res.data.fields.status.name,
+          done: res.data.fields.status.statusCategory.key === 'done' || 
+                res.data.fields.status.name === 'Closed'
+        };
+        console.log(`  ✅ ${ticket}: ${res.data.fields.status.name}`);
+      } catch (e) {
+        console.log(`  ⚠️ ${ticket}: could not fetch`);
+      }
+    }
+
+    return { bugCount, bugs: bugs.slice(0, 10), seoStatuses };
+  } catch (e) {
+    console.error('❌ Jira error:', e.message);
+    return null;
+  }
+}
+
 // ─── MAIN ────────────────────────────────────────────────────────────────────
 async function main() {
   console.log('🚀 Duxre Dashboard Data Refresh — ' + today());
   console.log('==========================================\n');
-  const [mixpanel, hubspot, stripe, sendgrid] = await Promise.all([
-    fetchMixpanel(), fetchHubSpot(), fetchStripe(), fetchSendGrid()
+  const [mixpanel, hubspot, stripe, sendgrid, jira] = await Promise.all([
+    fetchMixpanel(), fetchHubSpot(), fetchStripe(), fetchSendGrid(), fetchJira()
   ]);
-  await updateDataJs(mixpanel, hubspot, stripe, sendgrid);
+  await updateDataJs(mixpanel, hubspot, stripe, sendgrid, jira);
   console.log('\n==========================================');
   console.log('✅ Refresh complete');
 }

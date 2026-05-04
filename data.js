@@ -196,7 +196,7 @@ s5_platform: {
   ]
 },
 s6_health: {
-  bugCount: 36,
+  bugCount: 9,
   criticalBugs: [
     { ticket: "DTM-5650", title: "🔥 Registration Flow Critically Broken on Staging (DTM-5553 regression)", detail: "Fix for 'Other' account type caused full registration regression. Dhruv Patel · Ready For Deployment." },
     { ticket: "DTM-5651", title: "🔥 No registration confirmation emails sent for any account type", detail: "Critical · Staging · Dhruv Patel · Ready For Deployment." },
