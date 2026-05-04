@@ -133,13 +133,13 @@ s4_marketplace: {
 },
 s5_platform: {
   kpis: [
-    { label: "Broker Logins — Apr MTD", value: "97", sub: "Dashboard 45 · Marketplace 31 · Microsite 21 · Live May 4" },
+    { label: "Broker Logins — Apr MTD", value: "318", sub: "Dashboard 148 · Marketplace 116 · Microsite 54 · Live May 4, 2026" },
     { label: "Listing Detail Views — 30d", value: "905", sub: "826 page views · 274 contact views" },
     { label: "Active Subscriptions", value: "100+", sub: "Stripe live · Apr 24 2026" },
     { label: "CAC (Apr MTD)", value: "$160", sub: "$640.19 ÷ 4 closes · LinkedIn-only" }
   ],
   platformLogins: {
-    dashboard: 45, microsite: 21, marketplace: 31
+    dashboard: 148, microsite: 54, marketplace: 31
   },
   apexTeams: [
     { name: "Colliers Western Region", company: "Colliers", members: [
