@@ -8,7 +8,7 @@ hero: [
   { label: "Total ARR", value: "$65K", sub: "7 Apex teams · 22 users · Stripe live", color: "#EE3135" },
   { label: "Power Brokers", value: "33 /50", goal: 50, sub: "4 Apex · 29 Ignite confirmed", color: "#282828" },
   { label: "New Ignites MTD", value: "2", goal: 20, sub: "10% to goal · Stripe live · May 4", color: "#12B76A" },
-  { label: "Demos Booked MTD", value: "0", goal: 20, sub: "0% to goal · HubSpot live · May MTD", color: "#EE3135" }
+  { label: "Demos Booked MTD", value: "4", goal: 20, sub: "20% to goal · HubSpot live · May 4", color: "#EE3135" }
 ],
 s1_targets: [
   { name: "Joe Cesta", company: "CBRE Capital Markets", priority: "hot", owner: "Shermin", status: "Demo Apr 27 · BlackRock client · Sean invited · confirmed", date: "Apr 27" },
