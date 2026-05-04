@@ -98,7 +98,7 @@ s3_seo: {
     { title: "Canonical tags, H1/H2, 404s — fixed", detail: "All resolved at HubSpot template level" },
     { title: "UTM attribution — all channels confirmed", detail: "Facebook, LinkedIn, Instagram, Bing, Teams all tracking" },
     { title: "Organic Search 18 → 116 ✅ 6x jump", detail: "duxre.com SEO fixes driving results · Schema, OG, canonical all contributing" },
-    { title: "XML Sitemap + robots.txt ✅", date: "May 1", detail: "DTM-5808 · Closed May 1, 2026 · marketplace.duxre.com/sitemap.xml live · robots.txt 200 OK · Auto-generated · Notify Bryan to submit to GSC" }
+    { title: "XML Sitemap + robots.txt + GSC Submitted ✅", date: "May 1", detail: "DTM-5808 · Closed May 1, 2026 · marketplace.duxre.com/sitemap.xml live · robots.txt 200 OK · Sitemap submitted to Google Search Console · marketplace.duxre.com property confirmed" }
   ],
   pending: [
     { title: "SSR Phase 2 — Angular Universal", ticket: "DTM-5681", detail: "Permanent fix · Prerequisite DTM-5635 now met ✅ · Angular Universal on listing routes only · Replaces Rendertron workaround · Assigned Dhruv Patel · Open", priority: "gray" },
