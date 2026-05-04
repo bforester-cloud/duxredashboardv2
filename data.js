@@ -97,10 +97,10 @@ s3_seo: {
     { title: "Open Graph + Twitter/X Card — deployed", detail: "Links preview correctly on X, LinkedIn, Slack, Facebook" },
     { title: "Canonical tags, H1/H2, 404s — fixed", detail: "All resolved at HubSpot template level" },
     { title: "UTM attribution — all channels confirmed", detail: "Facebook, LinkedIn, Instagram, Bing, Teams all tracking" },
-    { title: "Organic Search 18 → 116 ✅ 6x jump", detail: "duxre.com SEO fixes driving results · Schema, OG, canonical all contributing" }
+    { title: "Organic Search 18 → 116 ✅ 6x jump", detail: "duxre.com SEO fixes driving results · Schema, OG, canonical all contributing" },
+    { title: "XML Sitemap + robots.txt ✅", date: "May 1", detail: "DTM-5808 · Closed May 1, 2026 · marketplace.duxre.com/sitemap.xml live · robots.txt 200 OK · Auto-generated · Notify Bryan to submit to GSC" }
   ],
   pending: [
-    { title: "XML Sitemap + robots.txt", ticket: "DTM-5808", detail: "Dhruv Patel · Open · robots.txt currently 404 · Sitemap to marketplace.duxre.com/sitemap.xml · Bryan to submit to GSC once live · Auto-generated, includes all 234 live listings", priority: "red" },
     { title: "SSR Phase 2 — Angular Universal", ticket: "DTM-5681", detail: "Permanent fix · Prerequisite DTM-5635 now met ✅ · Angular Universal on listing routes only · Replaces Rendertron workaround · Assigned Dhruv Patel · Open", priority: "gray" },
     { title: "SPF — still ~all · needs -all", detail: "Recommended update to -all for full alignment · Low risk change · Pending", priority: "gray" },
     { title: "Unique meta titles per listing", detail: "All pages share generic tags · Now unblocked by SSR · Queued next", priority: "light" },
