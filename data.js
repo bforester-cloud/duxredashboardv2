@@ -36,7 +36,6 @@ s1_targets: [
   { name: "Virgilio Fernandez", company: "Cushman & Wakefield", priority: "closed", owner: "Shermin", status: "Demo completed Apr 24 · warm nurture · 30+ listings", date: "Apr 24" },
   { name: "Felipe Echarte", company: "Broker", priority: "closed", owner: "Shermin", status: "Demo completed Apr 23 · added to platform", date: "Apr 23" }
 ],
-s1_leadSources:,
 s1_leadSources: [
   { label: "Smart List · Top Brokers 2026", count: 1028, pct: 75.5, color: "#EE3135" },
   { label: "C&W Canada Scout · +245 this month", count: 291, pct: 21.4, color: "#EE3135" },
@@ -111,7 +110,7 @@ s3_seo: {
 },
 s4_marketplace: {
   kpis: [
-    { label: "Active Listings", value: "255", sub: "Live · Apr 22 2026" },
+    { label: "Active Listings", value: "255", sub: "Live · May 4 2026" },
     { label: "For Sale", value: "162", sub: "Active · Apr 22 2026" },
     { label: "For Lease", value: "93", sub: "Active · Apr 22 2026" },
     { label: "New Ignites — Apr MTD", value: "13", sub: "3 added Apr 21 via email/LinkedIn/VMD" }
