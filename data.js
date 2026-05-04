@@ -111,9 +111,9 @@ s3_seo: {
 },
 s4_marketplace: {
   kpis: [
-    { label: "Active Listings", value: "248", sub: "Live · Apr 22 2026" },
-    { label: "For Sale", value: "158", sub: "Active · Apr 22 2026" },
-    { label: "For Lease", value: "90", sub: "Active · Apr 22 2026" },
+    { label: "Active Listings", value: "255", sub: "Live · Apr 22 2026" },
+    { label: "For Sale", value: "162", sub: "Active · Apr 22 2026" },
+    { label: "For Lease", value: "93", sub: "Active · Apr 22 2026" },
     { label: "New Ignites — Apr MTD", value: "13", sub: "3 added Apr 21 via email/LinkedIn/VMD" }
   ],
   topListings: [
