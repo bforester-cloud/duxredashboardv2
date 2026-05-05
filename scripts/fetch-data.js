@@ -153,7 +153,7 @@ async function fetchStripe() {
 }
 
 // ─── UPDATE DATA.JS ──────────────────────────────────────────────────────────
-async function updateDataJs(mixpanel, hubspot, stripe, sendgrid, jira) {
+async function updateDataJs(mixpanel, hubspot, stripe, sendgrid, jira, ga4) {
   console.log('\n📝 Updating data.js...');
   let data = fs.readFileSync('data.js', 'utf8');
   const todayDate = today();
@@ -251,6 +251,27 @@ async function updateDataJs(mixpanel, hubspot, stripe, sendgrid, jira) {
       `alert: "${jira.bugCount} open bugs · Jira live ${todayDate}"`
     );
     console.log(`  ✅ Bug count → ${jira.bugCount}`);
+  }
+
+  // ── GA4 Traffic by Channel ──
+  if (ga4 && ga4.total > 0) {
+    const chMap = ga4.channels;
+    const byChannel = [
+      { label: 'Paid Social', value: chMap['Paid Social'] || 0 },
+      { label: 'Direct', value: chMap['Direct'] || 0 },
+      { label: 'Email', value: chMap['Email'] || 0 },
+      { label: 'Unassigned', value: chMap['Unassigned'] || 0 },
+      { label: 'Paid Search', value: chMap['Paid Search'] || 0 },
+      { label: 'Organic Search', value: chMap['Organic Search'] || 0 },
+      { label: 'Organic Social', value: chMap['Organic Social'] || 0 },
+      { label: 'Referral', value: chMap['Referral'] || 0 }
+    ].filter(c => c.value > 0).sort((a,b) => b.value - a.value);
+
+    const byChannelStr = 'byChannel: [\n    ' +
+      byChannel.map(c => `{ label: "${c.label}", value: ${c.value} }`).join(',\n    ') +
+      '\n  ]';
+    data = data.replace(/byChannel:\s*\[[^\]]*\]/s, byChannelStr);
+    console.log(`  ✅ GA4 → ${ga4.total} total users, ${byChannel.length} channels updated`);
   }
 
   fs.writeFileSync('data.js', data);
@@ -361,14 +382,59 @@ async function fetchJira() {
   }
 }
 
+
+// ─── GA4 VIA ZAPIER ──────────────────────────────────────────────────────────
+async function fetchGA4() {
+  console.log('📈 Fetching GA4 via Zapier...');
+  try {
+    const now = new Date();
+    const startDate = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-01`;
+    const endDate = now.toISOString().split('T')[0];
+
+    // Call Zapier MCP webhook for GA4 runReport
+    const res = await axios.post('https://mcp.zapier.com/api/v1/execute', {
+      action: 'runReport',
+      app: 'Google Analytics 4',
+      params: {
+        property_id: '11453780286',
+        date_ranges: [{ start_date: startDate, end_date: endDate }],
+        dimensions: [{ name: 'sessionDefaultChannelGroup' }],
+        metrics: [{ name: 'totalUsers' }]
+      }
+    }, {
+      headers: {
+        'Authorization': `Bearer ${process.env.ZAPIER_MCP_TOKEN}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const rows = res.data.results || [];
+    const channels = {};
+    let total = 0;
+    for (const row of rows) {
+      const ch = row.channel || row.dimension || 'Other';
+      const val = parseInt(row.totalUsers || row.value || 0);
+      channels[ch] = val;
+      total += val;
+    }
+
+    console.log(`  ✅ GA4 Total Users: ${total}`);
+    console.log('  ✅ Channels:', JSON.stringify(channels));
+    return { total, channels };
+  } catch (e) {
+    console.error('❌ GA4 error:', e.message);
+    return null;
+  }
+}
+
 // ─── MAIN ────────────────────────────────────────────────────────────────────
 async function main() {
   console.log('🚀 Duxre Dashboard Data Refresh — ' + today());
   console.log('==========================================\n');
-  const [mixpanel, hubspot, stripe, sendgrid, jira] = await Promise.all([
-    fetchMixpanel(), fetchHubSpot(), fetchStripe(), fetchSendGrid(), fetchJira()
+  const [mixpanel, hubspot, stripe, sendgrid, jira, ga4] = await Promise.all([
+    fetchMixpanel(), fetchHubSpot(), fetchStripe(), fetchSendGrid(), fetchJira(), fetchGA4()
   ]);
-  await updateDataJs(mixpanel, hubspot, stripe, sendgrid, jira);
+  await updateDataJs(mixpanel, hubspot, stripe, sendgrid, jira, ga4);
   console.log('\n==========================================');
   console.log('✅ Refresh complete');
 }
