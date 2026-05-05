@@ -282,6 +282,17 @@ async function updateDataJs(mixpanel, hubspot, stripe, sendgrid, jira, ga4) {
     console.log(`  ✅ Email Engine → Sent: ${sendgrid.requests.toLocaleString()}, Open Rate: ${sendgrid.openRate}%, Delivered: ${sendgrid.deliveryRate}%`);
   }
 
+  // ── Mixpanel top users ──
+  if (mixpanel && mixpanel.topUsers && mixpanel.topUsers.length > 0) {
+    const topUsersStr = 'topUsers: [\n    ' +
+      mixpanel.topUsers.map(u =>
+        `{ email: "${u.email}", logins: ${u.logins}, name: "", company: "", tier: "Ignite", flag: "" }`
+      ).join(',\n    ') +
+      '\n  ]';
+    data = data.replace(/topUsers:\s*\[[\s\S]*?\](?=\s*[,}])/, topUsersStr);
+    console.log(`  ✅ Top users → ${mixpanel.topUsers.length} real users from Mixpanel`);
+  }
+
   // ── Jira bug count ──
   if (jira && jira.bugCount >= 0) {
     data = data.replace(/bugCount:\s*\d+/, `bugCount: ${jira.bugCount}`);
