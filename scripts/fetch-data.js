@@ -383,37 +383,43 @@ async function fetchJira() {
 }
 
 
-// ─── GA4 VIA ZAPIER ──────────────────────────────────────────────────────────
+// ─── GA4 VIA OAUTH2 ──────────────────────────────────────────────────────────
 async function fetchGA4() {
-  console.log('📈 Fetching GA4 via Zapier...');
+  console.log('📈 Fetching GA4 via OAuth2...');
   try {
     const now = new Date();
     const startDate = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-01`;
     const endDate = now.toISOString().split('T')[0];
+    const propertyId = process.env.GA4_PROPERTY_ID || '11453780286';
 
-    // Call Zapier MCP webhook for GA4 runReport
-    const res = await axios.post('https://mcp.zapier.com/api/v1/execute', {
-      action: 'runReport',
-      app: 'Google Analytics 4',
-      params: {
-        property_id: '11453780286',
-        date_ranges: [{ start_date: startDate, end_date: endDate }],
-        dimensions: [{ name: 'sessionDefaultChannelGroup' }],
-        metrics: [{ name: 'totalUsers' }]
-      }
-    }, {
-      headers: {
-        'Authorization': `Bearer ${process.env.ZAPIER_MCP_TOKEN}`,
-        'Content-Type': 'application/json'
-      }
+    // Step 1: Exchange refresh token for access token
+    const tokenRes = await axios.post('https://oauth2.googleapis.com/token', {
+      client_id: process.env.GA4_CLIENT_ID,
+      client_secret: process.env.GA4_CLIENT_SECRET || '',
+      refresh_token: process.env.GA4_REFRESH_TOKEN,
+      grant_type: 'refresh_token'
     });
+    const accessToken = tokenRes.data.access_token;
+    console.log('  ✅ Got GA4 access token');
 
-    const rows = res.data.results || [];
+    // Step 2: Call GA4 Data API
+    const reportRes = await axios.post(
+      `https://analyticsdata.googleapis.com/v1beta/properties/${propertyId}:runReport`,
+      {
+        dateRanges: [{ startDate, endDate }],
+        dimensions: [{ name: 'sessionDefaultChannelGroup' }],
+        metrics: [{ name: 'totalUsers' }],
+        orderBys: [{ metric: { metricName: 'totalUsers' }, desc: true }]
+      },
+      { headers: { Authorization: `Bearer ${accessToken}` } }
+    );
+
+    const rows = reportRes.data.rows || [];
     const channels = {};
     let total = 0;
     for (const row of rows) {
-      const ch = row.channel || row.dimension || 'Other';
-      const val = parseInt(row.totalUsers || row.value || 0);
+      const ch = row.dimensionValues[0].value;
+      const val = parseInt(row.metricValues[0].value);
       channels[ch] = val;
       total += val;
     }
