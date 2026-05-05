@@ -44,12 +44,51 @@ async function fetchMixpanel() {
       results[event] = res.data.trim().split('\n').filter(l => l.trim()).length;
       console.log(`  ✅ ${event}: ${results[event]}`);
     }
-    return {
+    const loginData = {
       dashboard: results['Login - Dashboard'] || 0,
       marketplace: results['Login - Marketplace'] || 0,
       microsite: results['Login - Microsite'] || 0,
       total: Object.values(results).reduce((a, b) => a + b, 0)
     };
+
+    // ── Top Users via Mixpanel segmentation API ──
+    let topUsers = [];
+    try {
+      const now2 = new Date();
+      const fromDate = `${now2.getFullYear()}-${String(now2.getMonth()+1).padStart(2,'0')}-01`;
+      const toDate = now2.toISOString().split('T')[0];
+      const segRes = await axios.get('https://mixpanel.com/api/2.0/segmentation', {
+        params: {
+          project_id: process.env.MIXPANEL_PROJECT_ID,
+          event: 'Login - Dashboard',
+          from_date: fromDate,
+          to_date: toDate,
+          on: 'properties["$email"]',
+          limit: 10,
+          type: 'general',
+          unit: 'month'
+        },
+        auth: {
+          username: process.env.MIXPANEL_SERVICE_ACCOUNT_USERNAME,
+          password: process.env.MIXPANEL_SERVICE_ACCOUNT_SECRET
+        }
+      });
+      const segData = segRes.data && segRes.data.data && segRes.data.data.values
+        ? segRes.data.data.values : {};
+      topUsers = Object.entries(segData)
+        .map(([email, counts]) => ({
+          email,
+          logins: Object.values(counts).reduce((a, b) => a + b, 0)
+        }))
+        .sort((a, b) => b.logins - a.logins)
+        .slice(0, 10);
+      console.log(`  ✅ Top users: ${topUsers.length} found`);
+      topUsers.forEach(u => console.log(`    ${u.email}: ${u.logins}`));
+    } catch (e) {
+      console.error('  ⚠️ Top users failed:', e.message);
+    }
+
+    return { ...loginData, topUsers };
   } catch (e) {
     console.error('❌ Mixpanel error:', e.message);
     return null;
