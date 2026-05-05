@@ -174,21 +174,23 @@ s5_platform: {
     ]}
   ],
   topUsers: [
-    { name: "Sean Fulp", company: "Colliers", team: "Colliers Western", tier: "Apex", dash: 104, mkt: 22, total: 126 },
-    { name: "Eric Longo", company: "Colliers", team: "Colliers Western", tier: "Apex", dash: 8, mkt: 64, total: 72 },
-    { name: "Blake Hammerstein", company: "Colliers", team: "Colliers Western", tier: "Apex", dash: 31, mkt: 1, total: 32 },
-    { name: "Trevor Olkowski", company: "Colliers", team: "Malan + Marcello", tier: "Apex", dash: 19, mkt: 1, total: 20 },
-    { name: "Monica Vanyo", company: "Colliers", team: "Malan + Marcello", tier: "Apex", dash: 17, mkt: 5, total: 22 },
-    { name: "Vitaly Vinogradov", company: "Duxre", team: "Dev Team", tier: "Internal", dash: 15, mkt: 39, total: 54 },
-    { name: "Kai Neyer", company: "CBRE", team: "Randy Getz", tier: "Apex", dash: 10, mkt: 5, total: 15 },
-    { name: "Jon England", company: "NAI Heartland", team: "Team England", tier: "Apex", dash: 7, mkt: 0, total: 7 }
+    { name: "Filip Niculete", company: "Marcus & Millichap", logins: 12, listings: 25, tier: "Ignite", flag: "🔴 Apex upsell priority" },
+    { name: "Cory Whitman", company: "Colliers", logins: 9, listings: 8, tier: "Ignite", flag: "Power Broker" },
+    { name: "Daniel Tour", company: "Omninet Capital", logins: 7, listings: 3, tier: "Ignite", flag: "New Apr 20" },
+    { name: "Brant Yasaka", company: "NAI-CBI Hawaii", logins: 6, listings: 4, tier: "Ignite", flag: "ONB queue" },
+    { name: "Nora Armenian", company: "Vegas Valley Commercial", logins: 5, listings: 2, tier: "Ignite", flag: "Desert SW" }
   ],
   onbQueue: [
-    { name: "Virgilio Fernandez", company: "Cushman & Wakefield", status: "Demo Fri 4/24", next: "Apr 24" },
-    { name: "Alex Bernaldo team", company: "Americas CRE", status: "Ignite Signup Pending", next: "This week" },
-    { name: "Cole Neville", company: "NAI Horizon", status: "ONB Apr 21 ✓", next: "Done" },
-    { name: "Brant Yasaka", company: "NAI CBI Hawaii", status: "Access Ready", next: "This week" },
-    { name: "Daniel Tour", company: "Omninet Capital", status: "Ignite Free · ONB Needed", next: "Alina" }
+    { name: "Matthew Bonnett", company: "Sperry Commercial", tier: "Tier 2", owner: "Shermin", date: "Apr 30", status: "Pending Alina" },
+    { name: "Jamison Shields", company: "Colliers Portland", tier: "Ignite", owner: "Shermin", date: "Apr 9", status: "Pending Alina" },
+    { name: "Greg Pavich", company: "Colliers", tier: "Ignite", owner: "Alina", date: "Apr 2", status: "In Onboarding" },
+    { name: "Omar Lopez", company: "Capital Edge Investors", tier: "Ignite", owner: "Alina", date: "Apr 2", status: "In Onboarding" },
+    { name: "Eitan Hakami", company: "Greiner-Maltz", tier: "Ignite", owner: "Shermin", date: "Mar 19", status: "Pending Alina" },
+    { name: "Caleb Rice", company: "Independent CRE Broker", tier: "Ignite", owner: "Shermin", date: "Mar 17", status: "Pending Alina" },
+    { name: "Brant Yasaka", company: "NAI-CBI Hawaii", tier: "Ignite", owner: "Shermin", date: "Mar 16", status: "Pending Alina" },
+    { name: "Norberto Villanueva", company: "Real Estate Supermarkets", tier: "Ignite", owner: "Shermin", date: "Mar 2", status: "Pending Alina" },
+    { name: "Jacob Megensha", company: "Colliers International", tier: "Ignite", owner: "Shermin", date: "Mar 2", status: "Pending Alina" },
+    { name: "Anthony Wooden", company: "Only Real Estate Group", tier: "Ignite", owner: "Alina", date: "Jan 20", status: "In Onboarding" }
   ]
 },
 s6_health: {
