@@ -383,54 +383,13 @@ async function fetchJira() {
 }
 
 
-// ─── GA4 VIA OAUTH2 ──────────────────────────────────────────────────────────
+// ─── GA4 — Pulled manually via Zapier MCP on-demand ──────────────────────────
+// GA4 is pulled via Zapier MCP when Bryan runs a manual deploy session.
+// The automated workflow skips GA4 to avoid OAuth complexity.
+// Last GA4 pull is preserved in data.js from the most recent manual session.
 async function fetchGA4() {
-  console.log('📈 Fetching GA4 via OAuth2...');
-  try {
-    const now = new Date();
-    const startDate = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-01`;
-    const endDate = now.toISOString().split('T')[0];
-    const propertyId = process.env.GA4_PROPERTY_ID || '11453780286';
-
-    // Step 1: Exchange refresh token for access token
-    const tokenRes = await axios.post('https://oauth2.googleapis.com/token', {
-      client_id: process.env.GA4_CLIENT_ID,
-      client_secret: process.env.GA4_CLIENT_SECRET || '',
-      refresh_token: process.env.GA4_REFRESH_TOKEN,
-      grant_type: 'refresh_token'
-    });
-    const accessToken = tokenRes.data.access_token;
-    console.log('  ✅ Got GA4 access token');
-
-    // Step 2: Call GA4 Data API
-    const reportRes = await axios.post(
-      `https://analyticsdata.googleapis.com/v1beta/properties/${propertyId}:runReport`,
-      {
-        dateRanges: [{ startDate, endDate }],
-        dimensions: [{ name: 'sessionDefaultChannelGroup' }],
-        metrics: [{ name: 'totalUsers' }],
-        orderBys: [{ metric: { metricName: 'totalUsers' }, desc: true }]
-      },
-      { headers: { Authorization: `Bearer ${accessToken}` } }
-    );
-
-    const rows = reportRes.data.rows || [];
-    const channels = {};
-    let total = 0;
-    for (const row of rows) {
-      const ch = row.dimensionValues[0].value;
-      const val = parseInt(row.metricValues[0].value);
-      channels[ch] = val;
-      total += val;
-    }
-
-    console.log(`  ✅ GA4 Total Users: ${total}`);
-    console.log('  ✅ Channels:', JSON.stringify(channels));
-    return { total, channels };
-  } catch (e) {
-    console.error('❌ GA4 error:', e.message);
-    return null;
-  }
+  console.log('📈 GA4: Skipping in automated workflow — pulled manually via Zapier MCP');
+  return null;
 }
 
 // ─── MAIN ────────────────────────────────────────────────────────────────────

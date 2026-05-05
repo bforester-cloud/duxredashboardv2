@@ -33,12 +33,8 @@ jobs:
           MIXPANEL_SERVICE_ACCOUNT_USERNAME: ${{ secrets.MIXPANEL_SERVICE_ACCOUNT_USERNAME }}
           MIXPANEL_SERVICE_ACCOUNT_SECRET: ${{ secrets.MIXPANEL_SERVICE_ACCOUNT_SECRET }}
           HUBSPOT_API_KEY: ${{ secrets.HUBSPOT_API_KEY }}
-          GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
           GA4_SERVICE_ACCOUNT_JSON: ${{ secrets.GA4_SERVICE_ACCOUNT_JSON }}
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
-          GA4_REFRESH_TOKEN: ${{ secrets.GA4_REFRESH_TOKEN }}
-          GA4_CLIENT_ID: ${{ secrets.GA4_CLIENT_ID }}
-          GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
           SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
         run: node scripts/fetch-data.js
 
