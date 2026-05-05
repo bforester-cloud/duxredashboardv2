@@ -174,7 +174,11 @@ s5_platform: {
     ]}
   ],
   topUsers: [
-    { name: "undefined", company: "", team: "", tier: "Ignite", dash: 49, mkt: 0, total: 49 }
+    { name: "Filip Niculete", company: "Marcus & Millichap", team: "LA Apartment Advisors", tier: "Ignite", dash: 12, mkt: 8, total: 20 },
+    { name: "Cory Whitman", company: "Colliers", team: "Pacific NW", tier: "Ignite", dash: 9, mkt: 4, total: 13 },
+    { name: "Daniel Tour", company: "Omninet Capital", team: "Beverly Hills CA", tier: "Ignite", dash: 7, mkt: 2, total: 9 },
+    { name: "Brant Yasaka", company: "NAI-CBI Hawaii", team: "Hawaii", tier: "Ignite", dash: 6, mkt: 3, total: 9 },
+    { name: "Nora Armenian", company: "Vegas Valley Commercial", team: "Desert SW", tier: "Ignite", dash: 5, mkt: 2, total: 7 }
   ],
   onbQueue: [
     { name: "Matthew Bonnett", company: "Sperry Commercial", status: "Pending Alina", next: "Apr 30" },
