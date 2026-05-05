@@ -174,11 +174,7 @@ s5_platform: {
     ]}
   ],
   topUsers: [
-    { name: "Filip Niculete", company: "Marcus & Millichap", logins: 12, listings: 25, tier: "Ignite", flag: "🔴 Apex upsell priority" },
-    { name: "Cory Whitman", company: "Colliers", logins: 9, listings: 8, tier: "Ignite", flag: "Power Broker" },
-    { name: "Daniel Tour", company: "Omninet Capital", logins: 7, listings: 3, tier: "Ignite", flag: "New Apr 20" },
-    { name: "Brant Yasaka", company: "NAI-CBI Hawaii", logins: 6, listings: 4, tier: "Ignite", flag: "ONB queue" },
-    { name: "Nora Armenian", company: "Vegas Valley Commercial", logins: 5, listings: 2, tier: "Ignite", flag: "Desert SW" }
+    { email: "undefined", logins: 49, name: "", company: "", tier: "Ignite", flag: "" }
   ],
   onbQueue: [
     { name: "Matthew Bonnett", company: "Sperry Commercial", tier: "Tier 2", owner: "Shermin", date: "Apr 30", status: "Pending Alina" },
