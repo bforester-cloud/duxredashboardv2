@@ -2,7 +2,7 @@ window.DUXRE = {
 meta: {
   title: "Revenue Operations — April 2026",
   updated: "May 4, 2026",
-  period: "May 1 — May 1, 2026"
+  period: "May 1 — May 4, 2026"
 },
 hero: [
   { label: "Total ARR", value: "$65K", sub: "7 Apex teams · 22 users · Stripe live", color: "#EE3135" },
@@ -128,13 +128,13 @@ s4_marketplace: {
 },
 s5_platform: {
   kpis: [
-    { label: "Broker Logins — Apr MTD", value: "427", sub: "Dashboard 197 · Marketplace 160 · Microsite 70 · Live May 4, 2026" },
+    { label: "Broker Logins — Apr MTD", value: "104", sub: "Dashboard 49 · Marketplace 33 · Microsite 22 · Live May 4" },
     { label: "Listing Detail Views — 30d", value: "905", sub: "826 page views · 274 contact views" },
     { label: "Active Subscriptions", value: "100+", sub: "Stripe live · Apr 24 2026" },
     { label: "CAC (Apr MTD)", value: "$160", sub: "$640.19 ÷ 4 closes · LinkedIn-only" }
   ],
   platformLogins: {
-    dashboard: 197, microsite: 70, marketplace: 31
+    dashboard: 49, microsite: 22, marketplace: 33
   },
   apexTeams: [
     { name: "Colliers Western Region", company: "Colliers", members: [
@@ -192,7 +192,7 @@ s5_platform: {
   ]
 },
 s6_health: {
-  bugCount: 9,
+  bugCount: 14,
   criticalBugs: [
     { ticket: "DTM-5650", title: "🔥 Registration Flow Critically Broken on Staging (DTM-5553 regression)", detail: "Fix for 'Other' account type caused full registration regression. Dhruv Patel · Ready For Deployment." },
     { ticket: "DTM-5651", title: "🔥 No registration confirmation emails sent for any account type", detail: "Critical · Staging · Dhruv Patel · Ready For Deployment." },
