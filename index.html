@@ -539,9 +539,14 @@ function buildOverview(D){
         +'</div>';
     }).join('');
   }
-  document.getElementById('ov-ga4-ch1').textContent=ga4.byChannel[0].value.toLocaleString();
-  document.getElementById('ov-ga4-ch2').textContent=ga4.byChannel[1].value.toLocaleString();
-  document.getElementById('ov-ga4-ch3').textContent=ga4.byChannel[2].value.toLocaleString();
+  [1,2,3,4,5].forEach(function(i){
+    var ch=ga4.byChannel[i-1];
+    if(!ch) return;
+    var lb=document.getElementById('ov-ga4-lb'+i);
+    var vl=document.getElementById('ov-ga4-ch'+i);
+    if(lb) lb.textContent=ch.label;
+    if(vl) vl.textContent=ch.value.toLocaleString();
+  });
 }
 
 function buildOverviewCharts(D){
@@ -1188,7 +1193,7 @@ document.addEventListener('DOMContentLoaded', function(){
     </div>
     <!-- Traffic by Channel — full width -->
     <div class="card">
-      <div class="card-hd"><div class="card-ht"><div class="card-title">Traffic by Channel</div><div class="card-sub">GA4 live · Apr MTD · <span id="ov-ga4-total">—</span> total users</div></div><span class="badge b-live">GA4</span></div>
+      <div class="card-hd"><div class="card-ht"><div class="card-title">Traffic by Channel</div><div class="card-sub">GA4 live · May MTD · <span id="ov-ga4-total">—</span> total users</div></div><span class="badge b-live">GA4</span></div>
       <div style="height:220px;position:relative"><canvas id="ov-ga4-chart"></canvas></div>
       <script>
       (function(){
@@ -1263,11 +1268,11 @@ document.addEventListener('DOMContentLoaded', function(){
       })();
       </script>
       <div style="margin-top:10px;padding-top:10px;border-top:1px solid #EAECF0;display:grid;grid-template-columns:repeat(5,1fr);gap:8px">
-        <div style="text-align:center"><div style="font-size:10px;color:#667085;font-weight:600;margin-bottom:2px">Paid Social</div><div style="font-family:var(--mono);font-size:16px;font-weight:600" id="ov-ga4-ch1">—</div></div>
-        <div style="text-align:center"><div style="font-size:10px;color:#667085;font-weight:600;margin-bottom:2px">Direct</div><div style="font-family:var(--mono);font-size:16px;font-weight:600" id="ov-ga4-ch2">—</div></div>
-        <div style="text-align:center"><div style="font-size:10px;color:#667085;font-weight:600;margin-bottom:2px">Email</div><div style="font-family:var(--mono);font-size:16px;font-weight:600" id="ov-ga4-ch3">—</div></div>
-        <div style="text-align:center"><div style="font-size:10px;color:#667085;font-weight:600;margin-bottom:2px">Unassigned</div><div style="font-family:var(--mono);font-size:16px;font-weight:600" id="ov-ga4-ch4">—</div></div>
-        <div style="text-align:center"><div style="font-size:10px;color:#667085;font-weight:600;margin-bottom:2px">Paid Search</div><div style="font-family:var(--mono);font-size:16px;font-weight:600" id="ov-ga4-ch5">—</div></div>
+        <div style="text-align:center"><div style="font-size:10px;color:#667085;font-weight:600;margin-bottom:2px" id="ov-ga4-lb1">—</div><div style="font-family:var(--mono);font-size:16px;font-weight:600" id="ov-ga4-ch1">—</div></div>
+        <div style="text-align:center"><div style="font-size:10px;color:#667085;font-weight:600;margin-bottom:2px" id="ov-ga4-lb2">—</div><div style="font-family:var(--mono);font-size:16px;font-weight:600" id="ov-ga4-ch2">—</div></div>
+        <div style="text-align:center"><div style="font-size:10px;color:#667085;font-weight:600;margin-bottom:2px" id="ov-ga4-lb3">—</div><div style="font-family:var(--mono);font-size:16px;font-weight:600" id="ov-ga4-ch3">—</div></div>
+        <div style="text-align:center"><div style="font-size:10px;color:#667085;font-weight:600;margin-bottom:2px" id="ov-ga4-lb4">Unassigned</div><div style="font-family:var(--mono);font-size:16px;font-weight:600" id="ov-ga4-ch4">—</div></div>
+        <div style="text-align:center"><div style="font-size:10px;color:#667085;font-weight:600;margin-bottom:2px" id="ov-ga4-lb5">Paid Search</div><div style="font-family:var(--mono);font-size:16px;font-weight:600" id="ov-ga4-ch5">—</div></div>
       </div>
       <div class="more-link" onclick="navTo('acquisition',document.querySelectorAll('.sb-item')[2])">View Acquisition →</div>
     </div>
