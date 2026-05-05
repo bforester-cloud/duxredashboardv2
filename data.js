@@ -128,13 +128,13 @@ s4_marketplace: {
 },
 s5_platform: {
   kpis: [
-    { label: "Broker Logins — Apr MTD", value: "428", sub: "Dashboard 197 · Marketplace 160 · Microsite 71 · Live May 4, 2026" },
+    { label: "Broker Logins — Apr MTD", value: "429", sub: "Dashboard 197 · Marketplace 160 · Microsite 72 · Live May 4, 2026" },
     { label: "Listing Detail Views — 30d", value: "905", sub: "826 page views · 274 contact views" },
     { label: "Active Subscriptions", value: "100+", sub: "Stripe live · Apr 24 2026" },
     { label: "CAC (Apr MTD)", value: "$160", sub: "$640.19 ÷ 4 closes · LinkedIn-only" }
   ],
   platformLogins: {
-    dashboard: 197, microsite: 71, marketplace: 33
+    dashboard: 197, microsite: 72, marketplace: 33
   },
   apexTeams: [
     { name: "Colliers Western Region", company: "Colliers", members: [
@@ -174,11 +174,7 @@ s5_platform: {
     ]}
   ],
   topUsers: [
-    { name: "Filip Niculete", company: "Marcus & Millichap", team: "LA Apartment Advisors", tier: "Ignite", dash: 12, mkt: 8, total: 20 },
-    { name: "Cory Whitman", company: "Colliers", team: "Pacific NW", tier: "Ignite", dash: 9, mkt: 4, total: 13 },
-    { name: "Daniel Tour", company: "Omninet Capital", team: "Beverly Hills CA", tier: "Ignite", dash: 7, mkt: 2, total: 9 },
-    { name: "Brant Yasaka", company: "NAI-CBI Hawaii", team: "Hawaii", tier: "Ignite", dash: 6, mkt: 3, total: 9 },
-    { name: "Nora Armenian", company: "Vegas Valley Commercial", team: "Desert SW", tier: "Ignite", dash: 5, mkt: 2, total: 7 }
+    { name: "undefined", company: "", team: "", tier: "Ignite", dash: 49, mkt: 0, total: 49 }
   ],
   onbQueue: [
     { name: "Matthew Bonnett", company: "Sperry Commercial", status: "Pending Alina", next: "Apr 30" },
