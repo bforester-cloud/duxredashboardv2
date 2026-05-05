@@ -174,19 +174,23 @@ s5_platform: {
     ]}
   ],
   topUsers: [
-    { email: "undefined", logins: 49, name: "", company: "", tier: "Ignite", flag: "" }
+    { name: "Filip Niculete", company: "Marcus & Millichap", team: "LA Apartment Advisors", tier: "Ignite", dash: 12, mkt: 8, total: 20 },
+    { name: "Cory Whitman", company: "Colliers", team: "Pacific NW", tier: "Ignite", dash: 9, mkt: 4, total: 13 },
+    { name: "Daniel Tour", company: "Omninet Capital", team: "Beverly Hills CA", tier: "Ignite", dash: 7, mkt: 2, total: 9 },
+    { name: "Brant Yasaka", company: "NAI-CBI Hawaii", team: "Hawaii", tier: "Ignite", dash: 6, mkt: 3, total: 9 },
+    { name: "Nora Armenian", company: "Vegas Valley Commercial", team: "Desert SW", tier: "Ignite", dash: 5, mkt: 2, total: 7 }
   ],
   onbQueue: [
-    { name: "Matthew Bonnett", company: "Sperry Commercial", tier: "Tier 2", owner: "Shermin", date: "Apr 30", status: "Pending Alina" },
-    { name: "Jamison Shields", company: "Colliers Portland", tier: "Ignite", owner: "Shermin", date: "Apr 9", status: "Pending Alina" },
-    { name: "Greg Pavich", company: "Colliers", tier: "Ignite", owner: "Alina", date: "Apr 2", status: "In Onboarding" },
-    { name: "Omar Lopez", company: "Capital Edge Investors", tier: "Ignite", owner: "Alina", date: "Apr 2", status: "In Onboarding" },
-    { name: "Eitan Hakami", company: "Greiner-Maltz", tier: "Ignite", owner: "Shermin", date: "Mar 19", status: "Pending Alina" },
-    { name: "Caleb Rice", company: "Independent CRE Broker", tier: "Ignite", owner: "Shermin", date: "Mar 17", status: "Pending Alina" },
-    { name: "Brant Yasaka", company: "NAI-CBI Hawaii", tier: "Ignite", owner: "Shermin", date: "Mar 16", status: "Pending Alina" },
-    { name: "Norberto Villanueva", company: "Real Estate Supermarkets", tier: "Ignite", owner: "Shermin", date: "Mar 2", status: "Pending Alina" },
-    { name: "Jacob Megensha", company: "Colliers International", tier: "Ignite", owner: "Shermin", date: "Mar 2", status: "Pending Alina" },
-    { name: "Anthony Wooden", company: "Only Real Estate Group", tier: "Ignite", owner: "Alina", date: "Jan 20", status: "In Onboarding" }
+    { name: "Matthew Bonnett", company: "Sperry Commercial", status: "Pending Alina", next: "Apr 30" },
+    { name: "Jamison Shields", company: "Colliers Portland", status: "Pending Alina", next: "Apr 9" },
+    { name: "Greg Pavich", company: "Colliers", status: "In Onboarding", next: "Apr 2" },
+    { name: "Omar Lopez", company: "Capital Edge Investors", status: "In Onboarding", next: "Apr 2" },
+    { name: "Eitan Hakami", company: "Greiner-Maltz", status: "Pending Alina", next: "Mar 19" },
+    { name: "Caleb Rice", company: "Independent CRE Broker", status: "Pending Alina", next: "Mar 17" },
+    { name: "Brant Yasaka", company: "NAI-CBI Hawaii", status: "Pending Alina", next: "Mar 16" },
+    { name: "Norberto Villanueva", company: "Real Estate Supermarkets", status: "Pending Alina", next: "Mar 2" },
+    { name: "Jacob Megensha", company: "Colliers International", status: "Pending Alina", next: "Mar 2" },
+    { name: "Anthony Wooden", company: "Only Real Estate Group", status: "In Onboarding", next: "Jan 20" }
   ]
 },
 s6_health: {

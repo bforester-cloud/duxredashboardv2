@@ -285,9 +285,11 @@ async function updateDataJs(mixpanel, hubspot, stripe, sendgrid, jira, ga4) {
   // ── Mixpanel top users ──
   if (mixpanel && mixpanel.topUsers && mixpanel.topUsers.length > 0) {
     const topUsersStr = 'topUsers: [\n    ' +
-      mixpanel.topUsers.map(u =>
-        `{ email: "${u.email}", logins: ${u.logins}, name: "", company: "", tier: "Ignite", flag: "" }`
-      ).join(',\n    ') +
+      mixpanel.topUsers.map(u => {
+        const namePart = u.email.split('@')[0].replace(/[._]/g, ' ');
+        const companyPart = u.email.split('@')[1] ? u.email.split('@')[1].split('.')[0] : '';
+        return `{ name: "${namePart}", company: "${companyPart}", team: "", tier: "Ignite", dash: ${u.logins}, mkt: 0, total: ${u.logins} }`;
+      }).join(',\n    ') +
       '\n  ]';
     data = data.replace(/topUsers:\s*\[[\s\S]*?\](?=\s*[,}])/, topUsersStr);
     console.log(`  ✅ Top users → ${mixpanel.topUsers.length} real users from Mixpanel`);
