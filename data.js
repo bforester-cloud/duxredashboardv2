@@ -206,15 +206,15 @@ kpis: [
     marketplace: { logins: 468, unique: 82, avg: 5.7 },
     microsite: { logins: 420, unique: 133, avg: 3.2 },
     topUsers: [
-      { name: "Blake Hammerstein", company: "Colliers Western Region", team: "Apex", tier: "Apex", last: "Apr — May active", platform: "Microsite" },
+      { name: "Blake Hammerstein", company: "Colliers Western Region", team: "Apex", tier: "Apex", last: "Apr + May active", platform: "Microsite" },
       { name: "Mark Schuessler", company: "Colliers Western Region", team: "Apex", tier: "Apex", last: "Apr active", platform: "Microsite" },
-      { name: "Sean Fulp", company: "Colliers Western Region", team: "Apex", tier: "Apex", last: "Apr — May active", platform: "Microsite" },
-      { name: "Eric Longo", company: "Colliers Western Region", team: "Apex", tier: "Apex", last: "Apr — May active", platform: "Microsite" },
-      { name: "Trevor Olkowski", company: "Malan + Marcello / Colliers", team: "Apex", tier: "Apex", last: "Apr active", platform: "Microsite" },
-      { name: "Monica Vanyo", company: "Malan + Marcello / Colliers", team: "Apex", tier: "Apex", last: "Apr active", platform: "Microsite" },
+      { name: "Eric Longo", company: "Colliers Western Region", team: "Apex", tier: "Apex", last: "Apr + May active", platform: "Microsite" },
+      { name: "Trevor Olkowski", company: "Malan + Marcello · Colliers", team: "Apex", tier: "Apex", last: "Apr active", platform: "Microsite" },
+      { name: "Monica Vanyo", company: "Malan + Marcello · Colliers", team: "Apex", tier: "Apex", last: "Apr active", platform: "Microsite" },
+      { name: "Sean Fulp", company: "Colliers Western Region", team: "Apex", tier: "Apex", last: "Apr + May active", platform: "Microsite" },
       { name: "Mark Tarczynski", company: "Colliers", team: "Ignite", tier: "Ignite", last: "Apr active", platform: "Microsite" },
-      { name: "Sean Margulis", company: "Logic CRE", team: "Independent", tier: "Ignite", last: "Apr — May active", platform: "Microsite" },
-      { name: "Ron Miller", company: "Bridge Commercial", team: "Independent", tier: "Ignite", last: "Apr — May active", platform: "Microsite" },
+      { name: "Sean Margulis", company: "Logic CRE", team: "Independent", tier: "Ignite", last: "Apr + May active", platform: "Microsite" },
+      { name: "Ron Miller", company: "Bridge Commercial", team: "Independent", tier: "Ignite", last: "Apr + May active", platform: "Microsite" },
       { name: "Owen Rice", company: "Hughes Marino", team: "Independent", tier: "Ignite", last: "Apr 21", platform: "Microsite" }
     ]
   },

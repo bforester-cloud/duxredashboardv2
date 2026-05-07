@@ -706,7 +706,8 @@ function buildAdoption(D){
   // Top users — May MTD
   var usersEl=document.getElementById('top-users-tbody');
   usersEl.innerHTML=plat.topUsers.map(function(u){
-    return '<tr><td class="bold">'+u.name+'</td><td>'+u.company+'</td><td style="font-size:11px">'+u.team+'</td><td><span class="badge b-dark">'+u.tier+'</span></td><td class="mono">'+u.dash+'</td><td class="mono">'+u.mkt+'</td><td class="mono" style="color:var(--green);font-size:14px">'+u.total+'</td></tr>';
+    var tierCls=u.tier==='Apex'?'b-red':'b-green';
+    return '<tr><td class="bold">'+u.name+'</td><td style="font-size:12px">'+u.company+'</td><td><span class="badge '+tierCls+'">'+u.tier+'</span></td><td style="font-size:12px;color:#667085">'+u.last+'</td><td style="font-size:12px;color:#344054">'+u.platform+'</td></tr>';
   }).join('');
 
   // ONB Queue
@@ -1412,7 +1413,7 @@ document.addEventListener('DOMContentLoaded', function(){
             <div style="font-size:10px;color:#667085">12 unique · 2.0 avg</div>
           </div>
         </div>
-        <table class="tbl"><thead><tr><th>Name</th><th>Company</th><th>Tier</th><th>Last Active</th><th>Platform</th></tr></thead><tbody id="top-users-tbody"></tbody></table>
+        <table class="tbl"><thead><tr><th>Name</th><th>Company</th><th>Tier</th><th>Last Active</th><th>Platform</th></tr></thead></thead><tbody id="top-users-tbody"></tbody></table>
       </div>
       <div class="card">
         <div class="card-hd"><div class="card-ht"><div class="card-title">Previous Month — April 2026</div><div class="card-sub">Mixpanel · Full month · Apr 1–30</div></div><span class="badge b-dark">252 Unique</span></div>
