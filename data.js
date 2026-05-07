@@ -223,35 +223,35 @@ kpis: [
       team: "Randy Getz | CBRE",
       status: "dark",
       members: [
-        { name: "Randy Getz", role: "Super Admin", email: "randy.getz@cbre.com", lastLogin: "Not in Apr–May data" },
-        { name: "Kai Neyer", role: "Admin", email: "kai.neyer@cbre.com", lastLogin: "Not in Apr–May data" }
+        { name: "Randy Getz", role: "Super Admin", email: "randy.getz@cbre.com", lastLogin: "March 2026", logins: "3 total (2 Dashboard · 1 Microsite)", dark: true },
+        { name: "Kai Neyer", role: "Admin", email: "kai.neyer@cbre.com", lastLogin: "April 2026", logins: "16 total (16 Dashboard)", dark: true }
       ]
     },
     {
       team: "May Realty Advisors",
       status: "dark",
       members: [
-        { name: "Matthew May", role: "Super Admin", email: "matthew@mra.la", lastLogin: "Not in Apr–May data" }
+        { name: "Matthew May", role: "Super Admin", email: "matthew@mra.la", lastLogin: "Never", logins: "0 logins", dark: true }
       ]
     },
     {
       team: "Integrated Advisory Services",
       status: "dark",
       members: [
-        { name: "Matt Heyn", role: "Super Admin", email: "matt.heyn@colliers.com", lastLogin: "Not in Apr–May data" },
-        { name: "Jaime Pickett", role: "Admin", email: "jaime.pickett@colliers.com", lastLogin: "Not in Apr–May data" },
-        { name: "Ian Gilbert", role: "Admin", email: "ian.gilbert@colliers.com", lastLogin: "Not in Apr–May data" },
-        { name: "David Solomon", role: "Admin", email: "david.solomon@colliers.com", lastLogin: "Not in Apr–May data" },
-        { name: "Caitlin Hoffman", role: "Admin", email: "caitlin.hoffman@colliers.com", lastLogin: "Not in Apr–May data" }
+        { name: "Matt Heyn", role: "Super Admin", email: "matt.heyn@colliers.com", lastLogin: "Never", logins: "0 logins", dark: true },
+        { name: "Jaime Pickett", role: "Admin", email: "jaime.pickett@colliers.com", lastLogin: "Never", logins: "0 logins", dark: true },
+        { name: "Ian Gilbert", role: "Admin", email: "ian.gilbert@colliers.com", lastLogin: "Never", logins: "0 logins", dark: true },
+        { name: "David Solomon", role: "Admin", email: "david.solomon@colliers.com", lastLogin: "Never", logins: "0 logins", dark: true },
+        { name: "Caitlin Hoffman", role: "Admin", email: "caitlin.hoffman@colliers.com", lastLogin: "Never", logins: "0 logins", dark: true }
       ]
     },
     {
       team: "Malan + Marcello (Partial)",
       status: "partial",
       members: [
-        { name: "Adam Malan", role: "Super Admin", email: "adam.malan@colliers.com", lastLogin: "Not in Apr–May data" },
-        { name: "Deana Marcello", role: "Admin", email: "deana.marcello@colliers.com", lastLogin: "Not in Apr–May data" },
-        { name: "Areeba Moten", role: "Admin", email: "areeba.moten@colliers.com", lastLogin: "Not in Apr–May data" }
+        { name: "Adam Malan", role: "Super Admin", email: "adam.malan@colliers.com", lastLogin: "Never", logins: "0 logins", dark: true },
+        { name: "Deana Marcello", role: "Admin", email: "deana.marcello@colliers.com", lastLogin: "Never", logins: "0 logins", dark: true },
+        { name: "Areeba Moten", role: "Admin", email: "areeba.moten@colliers.com", lastLogin: "Never", logins: "0 logins", dark: true }
       ]
     }
   ],

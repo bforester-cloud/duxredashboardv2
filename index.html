@@ -695,12 +695,13 @@ function buildAdoption(D){
       var teamName=t.team;
       return t.members.map(function(m, i){
         var isFirst=i===0;
-        return '<tr>'+
+        var loginColor=m.lastLogin==='Never'?'#EE3135':m.lastLogin.includes('March')?'#F79009':'#F59E0B';
+      return '<tr>'+
           '<td class="bold" style="color:#282828">'+(isFirst?teamName:'')+'</td>'+
           '<td style="font-size:12px;font-weight:'+(m.role==='Super Admin'?'600':'400')+'">'+m.name+'</td>'+
           '<td style="font-size:11px;color:#667085">'+m.role+'</td>'+
-          '<td style="font-size:11px;color:#667085">'+m.email+'</td>'+
-          '<td style="font-size:12px;color:#F79009">'+m.lastLogin+'</td>'+
+          '<td style="font-size:12px;color:'+loginColor+';font-weight:600">'+m.lastLogin+'</td>'+
+          '<td style="font-size:11px;color:#667085">'+m.logins+'</td>'+
           (isFirst?'<td rowspan="'+t.members.length+'"><span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px;background:'+statusColor+'22;color:'+statusColor+'">'+statusLabel+'</span></td>':'')+'</tr>';
       }).join('');
     }).join('');
@@ -1412,7 +1413,7 @@ document.addEventListener('DOMContentLoaded', function(){
         <span class="badge b-red">Action Needed</span>
       </div>
       <table class="tbl" style="margin-top:12px">
-        <thead><tr><th>Team</th><th>Name</th><th>Role</th><th>Email</th><th>Last Login</th><th>Status</th></tr></thead>
+        <thead><tr><th>Team</th><th>Name</th><th>Role</th><th>Last Login</th><th>Total Logins</th><th>Status</th></tr></thead>
         <tbody id="dark-apex-tbody"></tbody>
       </table>
     </div>
