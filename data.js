@@ -246,13 +246,6 @@ kpis: [
       ]
     },
     {
-      team: "Team England",
-      status: "verify",
-      members: [
-        { name: "Jon England", role: "Super Admin", email: "jon@nai-heartland.com", lastLogin: "Verify — not found in Apr–May Mixpanel data" }
-      ]
-    },
-    {
       team: "Malan + Marcello (Partial)",
       status: "partial",
       members: [
