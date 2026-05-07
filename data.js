@@ -218,6 +218,13 @@ kpis: [
       { name: "Andrew Ebrani", company: "Namdar LLC", team: "Independent", tier: "Ignite", last: "Apr active", platform: "Microsite" }
     ]
   },
+  darkApex: [
+    { team: "Team England", superAdmin: "Jon England", company: "NAI Heartland", lastLogin: "Never", darkSince: "Dec 30, 2025", days: 128, status: "critical" },
+    { team: "Randy Getz | CBRE", superAdmin: "Randy Getz", company: "CBRE", lastLogin: "Not in Apr–May data", darkSince: "Apr 1, 2026", days: 36, status: "dark" },
+    { team: "May Realty Advisors", superAdmin: "Matthew May", company: "May Realty Advisors", lastLogin: "Not in Apr–May data", darkSince: "Apr 1, 2026", days: 36, status: "dark" },
+    { team: "Integrated Advisory Services", superAdmin: "Matt Heyn", company: "Colliers", lastLogin: "Not in Apr–May data", darkSince: "Apr 1, 2026", days: 36, status: "dark" },
+    { team: "Pablo Rodriguez | CBRE", superAdmin: "Pablo Rodriguez", company: "CBRE", lastLogin: "Onboarding · microsite pending", darkSince: "Mar 2026", days: 67, status: "onboarding" }
+  ],
   igniteRoster: [
     { firm: "Colliers", users: 46, segment: "West Coast", superAdmins: ["Jason Roth", "Jeremy Thornton", "El Warner", "Mark Zorn", "Cory Whitman", "Scott Scharlach", "Alyssa Smith", "Grant Lammersen", "Jacob Mengesha", "Katie Lowder", "Emma Scott", "Jamison Shields", "Laura Spring"], powerBrokers: ["Jason Roth", "Jeremy Thornton", "El Warner", "Cory Whitman", "Alyssa Smith"], tier: "Ignite" },
     { firm: "CBRE", users: 21, segment: "Multi-Region", superAdmins: ["Kelly Murphy", "John Morris", "Lou Vidaillet", "Kevin Kelly", "Art Rasmussen", "David Norrie", "Jennifer Bussey", "Patrick Finlay"], powerBrokers: ["Kelly Murphy"], tier: "Ignite" },
