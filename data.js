@@ -175,15 +175,15 @@ kpis: [
     ]}
   ],
     topUsers: [
-    { name: "Blake Hammerstein", company: "Colliers Western Region", team: "Apex", tier: "Apex", last: "Today", platform: "Microsite" },
-    { name: "Sean Fulp", company: "Colliers Western Region", team: "Apex", tier: "Apex", last: "Today", platform: "Microsite" },
     { name: "Kevin Fenenbock", company: "Colliers", team: "Ignite", tier: "Ignite", last: "Yesterday", platform: "Microsite" },
     { name: "Shadd Walker", company: "Colliers", team: "Ignite", tier: "Ignite", last: "Yesterday", platform: "Microsite" },
     { name: "Grant Lammersen", company: "Colliers", team: "Ignite", tier: "Ignite", last: "2 days ago", platform: "Microsite" },
     { name: "Sean Margulis", company: "Logic CRE", team: "Independent", tier: "Ignite", last: "Today", platform: "Microsite" },
     { name: "Ron Miller", company: "Bridge Commercial", team: "Independent", tier: "Ignite", last: "Today", platform: "Microsite" },
-    { name: "Jordan Selig", company: "J Selig RE", team: "Independent", tier: "Ignite", last: "2 days ago", platform: "Microsite" },
-    { name: "Eric Longo", company: "Colliers Western Region", team: "Apex", tier: "Apex", last: "Yesterday", platform: "Microsite" },
+    { name: "Jordan Selig", company: "J Selig Real Estate", team: "Independent", tier: "Ignite", last: "2 days ago", platform: "Microsite" },
+    { name: "Matt Felton", company: "Felton Properties", team: "Independent", tier: "Ignite", last: "Today", platform: "Microsite" },
+    { name: "Noah Tillipman", company: "Stone Trail Partners", team: "Independent", tier: "Ignite", last: "Today", platform: "Microsite" },
+    { name: "Howard Reback", company: "Reback RE · CCIM", team: "Independent", tier: "Ignite", last: "Today", platform: "Microsite" },
     { name: "Nipun Nath", company: "Independent", team: "Independent", tier: "Ignite", last: "Today", platform: "Microsite" }
   ],
   onbQueue: [
