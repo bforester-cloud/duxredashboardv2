@@ -122,6 +122,54 @@ async function fetchHubSpot() {
   }
 }
 
+
+// ─── GA4 ──────────────────────────────────────────────────────────────────────
+async function fetchGA4() {
+  try {
+    console.log('\n📊 Fetching GA4...');
+    const propertyId = 'properties/495842825'; // duxre.com G-VEDY2SHVE7
+    const token = process.env.GA4_ACCESS_TOKEN;
+    if (!token) { console.log('  ⚠️ GA4_ACCESS_TOKEN not set — skipping'); return null; }
+
+    const today = new Date();
+    const startOfMonth = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-01`;
+    const todayStr = today.toISOString().slice(0,10);
+
+    const res = await axios.post(
+      `https://analyticsdata.googleapis.com/v1beta/${propertyId}:runReport`,
+      {
+        dateRanges: [
+          { startDate: startOfMonth, endDate: todayStr, name: 'mtd' },
+          { startDate: `${today.getFullYear()}-${String(today.getMonth()).padStart(2,'0')}-01`,
+            endDate: `${today.getFullYear()}-${String(today.getMonth()).padStart(2,'0')}-30`,
+            name: 'last' }
+        ],
+        metrics: [
+          { name: 'sessions' },
+          { name: 'totalUsers' },
+          { name: 'newUsers' },
+          { name: 'screenPageViews' }
+        ]
+      },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+
+    const rows = res.data.rows || [];
+    const mtd = rows.find(r => r.dimensionValues?.[0]?.value === 'mtd') || rows[0];
+    const last = rows.find(r => r.dimensionValues?.[0]?.value === 'last') || rows[1];
+
+    const sessions = parseInt(mtd?.metricValues?.[0]?.value || 0);
+    const users = parseInt(mtd?.metricValues?.[1]?.value || 0);
+    const lastSessions = parseInt(last?.metricValues?.[0]?.value || 0);
+
+    console.log(`  ✅ GA4 → Sessions: ${sessions} · Users: ${users} · Last month: ${lastSessions}`);
+    return { sessions, users, lastSessions };
+  } catch (e) {
+    console.error('❌ GA4 error:', e.message);
+    return null;
+  }
+}
+
 // ─── STRIPE ──────────────────────────────────────────────────────────────────
 async function fetchStripe() {
   console.log('💳 Fetching Stripe data...');
@@ -433,8 +481,8 @@ async function fetchGA4() {
 async function main() {
   console.log('🚀 Duxre Dashboard Data Refresh — ' + today());
   console.log('==========================================\n');
-  const [mixpanel, hubspot, stripe, sendgrid, jira, ga4] = await Promise.all([
-    fetchMixpanel(), fetchHubSpot(), fetchStripe(), fetchSendGrid(), fetchJira(), fetchGA4()
+  const [mixpanel, hubspot, stripe, ga4, sendgrid, jira] = await Promise.all([
+    fetchMixpanel(), fetchHubSpot(), fetchStripe(), fetchGA4(), fetchSendGrid(), fetchJira()
   ]);
   await updateDataJs(mixpanel, hubspot, stripe, sendgrid, jira, ga4);
   console.log('\n==========================================');
