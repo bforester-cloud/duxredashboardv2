@@ -361,10 +361,21 @@ google_ads: {
 },
 meta_ads: {
   status: "Active ✅",
-  totalLeads: 603,
+  period: "May 1–7, 2026",
+  totalReach: 67263,
+  totalSpend: 488.79,
+  avgCPM: 7.27,
   campaign: "duxre | p1 team leader | conversions",
-  ctr: "2.5%",
-  note: "Account recovered Apr 20. Campaign relaunched — April 22 noon relaunch confirmed via Slack. New leads flow automatically into HubSpot."
+  ageBreakdown: [
+    { age: "65+",   reach: 17400, spend: 146.39, cpm: 8.41 },
+    { age: "55–64", reach: 14500, spend: 104.78, cpm: 7.23 },
+    { age: "45–54", reach: 11800, spend:  85.49, cpm: 7.24 },
+    { age: "35–44", reach: 12300, spend:  79.84, cpm: 6.49 },
+    { age: "25–34", reach: 10500, spend:  67.48, cpm: 6.43 },
+    { age: "18–24", reach:   763, spend:   4.81, cpm: 6.30 }
+  ],
+  insight: "55+ audience = 47% of total reach. 35–44 is highest-value underinvested segment — established brokers at lowest meaningful CPM.",
+  note: "Account recovered Apr 20. Live data pulled manually May 7."
 }
 };
 
