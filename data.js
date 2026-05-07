@@ -8,7 +8,7 @@ hero: [
   { label: "Total ARR", value: "$65K", sub: "7 Apex teams · 22 users · Stripe live", color: "#EE3135" },
   { label: "Command Subscriptions", value: "0", goal: 21, sub: "0% to goal · May MTD · Stripe live", color: "#282828" },
   { label: "New Ignites MTD", value: "9", goal: 20, sub: "45% to goal · Stripe verified · May 7", color: "#12B76A" },
-  { label: "Demos Booked MTD", value: "5", goal: 20, sub: "25% to goal · HubSpot live · May 7", color: "#EE3135" }
+  { label: "Demos Booked MTD", value: "8", goal: 20, sub: "40% to goal · Shermin 5 · Bots/Ads 3 · May 7", color: "#EE3135" }
 ],
 s1_targets: [
   { name: "Adam English", company: "STREAM Capital Partners", priority: "hot", owner: "Shermin", status: "Demo May 6 2pm EST · Managing Director", date: "May 6" },
