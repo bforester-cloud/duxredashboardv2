@@ -144,9 +144,36 @@ kpis: [
       { role: "Admin", name: "Blake Hammerstein", title: "AVP" },
       { role: "Admin", name: "Eric Longo", title: "Analyst" },
       { role: "Admin", name: "Todd Tydlaska", title: "EVP" }
-    ],
-  }],
-  topUsers: [
+    ]},
+    { name: "Integrated Advisory Services", company: "Colliers", members: [
+      { role: "Super Admin", name: "Matt Heyn", title: "Vice Chair" },
+      { role: "Admin", name: "Jaime Pickett", title: "Sr. Coordinator" },
+      { role: "Admin", name: "Ian Gilbert", title: "EVP" },
+      { role: "Admin", name: "David Solomon", title: "Sr. EVP" },
+      { role: "Admin", name: "Caitlin Hoffman", title: "VP" }
+    ]},
+    { name: "Malan + Marcello Investment", company: "Colliers", members: [
+      { role: "Super Admin", name: "Adam Malan", title: "Vice Chair" },
+      { role: "Admin", name: "Deana Marcello", title: "EVP" },
+      { role: "Admin", name: "Monica Vanyo", title: "Sr. Strategist" },
+      { role: "Admin", name: "Trevor Olkowski", title: "Associate" },
+      { role: "Admin", name: "Areeba Moten", title: "Sr. Associate" }
+    ]},
+    { name: "Randy Getz | CBRE", company: "CBRE", members: [
+      { role: "Super Admin", name: "Randy Getz", title: "EVP" },
+      { role: "Admin", name: "Kai Neyer", title: "Client Svc." }
+    ]},
+    { name: "Team England", company: "NAI Heartland", members: [
+      { role: "Super Admin", name: "Jon England", title: "Partner" }
+    ]},
+    { name: "May Realty Advisors", company: "May Realty", arr: "$12,000 · Confirmed paid", members: [
+      { role: "Super Admin", name: "Matthew May", title: "Owner/Broker" }
+    ]},
+    { name: "Pablo Rodriguez | CBRE", company: "CBRE", arr: "$2,500 · Mar 2026 · team roster TBD", members: [
+      { role: "Super Admin", name: "Pablo Rodriguez", title: "Managing Dir." }
+    ]}
+  ],
+    topUsers: [
     { name: "Filip Niculete", company: "Marcus & Millichap", team: "LA Apartment Advisors", tier: "Ignite", dash: 12, mkt: 8, total: 20 },
     { name: "Cory Whitman", company: "Colliers", team: "Pacific NW", tier: "Ignite", dash: 9, mkt: 4, total: 13 },
     { name: "Daniel Tour", company: "Omninet Capital", team: "Beverly Hills CA", tier: "Ignite", dash: 7, mkt: 2, total: 9 },
