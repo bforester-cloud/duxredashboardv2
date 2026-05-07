@@ -127,14 +127,14 @@ s4_marketplace: {
   ]
 },
 s5_platform: {
-  kpis: [
-    { label: "Broker Logins — Apr MTD", value: "959", sub: "Dashboard 423 · Marketplace 319 · Microsite 217 · Live May 6, 2026" },
+kpis: [
+    { label: "Broker Logins — Apr MTD", value: "627", sub: "Dashboard 268 · Marketplace 247 · Microsite 112 · Live May 6, 2026" },
     { label: "Listing Detail Views — 30d", value: "905", sub: "826 page views · 274 contact views" },
     { label: "Active Subscriptions", value: "100+", sub: "Stripe live · Apr 24 2026" },
     { label: "CAC (Apr MTD)", value: "$160", sub: "$640.19 ÷ 4 closes · LinkedIn-only" }
   ],
   platformLogins: {
-    dashboard: 423, microsite: 217, marketplace: 33
+    dashboard: 268, microsite: 112, marketplace: 33
   },
   apexTeams: [
     { name: "Colliers Western Region", company: "Colliers", members: [
@@ -145,44 +145,7 @@ s5_platform: {
       { role: "Admin", name: "Eric Longo", title: "Analyst" },
       { role: "Admin", name: "Todd Tydlaska", title: "EVP" }
     ],
-  igniteRoster: [
-    { firm: "Colliers", users: 46, segment: "West Coast", superAdmins: ["Jason Roth", "Jeremy Thornton", "El Warner", "Mark Zorn", "Cory Whitman", "Scott Scharlach", "Alyssa Smith", "Grant Lammersen", "Jacob Mengesha", "Katie Lowder", "Emma Scott", "Jamison Shields", "Laura Spring"], powerBrokers: ["Jason Roth", "Jeremy Thornton", "El Warner", "Cory Whitman", "Alyssa Smith"], tier: "Ignite" },
-    { firm: "CBRE", users: 21, segment: "Multi-Region", superAdmins: ["Kelly Murphy", "John Morris", "Lou Vidaillet", "Kevin Kelly", "Art Rasmussen", "David Norrie", "Jennifer Bussey", "Patrick Finlay"], powerBrokers: ["Kelly Murphy"], tier: "Ignite" },
-    { firm: "Newmark", users: 12, segment: "West Coast", superAdmins: ["Andrew Robben", "Carter Norton", "Colin Kloezeman", "Jon Cannon", "Zain Kooshkabadi", "Trace Elrod"], powerBrokers: ["Andrew Robben"], tier: "Ignite" },
-    { firm: "Marcus & Millichap", users: 10, segment: "West Coast", superAdmins: ["Filip Niculete", "Hunter Loncar"], powerBrokers: ["Filip Niculete"], tier: "Ignite" },
-    { firm: "Cushman & Wakefield", users: 6, segment: "Multi-Region", superAdmins: ["Virgilio Fernandez", "Andres Navarrete", "Kelsey Berry"], powerBrokers: [], tier: "Ignite" },
-    { firm: "Kidder Mathews", users: 5, segment: "West Coast", superAdmins: ["Darren Tappen", "Casey Lins", "Mike King", "Peter Beauchamp", "Nathan Thinnes"], powerBrokers: ["Darren Tappen"], tier: "Ignite" },
-    { firm: "NAI Affiliates", users: 3, segment: "Multi-Region", superAdmins: ["Brant Yasaka", "Edward Villareal", "Obed Garcia"], powerBrokers: [], tier: "Ignite" },
-    { firm: "Boutique & Independent", users: 47, segment: "Multi-Region", superAdmins: ["Shane Young", "Daniel Tour", "John Carpenter", "Tanner Webster", "Dmytro Shcherbitskyi", "Steven Paulsen", "Ofir Barashy", "Majid Radaei"], powerBrokers: ["Shane Young", "John Carpenter"], tier: "Ignite" }
-  ]},
-    { name: "Integrated Advisory Services", company: "Colliers", members: [
-      { role: "Super Admin", name: "Matt Heyn", title: "Vice Chair" },
-      { role: "Admin", name: "Jaime Pickett", title: "Sr. Coordinator" },
-      { role: "Admin", name: "Ian Gilbert", title: "EVP" },
-      { role: "Admin", name: "David Solomon", title: "Sr. EVP" },
-      { role: "Admin", name: "Caitlin Hoffman", title: "VP" }
-    ]},
-    { name: "Malan + Marcello Investment", company: "Colliers", members: [
-      { role: "Super Admin", name: "Adam Malan", title: "Vice Chair" },
-      { role: "Admin", name: "Deana Marcello", title: "EVP" },
-      { role: "Admin", name: "Monica Vanyo", title: "Sr. Strategist" },
-      { role: "Admin", name: "Trevor Olkowski", title: "Associate" },
-      { role: "Admin", name: "Areeba Moten", title: "Sr. Associate" }
-    ]},
-    { name: "Randy Getz | CBRE", company: "CBRE", members: [
-      { role: "Super Admin", name: "Randy Getz", title: "EVP" },
-      { role: "Admin", name: "Kai Neyer", title: "Client Svc." }
-    ]},
-    { name: "Team England", company: "NAI Heartland", members: [
-      { role: "Super Admin", name: "Jon England", title: "Partner" }
-    ]},
-    { name: "May Realty Advisors", company: "May Realty", arr: "$12,000 · Confirmed paid", members: [
-      { role: "Super Admin", name: "Matthew May", title: "Owner/Broker" }
-    ]},
-    { name: "Pablo Rodriguez | CBRE", company: "CBRE", arr: "$2,500 · Mar 2026 · team roster TBD", members: [
-      { role: "Super Admin", name: "Pablo Rodriguez", title: "Managing Dir." }
-    ]}
-  ],
+  }],
   topUsers: [
     { name: "Filip Niculete", company: "Marcus & Millichap", team: "LA Apartment Advisors", tier: "Ignite", dash: 12, mkt: 8, total: 20 },
     { name: "Cory Whitman", company: "Colliers", team: "Pacific NW", tier: "Ignite", dash: 9, mkt: 4, total: 13 },
@@ -201,8 +164,19 @@ s5_platform: {
     { name: "Norberto Villanueva", company: "Real Estate Supermarkets", status: "Pending Alina", next: "Mar 2" },
     { name: "Jacob Megensha", company: "Colliers International", status: "Pending Alina", next: "Mar 2" },
     { name: "Anthony Wooden", company: "Only Real Estate Group", status: "In Onboarding", next: "Jan 20" }
+  ],
+  igniteRoster: [
+    { firm: "Colliers", users: 46, segment: "West Coast", superAdmins: ["Jason Roth", "Jeremy Thornton", "El Warner", "Mark Zorn", "Cory Whitman", "Scott Scharlach", "Alyssa Smith", "Grant Lammersen", "Jacob Mengesha", "Katie Lowder", "Emma Scott", "Jamison Shields", "Laura Spring"], powerBrokers: ["Jason Roth", "Jeremy Thornton", "El Warner", "Cory Whitman", "Alyssa Smith"], tier: "Ignite" },
+    { firm: "CBRE", users: 21, segment: "Multi-Region", superAdmins: ["Kelly Murphy", "John Morris", "Lou Vidaillet", "Kevin Kelly", "Art Rasmussen", "David Norrie", "Jennifer Bussey", "Patrick Finlay"], powerBrokers: ["Kelly Murphy"], tier: "Ignite" },
+    { firm: "Newmark", users: 12, segment: "West Coast", superAdmins: ["Andrew Robben", "Carter Norton", "Colin Kloezeman", "Jon Cannon", "Zain Kooshkabadi", "Trace Elrod"], powerBrokers: ["Andrew Robben"], tier: "Ignite" },
+    { firm: "Marcus & Millichap", users: 10, segment: "West Coast", superAdmins: ["Filip Niculete", "Hunter Loncar"], powerBrokers: ["Filip Niculete"], tier: "Ignite" },
+    { firm: "Cushman & Wakefield", users: 6, segment: "Multi-Region", superAdmins: ["Virgilio Fernandez", "Andres Navarrete", "Kelsey Berry"], powerBrokers: [], tier: "Ignite" },
+    { firm: "Kidder Mathews", users: 5, segment: "West Coast", superAdmins: ["Darren Tappen", "Casey Lins", "Mike King", "Peter Beauchamp", "Nathan Thinnes"], powerBrokers: ["Darren Tappen"], tier: "Ignite" },
+    { firm: "NAI Affiliates", users: 3, segment: "Multi-Region", superAdmins: ["Brant Yasaka", "Edward Villareal", "Obed Garcia"], powerBrokers: [], tier: "Ignite" },
+    { firm: "Boutique & Independent", users: 47, segment: "Multi-Region", superAdmins: ["Shane Young", "Daniel Tour", "John Carpenter", "Tanner Webster", "Dmytro Shcherbitskyi", "Steven Paulsen", "Ofir Barashy", "Majid Radaei"], powerBrokers: ["Shane Young", "John Carpenter"], tier: "Ignite" }
   ]
 },
+
 s6_health: {
   bugCount: 14,
   criticalBugs: [
