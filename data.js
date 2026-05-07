@@ -170,7 +170,8 @@ kpis: [
       { role: "Super Admin", name: "Matthew May", title: "Owner/Broker" }
     ]},
     { name: "Pablo Rodriguez | CBRE", company: "CBRE", arr: "$2,500 · Mar 2026 · team roster TBD", members: [
-      { role: "Super Admin", name: "Pablo Rodriguez", title: "Managing Dir." }
+      { role: "Super Admin", name: "Pablo Rodriguez", title: "Managing Dir." },
+      { role: "Admin", name: "Leticia Mendez", title: "Assistant · CBRE Ontario" }
     ]}
   ],
     topUsers: [
