@@ -128,13 +128,13 @@ s4_marketplace: {
 },
 s5_platform: {
 kpis: [
-    { label: "Broker Logins — Apr MTD", value: "978", sub: "Dashboard 429 · Marketplace 319 · Microsite 230 · Live May 6, 2026" },
+    { label: "Broker Logins — Apr MTD", value: "245", sub: "Dashboard 106 · Marketplace 69 · Microsite 70 · Live May 6" },
     { label: "Listing Detail Views — 30d", value: "905", sub: "826 page views · 274 contact views" },
     { label: "Active Subscriptions", value: "100+", sub: "Stripe live · Apr 24 2026" },
     { label: "CAC (Apr MTD)", value: "$160", sub: "$640.19 ÷ 4 closes · LinkedIn-only" }
   ],
   platformLogins: {
-    dashboard: 429, microsite: 230, marketplace: 69
+    dashboard: 106, microsite: 70, marketplace: 69
   },
   apexTeams: [
     { name: "Colliers Western Region", company: "Colliers", members: [
@@ -175,16 +175,16 @@ kpis: [
     ]}
   ],
     topUsers: [
-    { name: "Filip Niculete", company: "Marcus & Millichap", tier: "Ignite", last: "Active May MTD", platform: "Dashboard + Marketplace" },
-    { name: "Cory Whitman", company: "Colliers", tier: "Ignite", last: "Active May MTD", platform: "Dashboard + Marketplace" },
-    { name: "Kevin Fenenbock", company: "Colliers", tier: "Ignite", last: "Active May MTD", platform: "Dashboard + Marketplace" },
-    { name: "Shadd Walker", company: "Colliers", tier: "Ignite", last: "Active May MTD", platform: "Dashboard + Marketplace" },
-    { name: "Grant Lammersen", company: "Colliers", tier: "Ignite", last: "Active May MTD", platform: "Dashboard + Marketplace" },
-    { name: "Trevor Olkowski", company: "Malan + Marcello · Colliers", tier: "Apex", last: "Active May MTD", platform: "Microsite" },
-    { name: "Monica Vanyo", company: "Malan + Marcello · Colliers", tier: "Apex", last: "Active May MTD", platform: "Microsite" },
-    { name: "Sean Margulis", company: "Logic CRE", tier: "Ignite", last: "Active May MTD", platform: "Marketplace" },
-    { name: "Ron Miller", company: "Bridge Commercial", tier: "Ignite", last: "Active May MTD", platform: "Marketplace" },
-    { name: "Jordan Selig", company: "J Selig Real Estate", tier: "Ignite", last: "Active May MTD", platform: "Marketplace" }
+    { name: "Rodney Roller", company: "Independent", tier: "Ignite", dash: 0, mkt: 10, micro: 0, total: 10, platform: "Marketplace" },
+    { name: "Monica Vanyo", company: "Malan + Marcello · Colliers", tier: "Apex", dash: 3, mkt: 0, micro: 0, total: 3, platform: "Dashboard" },
+    { name: "Adam Lasoff", company: "Independent", tier: "Ignite", dash: 0, mkt: 0, micro: 4, total: 4, platform: "Microsite" },
+    { name: "Sarah Berg", company: "Independent", tier: "Ignite", dash: 0, mkt: 0, micro: 3, total: 3, platform: "Microsite" },
+    { name: "Trevor Olkowski", company: "Malan + Marcello · Colliers", tier: "Apex", dash: 2, mkt: 0, micro: 0, total: 2, platform: "Dashboard" },
+    { name: "Jordan Selig", company: "J Selig Real Estate", tier: "Ignite", dash: 0, mkt: 0, micro: 2, total: 2, platform: "Microsite" },
+    { name: "Joshua Hanasab", company: "Orum Capital", tier: "Ignite", dash: 0, mkt: 0, micro: 2, total: 2, platform: "Microsite" },
+    { name: "Matt Kim", company: "Edgewood Realty", tier: "Ignite", dash: 0, mkt: 0, micro: 2, total: 2, platform: "Microsite" },
+    { name: "Howard Reback", company: "Reback RE · CCIM", tier: "Ignite", dash: 0, mkt: 0, micro: 2, total: 2, platform: "Microsite" },
+    { name: "Nipun Nath", company: "Independent", tier: "Ignite", dash: 0, mkt: 0, micro: 2, total: 2, platform: "Microsite" }
   ],
   onbQueue: [
     { name: "Matthew Bonnett", company: "Sperry Commercial", status: "Pending Alina", next: "Apr 30" },
@@ -206,16 +206,16 @@ kpis: [
     marketplace: { logins: 468, unique: 82, avg: 5.7 },
     microsite: { logins: 420, unique: 133, avg: 3.2 },
     topUsers: [
-      { name: "Filip Niculete", company: "Marcus & Millichap", tier: "Ignite", last: "Apr active", platform: "Dashboard + Marketplace" },
-      { name: "Cory Whitman", company: "Colliers", tier: "Ignite", last: "Apr active", platform: "Dashboard + Marketplace" },
-      { name: "Daniel Tour", company: "Omninet Capital", tier: "Ignite", last: "Apr active", platform: "Dashboard + Marketplace" },
-      { name: "Trevor Olkowski", company: "Malan + Marcello · Colliers", tier: "Apex", last: "Apr active", platform: "Microsite" },
-      { name: "Monica Vanyo", company: "Malan + Marcello · Colliers", tier: "Apex", last: "Apr active", platform: "Microsite" },
-      { name: "Mark Tarczynski", company: "Colliers", tier: "Ignite", last: "Apr active", platform: "Dashboard + Marketplace" },
-      { name: "Sean Margulis", company: "Logic CRE", tier: "Ignite", last: "Apr active", platform: "Marketplace" },
-      { name: "Ron Miller", company: "Bridge Commercial", tier: "Ignite", last: "Apr active", platform: "Marketplace" },
-      { name: "Owen Rice", company: "Hughes Marino", tier: "Ignite", last: "Apr 21", platform: "Marketplace" },
-      { name: "Matt Alisch", company: "Martin Selig Real Estate", tier: "Ignite", last: "Apr active", platform: "Marketplace" }
+      { name: "Monica Vanyo", company: "Malan + Marcello · Colliers", tier: "Apex", dash: 12, mkt: 2, micro: 4, total: 18, platform: "Dashboard + Marketplace + Microsite" },
+      { name: "Trevor Olkowski", company: "Malan + Marcello · Colliers", tier: "Apex", dash: 16, mkt: 0, micro: 1, total: 17, platform: "Dashboard + Microsite" },
+      { name: "Kai Neyer", company: "CBRE · Randy Getz Team", tier: "Apex", dash: 9, mkt: 4, micro: 0, total: 13, platform: "Dashboard + Marketplace" },
+      { name: "Johny West", company: "Independent", tier: "Ignite", dash: 0, mkt: 7, micro: 1, total: 8, platform: "Marketplace + Microsite" },
+      { name: "Ofir Barashy", company: "Berkshire Hathaway NV", tier: "Ignite", dash: 5, mkt: 2, micro: 0, total: 7, platform: "Dashboard + Marketplace" },
+      { name: "Jon England", company: "NAI Heartland", tier: "Apex", dash: 6, mkt: 0, micro: 0, total: 6, platform: "Dashboard" },
+      { name: "Leticia Mendez", company: "CBRE · Pablo Rodriguez Team", tier: "Apex", dash: 4, mkt: 1, micro: 0, total: 5, platform: "Dashboard + Marketplace" },
+      { name: "Ron Miller", company: "Bridge Commercial", tier: "Ignite", dash: 0, mkt: 1, micro: 4, total: 5, platform: "Marketplace + Microsite" },
+      { name: "Rodney Roller", company: "Independent", tier: "Ignite", dash: 0, mkt: 2, micro: 3, total: 5, platform: "Marketplace + Microsite" },
+      { name: "Andrew Ebrani", company: "Namdar LLC", tier: "Ignite", dash: 0, mkt: 0, micro: 4, total: 4, platform: "Microsite" }
     ]
   },
   darkApex: [

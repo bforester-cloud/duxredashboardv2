@@ -682,7 +682,16 @@ function buildAdoption(D){
   if(prevEl&&plat.prevMonth&&plat.prevMonth.topUsers){
     prevEl.innerHTML=plat.prevMonth.topUsers.map(function(u){
       var tierCls=u.tier==='Apex'?'b-red':'b-green';
-      return '<tr><td class="bold">'+u.name+'</td><td style="font-size:12px">'+u.company+'</td><td><span class="badge '+tierCls+'">'+u.tier+'</span></td><td style="font-size:12px;color:#667085">'+u.last+'</td><td style="font-size:12px;color:#344054">'+u.platform+'</td></tr>';
+      return '<tr>'+
+        '<td class="bold">'+u.name+'</td>'+
+        '<td style="font-size:12px">'+u.company+'</td>'+
+        '<td><span class="badge '+tierCls+'">'+u.tier+'</span></td>'+
+        '<td style="font-family:var(--mono);font-size:12px;color:'+(u.dash>0?'#282828':'#D0D5DD')+'">'+u.dash+'</td>'+
+        '<td style="font-family:var(--mono);font-size:12px;color:'+(u.mkt>0?'#282828':'#D0D5DD')+'">'+u.mkt+'</td>'+
+        '<td style="font-family:var(--mono);font-size:12px;color:'+(u.micro>0?'#282828':'#D0D5DD')+'">'+u.micro+'</td>'+
+        '<td style="font-family:var(--mono);font-size:12px;font-weight:700">'+u.total+'</td>'+
+        '<td style="font-size:11px;color:#667085">'+u.platform+'</td>'+
+        '</tr>';
     }).join('');
   }
 
@@ -728,7 +737,16 @@ function buildAdoption(D){
   var usersEl=document.getElementById('top-users-tbody');
   usersEl.innerHTML=plat.topUsers.map(function(u){
     var tierCls=u.tier==='Apex'?'b-red':'b-green';
-    return '<tr><td class="bold">'+u.name+'</td><td style="font-size:12px">'+u.company+'</td><td><span class="badge '+tierCls+'">'+u.tier+'</span></td><td style="font-size:12px;color:#667085">'+u.last+'</td><td style="font-size:12px;color:#344054">'+u.platform+'</td></tr>';
+    return '<tr>'+
+      '<td class="bold">'+u.name+'</td>'+
+      '<td style="font-size:12px">'+u.company+'</td>'+
+      '<td><span class="badge '+tierCls+'">'+u.tier+'</span></td>'+
+      '<td style="font-family:var(--mono);font-size:12px;color:'+(u.dash>0?'#282828':'#D0D5DD')+'">'+u.dash+'</td>'+
+      '<td style="font-family:var(--mono);font-size:12px;color:'+(u.mkt>0?'#282828':'#D0D5DD')+'">'+u.mkt+'</td>'+
+      '<td style="font-family:var(--mono);font-size:12px;color:'+(u.micro>0?'#282828':'#D0D5DD')+'">'+u.micro+'</td>'+
+      '<td style="font-family:var(--mono);font-size:12px;font-weight:700">'+u.total+'</td>'+
+      '<td style="font-size:11px;color:#667085">'+u.platform+'</td>'+
+      '</tr>';
   }).join('');
 
   // ONB Queue
@@ -1468,7 +1486,7 @@ document.addEventListener('DOMContentLoaded', function(){
             <div style="font-size:10px;color:#667085">133 unique · 3.2 avg</div>
           </div>
         </div>
-        <table class="tbl"><thead><tr><th>Name</th><th>Company</th><th>Tier</th><th>Last Active</th><th>Platform</th></tr></thead><tbody id="prev-users-tbody"></tbody></table>
+        <table class="tbl"><thead><tr><th>Name</th><th>Company</th><th>Tier</th><th>Dash</th><th>Mkt</th><th>Micro</th><th>Total</th><th>Primary Platform</th></tr></thead><tbody id="prev-users-tbody"></tbody></table>
       </div>
       <div class="card">
         <div class="card-hd"><div class="card-ht"><div class="card-title">ONB Queue + Watch List</div><div class="card-sub">Alina Garmatyuk · Active</div></div><span class="badge b-amber">Action needed</span></div>
