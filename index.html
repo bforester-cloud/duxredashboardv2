@@ -690,17 +690,19 @@ function buildAdoption(D){
   var darkEl=document.getElementById('dark-apex-tbody');
   if(darkEl&&plat.darkApex){
     darkEl.innerHTML=plat.darkApex.map(function(t){
-      var statusColor=t.status==='critical'?'#EE3135':t.status==='dark'?'#F79009':'#667085';
-      var statusLabel=t.status==='critical'?'Never Logged In':t.status==='dark'?'Dark — '+t.days+' days':'Onboarding';
-      var daysCellColor=t.status==='critical'?'color:#EE3135;font-weight:700':t.status==='dark'?'color:#F79009;font-weight:600':'color:#667085';
-      return '<tr>'+
-        '<td class="bold">'+t.team+'</td>'+
-        '<td>'+t.superAdmin+'</td>'+
-        '<td style="font-size:12px;color:#667085">'+t.company+'</td>'+
-        '<td style="font-size:12px;color:#667085">'+t.lastLogin+'</td>'+
-        '<td style="font-size:12px;'+daysCellColor+'">'+t.darkSince+'</td>'+
-        '<td><span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px;background:'+statusColor+'22;color:'+statusColor+'">'+statusLabel+'</span></td>'+
-        '</tr>';
+      var statusColor=t.status==='dark'?'#F79009':t.status==='verify'?'#6366F1':t.status==='partial'?'#F59E0B':'#667085';
+      var statusLabel=t.status==='dark'?'Dark':t.status==='verify'?'Verify':t.status==='partial'?'Partial':'Unknown';
+      var teamName=t.team;
+      return t.members.map(function(m, i){
+        var isFirst=i===0;
+        return '<tr>'+
+          '<td class="bold" style="color:#282828">'+(isFirst?teamName:'')+'</td>'+
+          '<td style="font-size:12px;font-weight:'+(m.role==='Super Admin'?'600':'400')+'">'+m.name+'</td>'+
+          '<td style="font-size:11px;color:#667085">'+m.role+'</td>'+
+          '<td style="font-size:11px;color:#667085">'+m.email+'</td>'+
+          '<td style="font-size:12px;color:#F79009">'+m.lastLogin+'</td>'+
+          (isFirst?'<td rowspan="'+t.members.length+'"><span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px;background:'+statusColor+'22;color:'+statusColor+'">'+statusLabel+'</span></td>':'')+'</tr>';
+      }).join('');
     }).join('');
   }
 
@@ -1410,7 +1412,7 @@ document.addEventListener('DOMContentLoaded', function(){
         <span class="badge b-red">Action Needed</span>
       </div>
       <table class="tbl" style="margin-top:12px">
-        <thead><tr><th>Team</th><th>Super Admin</th><th>Company</th><th>Last Login</th><th>Dark Since</th><th>Status</th></tr></thead>
+        <thead><tr><th>Team</th><th>Name</th><th>Role</th><th>Email</th><th>Last Login</th><th>Status</th></tr></thead>
         <tbody id="dark-apex-tbody"></tbody>
       </table>
     </div>
