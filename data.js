@@ -175,11 +175,16 @@ kpis: [
     ]}
   ],
     topUsers: [
-    { name: "Filip Niculete", company: "Marcus & Millichap", team: "LA Apartment Advisors", tier: "Ignite", dash: 12, mkt: 8, total: 20 },
-    { name: "Cory Whitman", company: "Colliers", team: "Pacific NW", tier: "Ignite", dash: 9, mkt: 4, total: 13 },
-    { name: "Daniel Tour", company: "Omninet Capital", team: "Beverly Hills CA", tier: "Ignite", dash: 7, mkt: 2, total: 9 },
-    { name: "Brant Yasaka", company: "NAI-CBI Hawaii", team: "Hawaii", tier: "Ignite", dash: 6, mkt: 3, total: 9 },
-    { name: "Nora Armenian", company: "Vegas Valley Commercial", team: "Desert SW", tier: "Ignite", dash: 5, mkt: 2, total: 7 }
+    { name: "Blake Hammerstein", company: "Colliers Western Region", team: "Apex", tier: "Apex", last: "Today", platform: "Microsite" },
+    { name: "Sean Fulp", company: "Colliers Western Region", team: "Apex", tier: "Apex", last: "Today", platform: "Microsite" },
+    { name: "Kevin Fenenbock", company: "Colliers", team: "Ignite", tier: "Ignite", last: "Yesterday", platform: "Microsite" },
+    { name: "Shadd Walker", company: "Colliers", team: "Ignite", tier: "Ignite", last: "Yesterday", platform: "Microsite" },
+    { name: "Grant Lammersen", company: "Colliers", team: "Ignite", tier: "Ignite", last: "2 days ago", platform: "Microsite" },
+    { name: "Sean Margulis", company: "Logic CRE", team: "Independent", tier: "Ignite", last: "Today", platform: "Microsite" },
+    { name: "Ron Miller", company: "Bridge Commercial", team: "Independent", tier: "Ignite", last: "Today", platform: "Microsite" },
+    { name: "Jordan Selig", company: "J Selig RE", team: "Independent", tier: "Ignite", last: "2 days ago", platform: "Microsite" },
+    { name: "Eric Longo", company: "Colliers Western Region", team: "Apex", tier: "Apex", last: "Yesterday", platform: "Microsite" },
+    { name: "Nipun Nath", company: "Independent", team: "Independent", tier: "Ignite", last: "Today", platform: "Microsite" }
   ],
   onbQueue: [
     { name: "Matthew Bonnett", company: "Sperry Commercial", status: "Pending Alina", next: "Apr 30" },
@@ -196,16 +201,21 @@ kpis: [
   prevMonth: {
     label: "April 2026 — Full Month",
     totalLogins: 1672,
-    uniqueUsers: 252,
+    uniqueUsers: 133,
     dashboard: { logins: 784, unique: 37, avg: 21.2 },
     marketplace: { logins: 468, unique: 82, avg: 5.7 },
     microsite: { logins: 420, unique: 133, avg: 3.2 },
     topUsers: [
-      { name: "Filip Niculete", company: "Marcus & Millichap", team: "LA Apartment Advisors", tier: "Ignite", dash: 58, mkt: 32, total: 90 },
-      { name: "Cory Whitman", company: "Colliers", team: "Pacific NW", tier: "Ignite", dash: 44, mkt: 18, total: 62 },
-      { name: "Malan + Marcello", company: "Colliers", team: "CA Investment Sales", tier: "Apex", dash: 38, mkt: 20, total: 58 },
-      { name: "Brant Yasaka", company: "NAI-CBI Hawaii", team: "Hawaii", tier: "Ignite", dash: 29, mkt: 12, total: 41 },
-      { name: "Colliers Western Region", company: "Colliers", team: "Colliers VIP", tier: "Apex", dash: 26, mkt: 14, total: 40 }
+      { name: "Blake Hammerstein", company: "Colliers Western Region", team: "Apex", tier: "Apex", last: "Apr — May active", platform: "Microsite" },
+      { name: "Mark Schuessler", company: "Colliers Western Region", team: "Apex", tier: "Apex", last: "Apr active", platform: "Microsite" },
+      { name: "Sean Fulp", company: "Colliers Western Region", team: "Apex", tier: "Apex", last: "Apr — May active", platform: "Microsite" },
+      { name: "Eric Longo", company: "Colliers Western Region", team: "Apex", tier: "Apex", last: "Apr — May active", platform: "Microsite" },
+      { name: "Trevor Olkowski", company: "Malan + Marcello / Colliers", team: "Apex", tier: "Apex", last: "Apr active", platform: "Microsite" },
+      { name: "Monica Vanyo", company: "Malan + Marcello / Colliers", team: "Apex", tier: "Apex", last: "Apr active", platform: "Microsite" },
+      { name: "Mark Tarczynski", company: "Colliers", team: "Ignite", tier: "Ignite", last: "Apr active", platform: "Microsite" },
+      { name: "Sean Margulis", company: "Logic CRE", team: "Independent", tier: "Ignite", last: "Apr — May active", platform: "Microsite" },
+      { name: "Ron Miller", company: "Bridge Commercial", team: "Independent", tier: "Ignite", last: "Apr — May active", platform: "Microsite" },
+      { name: "Owen Rice", company: "Hughes Marino", team: "Independent", tier: "Ignite", last: "Apr 21", platform: "Microsite" }
     ]
   },
   igniteRoster: [
