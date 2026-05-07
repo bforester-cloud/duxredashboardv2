@@ -193,6 +193,21 @@ kpis: [
     { name: "Jacob Megensha", company: "Colliers International", status: "Pending Alina", next: "Mar 2" },
     { name: "Anthony Wooden", company: "Only Real Estate Group", status: "In Onboarding", next: "Jan 20" }
   ],
+  prevMonth: {
+    label: "April 2026 — Full Month",
+    totalLogins: 1672,
+    uniqueUsers: 252,
+    dashboard: { logins: 784, unique: 37, avg: 21.2 },
+    marketplace: { logins: 468, unique: 82, avg: 5.7 },
+    microsite: { logins: 420, unique: 133, avg: 3.2 },
+    topUsers: [
+      { name: "Filip Niculete", company: "Marcus & Millichap", team: "LA Apartment Advisors", tier: "Ignite", dash: 58, mkt: 32, total: 90 },
+      { name: "Cory Whitman", company: "Colliers", team: "Pacific NW", tier: "Ignite", dash: 44, mkt: 18, total: 62 },
+      { name: "Malan + Marcello", company: "Colliers", team: "CA Investment Sales", tier: "Apex", dash: 38, mkt: 20, total: 58 },
+      { name: "Brant Yasaka", company: "NAI-CBI Hawaii", team: "Hawaii", tier: "Ignite", dash: 29, mkt: 12, total: 41 },
+      { name: "Colliers Western Region", company: "Colliers", team: "Colliers VIP", tier: "Apex", dash: 26, mkt: 14, total: 40 }
+    ]
+  },
   igniteRoster: [
     { firm: "Colliers", users: 46, segment: "West Coast", superAdmins: ["Jason Roth", "Jeremy Thornton", "El Warner", "Mark Zorn", "Cory Whitman", "Scott Scharlach", "Alyssa Smith", "Grant Lammersen", "Jacob Mengesha", "Katie Lowder", "Emma Scott", "Jamison Shields", "Laura Spring"], powerBrokers: ["Jason Roth", "Jeremy Thornton", "El Warner", "Cory Whitman", "Alyssa Smith"], tier: "Ignite" },
     { firm: "CBRE", users: 21, segment: "Multi-Region", superAdmins: ["Kelly Murphy", "John Morris", "Lou Vidaillet", "Kevin Kelly", "Art Rasmussen", "David Norrie", "Jennifer Bussey", "Patrick Finlay"], powerBrokers: ["Kelly Murphy"], tier: "Ignite" },

@@ -677,6 +677,15 @@ function buildAdoption(D){
     return '<div class="team-card"><div class="tc-name">'+t.name+'</div><div class="tc-company">'+t.company+'</div>'+(t.arr?'<div class="tc-arr">ARR: '+t.arr+'</div>':'')+mems+'</div>';
   }).join('');
 
+  // Prev month top users
+  var prevEl=document.getElementById('prev-users-tbody');
+  if(prevEl&&plat.prevMonth&&plat.prevMonth.topUsers){
+    prevEl.innerHTML=plat.prevMonth.topUsers.map(function(u){
+      var tierCls=u.tier==='Apex'?'b-red':'b-green';
+      return '<tr><td class="bold">'+u.name+'</td><td>'+u.company+'</td><td style="font-size:11px;color:#667085">'+u.team+'</td><td><span class="badge '+tierCls+'">'+u.tier+'</span></td><td style="font-family:var(--mono)">'+u.dash+'</td><td style="font-family:var(--mono)">'+u.mkt+'</td><td style="font-family:var(--mono);font-weight:600">'+u.total+'</td></tr>';
+    }).join('');
+  }
+
   // ── Ignite Account Roster ──
   var igniteGrid=document.getElementById('ignite-roster-grid');
   if(igniteGrid&&plat.igniteRoster){
@@ -694,7 +703,7 @@ function buildAdoption(D){
     }).join('');
   }
 
-  // Top users
+  // Top users — May MTD
   var usersEl=document.getElementById('top-users-tbody');
   usersEl.innerHTML=plat.topUsers.map(function(u){
     return '<tr><td class="bold">'+u.name+'</td><td>'+u.company+'</td><td style="font-size:11px">'+u.team+'</td><td><span class="badge b-dark">'+u.tier+'</span></td><td class="mono">'+u.dash+'</td><td class="mono">'+u.mkt+'</td><td class="mono" style="color:var(--green);font-size:14px">'+u.total+'</td></tr>';
@@ -1385,8 +1394,46 @@ document.addEventListener('DOMContentLoaded', function(){
     </div>
     <div class="g2">
       <div class="card">
-        <div class="card-hd"><div class="card-ht"><div class="card-title">Top Users by Engagement</div><div class="card-sub">Mixpanel live · May MTD</div></div></div>
+        <div class="card-hd"><div class="card-ht"><div class="card-title">Top Users — May MTD</div><div class="card-sub">Mixpanel live · 12 unique Dashboard · 10 Marketplace · 12 Microsite</div></div><span class="badge b-green">34 Unique</span></div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0 12px">
+          <div style="background:#F9FAFB;border-radius:6px;padding:8px;text-align:center">
+            <div style="font-size:10px;color:#667085;font-weight:600">DASHBOARD</div>
+            <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:#282828">50</div>
+            <div style="font-size:10px;color:#667085">12 unique · 4.2 avg</div>
+          </div>
+          <div style="background:#F9FAFB;border-radius:6px;padding:8px;text-align:center">
+            <div style="font-size:10px;color:#667085;font-weight:600">MARKETPLACE</div>
+            <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:#282828">33</div>
+            <div style="font-size:10px;color:#667085">10 unique · 3.3 avg</div>
+          </div>
+          <div style="background:#F9FAFB;border-radius:6px;padding:8px;text-align:center">
+            <div style="font-size:10px;color:#667085;font-weight:600">MICROSITE</div>
+            <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:#282828">24</div>
+            <div style="font-size:10px;color:#667085">12 unique · 2.0 avg</div>
+          </div>
+        </div>
         <table class="tbl"><thead><tr><th>Name</th><th>Company</th><th>Team</th><th>Tier</th><th>Dash</th><th>Mktplace</th><th>Total</th></tr></thead><tbody id="top-users-tbody"></tbody></table>
+      </div>
+      <div class="card">
+        <div class="card-hd"><div class="card-ht"><div class="card-title">Previous Month — April 2026</div><div class="card-sub">Mixpanel · Full month · Apr 1–30</div></div><span class="badge b-dark">252 Unique</span></div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0 12px">
+          <div style="background:#F9FAFB;border-radius:6px;padding:8px;text-align:center">
+            <div style="font-size:10px;color:#667085;font-weight:600">DASHBOARD</div>
+            <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:#282828">784</div>
+            <div style="font-size:10px;color:#667085">37 unique · 21.2 avg</div>
+          </div>
+          <div style="background:#F9FAFB;border-radius:6px;padding:8px;text-align:center">
+            <div style="font-size:10px;color:#667085;font-weight:600">MARKETPLACE</div>
+            <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:#282828">468</div>
+            <div style="font-size:10px;color:#667085">82 unique · 5.7 avg</div>
+          </div>
+          <div style="background:#F9FAFB;border-radius:6px;padding:8px;text-align:center">
+            <div style="font-size:10px;color:#667085;font-weight:600">MICROSITE</div>
+            <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:#282828">420</div>
+            <div style="font-size:10px;color:#667085">133 unique · 3.2 avg</div>
+          </div>
+        </div>
+        <table class="tbl"><thead><tr><th>Name</th><th>Company</th><th>Team</th><th>Tier</th><th>Dash</th><th>Mktplace</th><th>Total</th></tr></thead><tbody id="prev-users-tbody"></tbody></table>
       </div>
       <div class="card">
         <div class="card-hd"><div class="card-ht"><div class="card-title">ONB Queue + Watch List</div><div class="card-sub">Alina Garmatyuk · Active</div></div><span class="badge b-amber">Action needed</span></div>
