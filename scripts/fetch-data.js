@@ -94,6 +94,28 @@ async function fetchHubSpot() {
 
             // Power Brokers — manually maintained (4 Apex + 29 Ignite = 33)
     console.log('  ℹ️ Power Brokers: manually maintained — skipping auto-update');;
+
+    // ── New Ignites MTD ──
+    let newIgnites = 0;
+    try {
+      const mtdMs = new Date(new Date().getFullYear(), new Date().getMonth(), 1).getTime();
+      const igniteRes = await axios.post(
+        'https://api.hubapi.com/crm/v3/objects/contacts/search',
+        {
+          filterGroups: [{ filters: [
+            { propertyName: 'duxre_plan', operator: 'EQ', value: 'Ignite' },
+            { propertyName: 'createdate', operator: 'GTE', value: String(mtdMs) }
+          ]}],
+          limit: 1
+        },
+        { headers: { Authorization: `Bearer ${process.env.HUBSPOT_API_KEY}`, 'Content-Type': 'application/json' } }
+      );
+      newIgnites = igniteRes.data.total || 0;
+      console.log(`  ✅ New Ignites MTD: ${newIgnites}`);
+    } catch (e) {
+      console.error('  ⚠️ New Ignites failed:', e.message);
+    }
+
   } catch (e) {
     console.error('❌ HubSpot error:', e.message);
     return null;
