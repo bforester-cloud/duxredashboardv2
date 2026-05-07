@@ -144,7 +144,17 @@ s5_platform: {
       { role: "Admin", name: "Blake Hammerstein", title: "AVP" },
       { role: "Admin", name: "Eric Longo", title: "Analyst" },
       { role: "Admin", name: "Todd Tydlaska", title: "EVP" }
-    ]},
+    ],
+  igniteRoster: [
+    { firm: "Colliers", users: 46, segment: "West Coast", superAdmins: ["Jason Roth", "Jeremy Thornton", "El Warner", "Mark Zorn", "Cory Whitman", "Scott Scharlach", "Alyssa Smith", "Grant Lammersen", "Jacob Mengesha", "Katie Lowder", "Emma Scott", "Jamison Shields", "Laura Spring"], powerBrokers: ["Jason Roth", "Jeremy Thornton", "El Warner", "Cory Whitman", "Alyssa Smith"], tier: "Ignite" },
+    { firm: "CBRE", users: 21, segment: "Multi-Region", superAdmins: ["Kelly Murphy", "John Morris", "Lou Vidaillet", "Kevin Kelly", "Art Rasmussen", "David Norrie", "Jennifer Bussey", "Patrick Finlay"], powerBrokers: ["Kelly Murphy"], tier: "Ignite" },
+    { firm: "Newmark", users: 12, segment: "West Coast", superAdmins: ["Andrew Robben", "Carter Norton", "Colin Kloezeman", "Jon Cannon", "Zain Kooshkabadi", "Trace Elrod"], powerBrokers: ["Andrew Robben"], tier: "Ignite" },
+    { firm: "Marcus & Millichap", users: 10, segment: "West Coast", superAdmins: ["Filip Niculete", "Hunter Loncar"], powerBrokers: ["Filip Niculete"], tier: "Ignite" },
+    { firm: "Cushman & Wakefield", users: 6, segment: "Multi-Region", superAdmins: ["Virgilio Fernandez", "Andres Navarrete", "Kelsey Berry"], powerBrokers: [], tier: "Ignite" },
+    { firm: "Kidder Mathews", users: 5, segment: "West Coast", superAdmins: ["Darren Tappen", "Casey Lins", "Mike King", "Peter Beauchamp", "Nathan Thinnes"], powerBrokers: ["Darren Tappen"], tier: "Ignite" },
+    { firm: "NAI Affiliates", users: 3, segment: "Multi-Region", superAdmins: ["Brant Yasaka", "Edward Villareal", "Obed Garcia"], powerBrokers: [], tier: "Ignite" },
+    { firm: "Boutique & Independent", users: 47, segment: "Multi-Region", superAdmins: ["Shane Young", "Daniel Tour", "John Carpenter", "Tanner Webster", "Dmytro Shcherbitskyi", "Steven Paulsen", "Ofir Barashy", "Majid Radaei"], powerBrokers: ["Shane Young", "John Carpenter"], tier: "Ignite" }
+  ]},
     { name: "Integrated Advisory Services", company: "Colliers", members: [
       { role: "Super Admin", name: "Matt Heyn", title: "Vice Chair" },
       { role: "Admin", name: "Jaime Pickett", title: "Sr. Coordinator" },

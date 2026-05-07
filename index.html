@@ -677,6 +677,23 @@ function buildAdoption(D){
     return '<div class="team-card"><div class="tc-name">'+t.name+'</div><div class="tc-company">'+t.company+'</div>'+(t.arr?'<div class="tc-arr">ARR: '+t.arr+'</div>':'')+mems+'</div>';
   }).join('');
 
+  // ── Ignite Account Roster ──
+  var igniteGrid=document.getElementById('ignite-roster-grid');
+  if(igniteGrid&&plat.igniteRoster){
+    igniteGrid.innerHTML=plat.igniteRoster.map(function(firm){
+      var pb=firm.powerBrokers&&firm.powerBrokers.length>0?'<span style="font-size:10px;background:#fff3cd;color:#856404;padding:1px 6px;border-radius:3px;font-weight:600;margin-top:4px;display:inline-block">'+firm.powerBrokers.length+' Power Broker'+(firm.powerBrokers.length>1?'s':'')+'</span>':'';
+      var admins=firm.superAdmins.slice(0,4).join(', ')+(firm.superAdmins.length>4?' +' + (firm.superAdmins.length-4)+' more':'');
+      return '<div style="background:#F9FAFB;border:1px solid #E4E7EC;border-radius:8px;padding:12px">'+
+        '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">'+
+        '<span style="font-weight:700;font-size:13px;color:#282828">'+firm.firm+'</span>'+
+        '<span style="font-size:11px;font-weight:600;background:#EEF4FF;color:#3538CD;padding:2px 8px;border-radius:4px">'+firm.users+' users</span>'+
+        '</div>'+
+        '<div style="font-size:11px;color:#667085;margin-bottom:4px">'+firm.segment+'</div>'+
+        '<div style="font-size:11px;color:#344054;line-height:1.5">'+admins+'</div>'+
+        pb+'</div>';
+    }).join('');
+  }
+
   // Top users
   var usersEl=document.getElementById('top-users-tbody');
   usersEl.innerHTML=plat.topUsers.map(function(u){
@@ -1355,6 +1372,16 @@ document.addEventListener('DOMContentLoaded', function(){
     <div class="card">
       <div class="card-hd"><div class="card-ht"><div class="card-title">Apex Account Roster — 7 Teams · 22 Users</div><div class="card-sub">Verified · CSV + HubSpot</div></div><span class="badge b-dark">Apex</span></div>
       <div class="team-grid" id="apex-teams"></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <div class="card-hd">
+        <div class="card-ht">
+          <div class="card-title">Ignite Account Roster — 150 Users</div>
+          <div class="card-sub">HubSpot live · May 4, 2026 · 6 ICP firms + boutique</div>
+        </div>
+        <span class="badge b-dark">Ignite</span>
+      </div>
+      <div id="ignite-roster-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;margin-top:12px"></div>
     </div>
     <div class="g2">
       <div class="card">
