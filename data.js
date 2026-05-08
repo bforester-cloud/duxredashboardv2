@@ -134,7 +134,7 @@ kpis: [
     { label: "CAC (Apr MTD)", value: "$160", sub: "$640.19 ÷ 4 closes · LinkedIn-only" }
   ],
   platformLogins: {
-    dashboard: 527, microsite: 267, marketplace: 69
+    dashboard: 106, microsite: 70, marketplace: 69
   },
   apexTeams: [
     { name: "Colliers Western Region", company: "Colliers", members: [
