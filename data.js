@@ -1,7 +1,7 @@
 window.DUXRE = {
 meta: {
   title: "Revenue Operations — April 2026",
-  updated: "Oct 30, 2026",
+  updated: "Oct 31, 2026",
   period: "May 1 — May 6, 2026"
 },
 hero: [
@@ -128,13 +128,13 @@ s4_marketplace: {
 },
 s5_platform: {
 kpis: [
-    { label: "Broker Logins — Apr MTD", value: "12,138", sub: "Dashboard 6087 · Marketplace 4975 · Microsite 1076 · Live Oct 30, 2026" },
+    { label: "Broker Logins — Apr MTD", value: "12,239", sub: "Dashboard 6156 · Marketplace 5010 · Microsite 1073 · Live Oct 31, 2026" },
     { label: "Listing Detail Views — 30d", value: "905", sub: "826 page views · 274 contact views" },
     { label: "Active Subscriptions", value: "100+", sub: "Stripe live · Apr 24 2026" },
     { label: "CAC (Apr MTD)", value: "$160", sub: "$640.19 ÷ 4 closes · LinkedIn-only" }
   ],
   platformLogins: {
-    dashboard: 6087, microsite: 1076, marketplace: 69
+    dashboard: 6156, microsite: 1073, marketplace: 69
   },
   apexTeams: [
     { name: "Colliers Western Region", company: "Colliers", members: [
