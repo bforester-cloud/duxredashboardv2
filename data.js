@@ -1,7 +1,7 @@
 window.DUXRE = {
 meta: {
   title: "Revenue Operations — April 2026",
-  updated: "Nov 12, 2026",
+  updated: "Nov 13, 2026",
   period: "May 1 — May 6, 2026"
 },
 hero: [
